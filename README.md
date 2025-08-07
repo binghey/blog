@@ -3,6 +3,7 @@
 ### :speech_balloon: 0 
 ### :hibiscus: 6773 
 ### :alarm_clock: 2025-08-07 22:20:48 
-### Powered by :heart: [Gmeek](https://github.com/Meekdai/Gmeek)
+### Powered by :heart: [知行合一笔记](https://binghey.github.io/blog)
+
 
 
