@@ -10,9 +10,9 @@
         let theme = localStorage.getItem("meek_theme") || "light";
         document.documentElement.setAttribute("data-color-mode", theme);
     </script>
-<meta name="description" content="##openpyxl 在 Python 中的应用教程，内容覆盖从创建 Excel、写入数据、读取数据、修改数据、样式设置、合并单元格、公式到保存文件等常用功能。">
+<meta name="description" content="好的，我给你做一个 **PyAutoGUI 的详细教程**，每句代码都有 **详细注释**，并且会用到常用功能（鼠标控制、键盘输入、截图、自动化等），让你能快速上手并理解。">
 <meta property="og:title" content="PyAutoGUI 教程">
-<meta property="og:description" content="##openpyxl 在 Python 中的应用教程，内容覆盖从创建 Excel、写入数据、读取数据、修改数据、样式设置、合并单元格、公式到保存文件等常用功能。">
+<meta property="og:description" content="好的，我给你做一个 **PyAutoGUI 的详细教程**，每句代码都有 **详细注释**，并且会用到常用功能（鼠标控制、键盘输入、截图、自动化等），让你能快速上手并理解。">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://binghey.github.io/blog/post/PyAutoGUI%20-jiao-cheng.html">
 <meta property="og:image" content="https://github.com/binghey/blog/blob/main/%E6%89%A7%E8%A1%8C%E5%90%88%E4%B8%80%E7%AC%94%E8%AE%B0.png?raw=true">
@@ -83,346 +83,126 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 </div>
 </div>
     <div id="content">
-<div class="markdown-body" id="postBody"><p>##openpyxl 在 Python 中的应用教程，内容覆盖从创建 Excel、写入数据、读取数据、修改数据、样式设置、合并单元格、公式到保存文件等常用功能。</p>
-<ol>
-<li>安装 openpyxl</li>
-</ol>
-<div class="highlight highlight-source-shell"><pre class="notranslate">  pip install openpyxl</pre></div>
-<p>openpyxl 是一个专门处理 .xlsx 格式 Excel 文件的 Python 库。<br>
-2. 创建 Excel 并写入数据</p>
-<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">from</span> <span class="pl-s1">openpyxl</span> <span class="pl-k">import</span> <span class="pl-v">Workbook</span>  <span class="pl-c"># 从 openpyxl 导入 Workbook 类（用于创建新 Excel）</span>
+<div class="markdown-body" id="postBody"><p>好的，我给你做一个 <strong>PyAutoGUI 的详细教程</strong>，每句代码都有 <strong>详细注释</strong>，并且会用到常用功能（鼠标控制、键盘输入、截图、自动化等），让你能快速上手并理解。</p>
+<hr>
+<h2>1. 什么是 PyAutoGUI</h2>
+<p><strong>PyAutoGUI</strong> 是 Python 的一个自动化操作库，可以控制 <strong>鼠标、键盘、屏幕截图</strong> 等，用于桌面自动化脚本，比如自动点击按钮、输入文字、截屏识别等。</p>
+<p>安装：</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">pip install pyautogui</pre></div>
+<hr>
+<h2>2. 导入模块</h2>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">import</span> <span class="pl-s1">pyautogui</span>  <span class="pl-c"># 导入 PyAutoGUI 模块，用于控制鼠标、键盘和屏幕</span>
+<span class="pl-k">import</span> <span class="pl-s1">time</span>       <span class="pl-c"># 导入 time 模块，用于延迟执行</span></pre></div>
+<hr>
+<h2>3. 基础鼠标操作</h2>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 获取当前鼠标坐标（返回一个 Point 对象，包含 x 和 y 坐标）</span>
+<span class="pl-s1">position</span> <span class="pl-c1">=</span> <span class="pl-s1">pyautogui</span>.<span class="pl-c1">position</span>()
+<span class="pl-en">print</span>(<span class="pl-s">"当前鼠标位置："</span>, <span class="pl-s1">position</span>)
 
-<span class="pl-c"># 创建一个新的 Excel 工作簿对象</span>
-<span class="pl-s1">wb</span> <span class="pl-c1">=</span> <span class="pl-en">Workbook</span>()
+<span class="pl-c"># 将鼠标移动到指定位置 (x=500, y=300)，用 1 秒时间完成</span>
+<span class="pl-s1">pyautogui</span>.<span class="pl-c1">moveTo</span>(<span class="pl-c1">500</span>, <span class="pl-c1">300</span>, <span class="pl-s1">duration</span><span class="pl-c1">=</span><span class="pl-c1">1</span>)
 
-<span class="pl-c"># 获取当前活跃的工作表（默认是第一个工作表）</span>
-<span class="pl-s1">ws</span> <span class="pl-c1">=</span> <span class="pl-s1">wb</span>.<span class="pl-c1">active</span>
+<span class="pl-c"># 鼠标相对当前位置移动 (右 100 像素，下 50 像素)</span>
+<span class="pl-s1">pyautogui</span>.<span class="pl-c1">moveRel</span>(<span class="pl-c1">100</span>, <span class="pl-c1">50</span>, <span class="pl-s1">duration</span><span class="pl-c1">=</span><span class="pl-c1">0.5</span>)
 
-<span class="pl-c"># 给工作表命名</span>
-<span class="pl-s1">ws</span>.<span class="pl-c1">title</span> <span class="pl-c1">=</span> <span class="pl-s">"学生成绩表"</span>
+<span class="pl-c"># 鼠标左键单击</span>
+<span class="pl-s1">pyautogui</span>.<span class="pl-c1">click</span>()
 
-<span class="pl-c"># 在指定单元格写入数据</span>
-<span class="pl-s1">ws</span>[<span class="pl-s">"A1"</span>] <span class="pl-c1">=</span> <span class="pl-s">"姓名"</span>   <span class="pl-c"># 第一列第一行</span>
-<span class="pl-s1">ws</span>[<span class="pl-s">"B1"</span>] <span class="pl-c1">=</span> <span class="pl-s">"语文"</span>
-<span class="pl-s1">ws</span>[<span class="pl-s">"C1"</span>] <span class="pl-c1">=</span> <span class="pl-s">"数学"</span>
+<span class="pl-c"># 鼠标右键单击</span>
+<span class="pl-s1">pyautogui</span>.<span class="pl-c1">rightClick</span>()
 
-<span class="pl-c"># 用循环写入多行数据</span>
-<span class="pl-s1">data</span> <span class="pl-c1">=</span> [
-    [<span class="pl-s">"张三"</span>, <span class="pl-c1">85</span>, <span class="pl-c1">90</span>],
-    [<span class="pl-s">"李四"</span>, <span class="pl-c1">78</span>, <span class="pl-c1">88</span>],
-    [<span class="pl-s">"王五"</span>, <span class="pl-c1">92</span>, <span class="pl-c1">95</span>]
-]
-<span class="pl-k">for</span> <span class="pl-s1">row</span> <span class="pl-c1">in</span> <span class="pl-s1">data</span>:
-    <span class="pl-s1">ws</span>.<span class="pl-c1">append</span>(<span class="pl-s1">row</span>)  <span class="pl-c"># append 会自动按行追加数据</span>
+<span class="pl-c"># 鼠标双击</span>
+<span class="pl-s1">pyautogui</span>.<span class="pl-c1">doubleClick</span>()
 
-<span class="pl-c"># 保存 Excel 文件</span>
-<span class="pl-s1">wb</span>.<span class="pl-c1">save</span>(<span class="pl-s">"学生成绩.xlsx"</span>)</pre></div>
-<ol start="3">
-<li>读取 Excel 数据</li>
-</ol>
-<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">from</span> <span class="pl-s1">openpyxl</span> <span class="pl-k">import</span> <span class="pl-s1">load_workbook</span>  <span class="pl-c"># 用于加载已存在的 Excel 文件</span>
+<span class="pl-c"># 鼠标拖动到指定位置（模拟拖拽操作）</span>
+<span class="pl-s1">pyautogui</span>.<span class="pl-c1">dragTo</span>(<span class="pl-c1">800</span>, <span class="pl-c1">500</span>, <span class="pl-s1">duration</span><span class="pl-c1">=</span><span class="pl-c1">1</span>)
 
-<span class="pl-c"># 打开 Excel 文件</span>
-<span class="pl-s1">wb</span> <span class="pl-c1">=</span> <span class="pl-en">load_workbook</span>(<span class="pl-s">"学生成绩.xlsx"</span>)
+<span class="pl-c"># 鼠标相对当前位置拖动</span>
+<span class="pl-s1">pyautogui</span>.<span class="pl-c1">dragRel</span>(<span class="pl-c1">-</span><span class="pl-c1">200</span>, <span class="pl-c1">-</span><span class="pl-c1">100</span>, <span class="pl-s1">duration</span><span class="pl-c1">=</span><span class="pl-c1">1</span>)</pre></div>
+<hr>
+<h2>4. 键盘输入</h2>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 输入一段文字（自动键入）</span>
+<span class="pl-s1">pyautogui</span>.<span class="pl-c1">typewrite</span>(<span class="pl-s">"Hello, PyAutoGUI!"</span>, <span class="pl-s1">interval</span><span class="pl-c1">=</span><span class="pl-c1">0.1</span>)  <span class="pl-c"># 每个字符间隔 0.1 秒</span>
 
-<span class="pl-c"># 选择工作表（方式一：按名称）</span>
-<span class="pl-s1">ws</span> <span class="pl-c1">=</span> <span class="pl-s1">wb</span>[<span class="pl-s">"学生成绩表"</span>]
+<span class="pl-c"># 按下单个键</span>
+<span class="pl-s1">pyautogui</span>.<span class="pl-c1">press</span>(<span class="pl-s">"enter"</span>)  <span class="pl-c"># 模拟按下 Enter</span>
 
-<span class="pl-c"># 方式二：按索引获取（第一个工作表）</span>
-<span class="pl-c"># ws = wb.worksheets[0]</span>
+<span class="pl-c"># 按住某个键不放（如 Ctrl+C）</span>
+<span class="pl-s1">pyautogui</span>.<span class="pl-c1">keyDown</span>(<span class="pl-s">"ctrl"</span>)  <span class="pl-c"># 按下 Ctrl</span>
+<span class="pl-s1">pyautogui</span>.<span class="pl-c1">press</span>(<span class="pl-s">"c"</span>)       <span class="pl-c"># 按下 C</span>
+<span class="pl-s1">pyautogui</span>.<span class="pl-c1">keyUp</span>(<span class="pl-s">"ctrl"</span>)    <span class="pl-c"># 松开 Ctrl</span>
 
-<span class="pl-c"># 读取单元格内容</span>
-<span class="pl-en">print</span>(<span class="pl-s1">ws</span>[<span class="pl-s">"A1"</span>].<span class="pl-c1">value</span>)  <span class="pl-c"># 输出：姓名</span>
+<span class="pl-c"># 组合快捷键（等效于 Ctrl+V）</span>
+<span class="pl-s1">pyautogui</span>.<span class="pl-c1">hotkey</span>(<span class="pl-s">"ctrl"</span>, <span class="pl-s">"v"</span>)</pre></div>
+<hr>
+<h2>5. 屏幕操作</h2>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 获取屏幕分辨率（返回宽度和高度）</span>
+<span class="pl-s1">screen_width</span>, <span class="pl-s1">screen_height</span> <span class="pl-c1">=</span> <span class="pl-s1">pyautogui</span>.<span class="pl-c1">size</span>()
+<span class="pl-en">print</span>(<span class="pl-s">"屏幕分辨率："</span>, <span class="pl-s1">screen_width</span>, <span class="pl-s">"x"</span>, <span class="pl-s1">screen_height</span>)
 
-<span class="pl-c"># 读取某一行</span>
-<span class="pl-k">for</span> <span class="pl-s1">cell</span> <span class="pl-c1">in</span> <span class="pl-s1">ws</span>[<span class="pl-c1">1</span>]:  <span class="pl-c"># 第一行</span>
-    <span class="pl-en">print</span>(<span class="pl-s1">cell</span>.<span class="pl-c1">value</span>)
+<span class="pl-c"># 判断鼠标是否在屏幕范围内</span>
+<span class="pl-s1">x</span>, <span class="pl-s1">y</span> <span class="pl-c1">=</span> <span class="pl-s1">pyautogui</span>.<span class="pl-c1">position</span>()
+<span class="pl-k">if</span> <span class="pl-c1">0</span> <span class="pl-c1">&lt;=</span> <span class="pl-s1">x</span> <span class="pl-c1">&lt;</span> <span class="pl-s1">screen_width</span> <span class="pl-c1">and</span> <span class="pl-c1">0</span> <span class="pl-c1">&lt;=</span> <span class="pl-s1">y</span> <span class="pl-c1">&lt;</span> <span class="pl-s1">screen_height</span>:
+    <span class="pl-en">print</span>(<span class="pl-s">"鼠标在屏幕范围内"</span>)
 
-<span class="pl-c"># 读取所有行（跳过表头）</span>
-<span class="pl-k">for</span> <span class="pl-s1">row</span> <span class="pl-c1">in</span> <span class="pl-s1">ws</span>.<span class="pl-c1">iter_rows</span>(<span class="pl-s1">min_row</span><span class="pl-c1">=</span><span class="pl-c1">2</span>, <span class="pl-s1">values_only</span><span class="pl-c1">=</span><span class="pl-c1">True</span>):  
-    <span class="pl-c"># min_row=2 表示从第二行开始，values_only=True 表示只返回值而不是 cell 对象</span>
-    <span class="pl-en">print</span>(<span class="pl-s1">row</span>)
+<span class="pl-c"># 屏幕截图（保存为文件）</span>
+<span class="pl-s1">screenshot</span> <span class="pl-c1">=</span> <span class="pl-s1">pyautogui</span>.<span class="pl-c1">screenshot</span>(<span class="pl-s">"screen.png"</span>)
 
-<span class="pl-s1">wb</span>.<span class="pl-c1">close</span>()  <span class="pl-c"># 用完关闭（释放内存）</span></pre></div>
-<ol start="4">
-<li>修改 Excel 数据</li>
-</ol>
-<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 修改某个单元格</span>
-<span class="pl-s1">ws</span>[<span class="pl-s">"B2"</span>] <span class="pl-c1">=</span> <span class="pl-c1">88</span>  <span class="pl-c"># 把张三的语文成绩改成 88</span>
+<span class="pl-c"># 截取屏幕某个区域（x, y, width, height）</span>
+<span class="pl-s1">region_screenshot</span> <span class="pl-c1">=</span> <span class="pl-s1">pyautogui</span>.<span class="pl-c1">screenshot</span>(<span class="pl-s">"region.png"</span>, <span class="pl-s1">region</span><span class="pl-c1">=</span>(<span class="pl-c1">0</span>, <span class="pl-c1">0</span>, <span class="pl-c1">500</span>, <span class="pl-c1">400</span>))</pre></div>
+<hr>
+<h2>6. 图像识别点击（基于截图）</h2>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 在屏幕上查找图片（需要提前准备好一个小图片，如 button.png）</span>
+<span class="pl-s1">button_location</span> <span class="pl-c1">=</span> <span class="pl-s1">pyautogui</span>.<span class="pl-c1">locateOnScreen</span>(<span class="pl-s">"button.png"</span>, <span class="pl-s1">confidence</span><span class="pl-c1">=</span><span class="pl-c1">0.8</span>)  
+<span class="pl-c"># confidence 参数是匹配精度（0~1 之间，需要安装 opencv-python）</span>
 
-<span class="pl-c"># 保存修改</span>
-<span class="pl-s1">wb</span>.<span class="pl-c1">save</span>(<span class="pl-s">"学生成绩.xlsx"</span>)</pre></div>
-<ol start="5">
-<li>设置单元格样式（字体、颜色、对齐方式等）</li>
-</ol>
-<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">from</span> <span class="pl-s1">openpyxl</span>.<span class="pl-s1">styles</span> <span class="pl-k">import</span> <span class="pl-v">Font</span>, <span class="pl-v">PatternFill</span>, <span class="pl-v">Alignment</span>
+<span class="pl-k">if</span> <span class="pl-s1">button_location</span>:
+    <span class="pl-en">print</span>(<span class="pl-s">"找到按钮位置："</span>, <span class="pl-s1">button_location</span>)
+    <span class="pl-c"># 获取按钮中心位置</span>
+    <span class="pl-s1">center_x</span>, <span class="pl-s1">center_y</span> <span class="pl-c1">=</span> <span class="pl-s1">pyautogui</span>.<span class="pl-c1">center</span>(<span class="pl-s1">button_location</span>)
+    <span class="pl-c"># 点击按钮</span>
+    <span class="pl-s1">pyautogui</span>.<span class="pl-c1">click</span>(<span class="pl-s1">center_x</span>, <span class="pl-s1">center_y</span>)
+<span class="pl-k">else</span>:
+    <span class="pl-en">print</span>(<span class="pl-s">"未找到按钮"</span>)</pre></div>
+<hr>
+<h2>7. 安全退出（防止脚本失控）</h2>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 启用鼠标移动到屏幕左上角 (0,0) 自动终止脚本</span>
+<span class="pl-s1">pyautogui</span>.<span class="pl-c1">FAILSAFE</span> <span class="pl-c1">=</span> <span class="pl-c1">True</span>
 
-<span class="pl-c"># 设置字体</span>
-<span class="pl-s1">ws</span>[<span class="pl-s">"A1"</span>].<span class="pl-c1">font</span> <span class="pl-c1">=</span> <span class="pl-en">Font</span>(<span class="pl-s1">name</span><span class="pl-c1">=</span><span class="pl-s">"微软雅黑"</span>, <span class="pl-s1">size</span><span class="pl-c1">=</span><span class="pl-c1">14</span>, <span class="pl-s1">bold</span><span class="pl-c1">=</span><span class="pl-c1">True</span>, <span class="pl-s1">color</span><span class="pl-c1">=</span><span class="pl-s">"FFFFFF"</span>)  <span class="pl-c"># 白色字体</span>
+<span class="pl-c"># 如果你不想使用这个安全功能，可以关闭</span>
+<span class="pl-c"># pyautogui.FAILSAFE = False</span></pre></div>
+<hr>
+<h2>8. 延迟与防抖</h2>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 全局延迟（每次 PyAutoGUI 执行动作后延迟 0.5 秒）</span>
+<span class="pl-s1">pyautogui</span>.<span class="pl-c1">PAUSE</span> <span class="pl-c1">=</span> <span class="pl-c1">0.5</span></pre></div>
+<hr>
+<h2>9. 示例：自动打开记事本并输入文字</h2>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">import</span> <span class="pl-s1">pyautogui</span>
+<span class="pl-k">import</span> <span class="pl-s1">time</span>
 
-<span class="pl-c"># 设置背景颜色</span>
-<span class="pl-s1">ws</span>[<span class="pl-s">"A1"</span>].<span class="pl-c1">fill</span> <span class="pl-c1">=</span> <span class="pl-en">PatternFill</span>(<span class="pl-s">"solid"</span>, <span class="pl-s1">fgColor</span><span class="pl-c1">=</span><span class="pl-s">"4F81BD"</span>)  <span class="pl-c"># 蓝色背景</span>
+<span class="pl-s1">pyautogui</span>.<span class="pl-c1">PAUSE</span> <span class="pl-c1">=</span> <span class="pl-c1">0.5</span>
+<span class="pl-s1">pyautogui</span>.<span class="pl-c1">FAILSAFE</span> <span class="pl-c1">=</span> <span class="pl-c1">True</span>
 
-<span class="pl-c"># 设置对齐方式</span>
-<span class="pl-s1">ws</span>[<span class="pl-s">"A1"</span>].<span class="pl-c1">alignment</span> <span class="pl-c1">=</span> <span class="pl-en">Alignment</span>(<span class="pl-s1">horizontal</span><span class="pl-c1">=</span><span class="pl-s">"center"</span>, <span class="pl-s1">vertical</span><span class="pl-c1">=</span><span class="pl-s">"center"</span>)
+<span class="pl-c"># 打开 Windows 搜索</span>
+<span class="pl-s1">pyautogui</span>.<span class="pl-c1">press</span>(<span class="pl-s">"win"</span>)
+<span class="pl-s1">pyautogui</span>.<span class="pl-c1">typewrite</span>(<span class="pl-s">"notepad"</span>, <span class="pl-s1">interval</span><span class="pl-c1">=</span><span class="pl-c1">0.1</span>)
+<span class="pl-s1">pyautogui</span>.<span class="pl-c1">press</span>(<span class="pl-s">"enter"</span>)
 
-<span class="pl-s1">wb</span>.<span class="pl-c1">save</span>(<span class="pl-s">"学生成绩.xlsx"</span>)</pre></div>
-<ol start="6">
-<li>合并与拆分单元格</li>
-</ol>
-<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 合并 A1 到 C1</span>
-<span class="pl-s1">ws</span>.<span class="pl-c1">merge_cells</span>(<span class="pl-s">"A1:C1"</span>)
-<span class="pl-s1">ws</span>[<span class="pl-s">"A1"</span>] <span class="pl-c1">=</span> <span class="pl-s">"成绩表"</span>
+<span class="pl-s1">time</span>.<span class="pl-c1">sleep</span>(<span class="pl-c1">1</span>)  <span class="pl-c"># 等待记事本打开</span>
 
-<span class="pl-c"># 拆分（取消合并）</span>
-<span class="pl-s1">ws</span>.<span class="pl-c1">unmerge_cells</span>(<span class="pl-s">"A1:C1"</span>)
+<span class="pl-c"># 输入文字</span>
+<span class="pl-s1">pyautogui</span>.<span class="pl-c1">typewrite</span>(<span class="pl-s">"Hello! This text is typed by PyAutoGUI."</span>, <span class="pl-s1">interval</span><span class="pl-c1">=</span><span class="pl-c1">0.05</span>)
 
-<span class="pl-s1">wb</span>.<span class="pl-c1">save</span>(<span class="pl-s">"学生成绩.xlsx"</span>)</pre></div>
-<ol start="7">
-<li>插入公式</li>
-</ol>
-<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 在 D 列计算平均分</span>
-<span class="pl-s1">ws</span>[<span class="pl-s">"D1"</span>] <span class="pl-c1">=</span> <span class="pl-s">"平均分"</span>
-<span class="pl-k">for</span> <span class="pl-s1">row</span> <span class="pl-c1">in</span> <span class="pl-en">range</span>(<span class="pl-c1">2</span>, <span class="pl-c1">5</span>):  <span class="pl-c"># 第 2 到第 4 行有数据</span>
-    <span class="pl-s1">ws</span>[<span class="pl-s">f"D<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">row</span><span class="pl-kos">}</span></span>"</span>] <span class="pl-c1">=</span> <span class="pl-s">f"=AVERAGE(B<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">row</span><span class="pl-kos">}</span></span>:C<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">row</span><span class="pl-kos">}</span></span>)"</span>  <span class="pl-c"># Excel 平均公式</span>
-
-<span class="pl-s1">wb</span>.<span class="pl-c1">save</span>(<span class="pl-s">"学生成绩.xlsx"</span>)</pre></div>
-<ol start="8">
-<li>读取 Excel 的行列范围</li>
-</ol>
-<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 读取第一列所有数据</span>
-<span class="pl-k">for</span> <span class="pl-s1">cell</span> <span class="pl-c1">in</span> <span class="pl-s1">ws</span>[<span class="pl-s">"A"</span>]:
-    <span class="pl-en">print</span>(<span class="pl-s1">cell</span>.<span class="pl-c1">value</span>)
-
-<span class="pl-c"># 读取第二列到第三列</span>
-<span class="pl-k">for</span> <span class="pl-s1">col</span> <span class="pl-c1">in</span> <span class="pl-s1">ws</span>.<span class="pl-c1">iter_cols</span>(<span class="pl-s1">min_col</span><span class="pl-c1">=</span><span class="pl-c1">2</span>, <span class="pl-s1">max_col</span><span class="pl-c1">=</span><span class="pl-c1">3</span>, <span class="pl-s1">values_only</span><span class="pl-c1">=</span><span class="pl-c1">True</span>):
-    <span class="pl-en">print</span>(<span class="pl-s1">col</span>)</pre></div>
-<ol start="9">
-<li>删除和插入行列</li>
-</ol>
-<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 插入一行（在第 2 行的位置插入）</span>
-<span class="pl-s1">ws</span>.<span class="pl-c1">insert_rows</span>(<span class="pl-c1">2</span>)
-
-<span class="pl-c"># 删除第 3 行</span>
-<span class="pl-s1">ws</span>.<span class="pl-c1">delete_rows</span>(<span class="pl-c1">3</span>)
-
-<span class="pl-c"># 插入一列（在第 2 列位置插入）</span>
-<span class="pl-s1">ws</span>.<span class="pl-c1">insert_cols</span>(<span class="pl-c1">2</span>)
-
-<span class="pl-c"># 删除第 3 列</span>
-<span class="pl-s1">ws</span>.<span class="pl-c1">delete_cols</span>(<span class="pl-c1">3</span>)
-
-<span class="pl-s1">wb</span>.<span class="pl-c1">save</span>(<span class="pl-s">"学生成绩.xlsx"</span>)</pre></div>
-<ol start="10">
-<li>设置列宽和行高</li>
-</ol>
-<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 设置列宽</span>
-<span class="pl-s1">ws</span>.<span class="pl-c1">column_dimensions</span>[<span class="pl-s">"A"</span>].<span class="pl-c1">width</span> <span class="pl-c1">=</span> <span class="pl-c1">15</span>
-<span class="pl-s1">ws</span>.<span class="pl-c1">column_dimensions</span>[<span class="pl-s">"B"</span>].<span class="pl-c1">width</span> <span class="pl-c1">=</span> <span class="pl-c1">10</span>
-
-<span class="pl-c"># 设置行高</span>
-<span class="pl-s1">ws</span>.<span class="pl-c1">row_dimensions</span>[<span class="pl-c1">1</span>].<span class="pl-c1">height</span> <span class="pl-c1">=</span> <span class="pl-c1">25</span>
-
-<span class="pl-s1">wb</span>.<span class="pl-c1">save</span>(<span class="pl-s">"学生成绩.xlsx"</span>)</pre></div>
-<ol start="11">
-<li>冻结窗口（方便滚动时表头不动）</li>
-</ol>
-<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 冻结首行</span>
-<span class="pl-s1">ws</span>.<span class="pl-c1">freeze_panes</span> <span class="pl-c1">=</span> <span class="pl-s">"A2"</span>
-
-<span class="pl-s1">wb</span>.<span class="pl-c1">save</span>(<span class="pl-s">"学生成绩.xlsx"</span>)</pre></div>
-<p>Excel 工具类实现</p>
-<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">from</span> <span class="pl-s1">openpyxl</span> <span class="pl-k">import</span> <span class="pl-v">Workbook</span>, <span class="pl-s1">load_workbook</span>
-<span class="pl-k">from</span> <span class="pl-s1">openpyxl</span>.<span class="pl-s1">styles</span> <span class="pl-k">import</span> <span class="pl-v">Font</span>, <span class="pl-v">PatternFill</span>, <span class="pl-v">Alignment</span>
-
-
-<span class="pl-k">class</span> <span class="pl-v">ExcelHelper</span>:
-    <span class="pl-s">"""</span>
-<span class="pl-s">    Excel 操作工具类</span>
-<span class="pl-s">    使用 openpyxl 封装常用 Excel 操作，适用于生产环境</span>
-<span class="pl-s">    """</span>
-
-    <span class="pl-k">def</span> <span class="pl-en">__init__</span>(<span class="pl-s1">self</span>, <span class="pl-s1">filename</span><span class="pl-c1">=</span><span class="pl-c1">None</span>):
-        <span class="pl-s">"""</span>
-<span class="pl-s">        初始化 Excel 文件</span>
-<span class="pl-s">        :param filename: Excel 文件路径（如果为 None，则新建一个）</span>
-<span class="pl-s">        """</span>
-        <span class="pl-k">if</span> <span class="pl-s1">filename</span>:
-            <span class="pl-c"># 如果传入了文件名，尝试加载</span>
-            <span class="pl-s1">self</span>.<span class="pl-c1">wb</span> <span class="pl-c1">=</span> <span class="pl-en">load_workbook</span>(<span class="pl-s1">filename</span>)
-            <span class="pl-s1">self</span>.<span class="pl-c1">filename</span> <span class="pl-c1">=</span> <span class="pl-s1">filename</span>
-        <span class="pl-k">else</span>:
-            <span class="pl-c"># 新建 Excel 文件</span>
-            <span class="pl-s1">self</span>.<span class="pl-c1">wb</span> <span class="pl-c1">=</span> <span class="pl-en">Workbook</span>()
-            <span class="pl-s1">self</span>.<span class="pl-c1">filename</span> <span class="pl-c1">=</span> <span class="pl-c1">None</span>
-
-        <span class="pl-c"># 默认选中第一个工作表</span>
-        <span class="pl-s1">self</span>.<span class="pl-c1">ws</span> <span class="pl-c1">=</span> <span class="pl-s1">self</span>.<span class="pl-c1">wb</span>.<span class="pl-c1">active</span>
-
-    <span class="pl-k">def</span> <span class="pl-en">set_sheet</span>(<span class="pl-s1">self</span>, <span class="pl-s1">sheet_name</span>):
-        <span class="pl-s">"""</span>
-<span class="pl-s">        设置当前操作的工作表</span>
-<span class="pl-s">        :param sheet_name: 工作表名称</span>
-<span class="pl-s">        """</span>
-        <span class="pl-k">if</span> <span class="pl-s1">sheet_name</span> <span class="pl-c1">in</span> <span class="pl-s1">self</span>.<span class="pl-c1">wb</span>.<span class="pl-c1">sheetnames</span>:
-            <span class="pl-s1">self</span>.<span class="pl-c1">ws</span> <span class="pl-c1">=</span> <span class="pl-s1">self</span>.<span class="pl-c1">wb</span>[<span class="pl-s1">sheet_name</span>]
-        <span class="pl-k">else</span>:
-            <span class="pl-s1">self</span>.<span class="pl-c1">ws</span> <span class="pl-c1">=</span> <span class="pl-s1">self</span>.<span class="pl-c1">wb</span>.<span class="pl-c1">create_sheet</span>(<span class="pl-s1">sheet_name</span>)
-
-    <span class="pl-k">def</span> <span class="pl-en">write_cell</span>(<span class="pl-s1">self</span>, <span class="pl-s1">row</span>, <span class="pl-s1">col</span>, <span class="pl-s1">value</span>):
-        <span class="pl-s">"""</span>
-<span class="pl-s">        写入单元格</span>
-<span class="pl-s">        :param row: 行号（1开始）</span>
-<span class="pl-s">        :param col: 列号（1开始）</span>
-<span class="pl-s">        :param value: 写入的值</span>
-<span class="pl-s">        """</span>
-        <span class="pl-s1">self</span>.<span class="pl-c1">ws</span>.<span class="pl-c1">cell</span>(<span class="pl-s1">row</span><span class="pl-c1">=</span><span class="pl-s1">row</span>, <span class="pl-s1">column</span><span class="pl-c1">=</span><span class="pl-s1">col</span>, <span class="pl-s1">value</span><span class="pl-c1">=</span><span class="pl-s1">value</span>)
-
-    <span class="pl-k">def</span> <span class="pl-en">read_cell</span>(<span class="pl-s1">self</span>, <span class="pl-s1">row</span>, <span class="pl-s1">col</span>):
-        <span class="pl-s">"""</span>
-<span class="pl-s">        读取单元格</span>
-<span class="pl-s">        :param row: 行号</span>
-<span class="pl-s">        :param col: 列号</span>
-<span class="pl-s">        :return: 单元格的值</span>
-<span class="pl-s">        """</span>
-        <span class="pl-k">return</span> <span class="pl-s1">self</span>.<span class="pl-c1">ws</span>.<span class="pl-c1">cell</span>(<span class="pl-s1">row</span><span class="pl-c1">=</span><span class="pl-s1">row</span>, <span class="pl-s1">column</span><span class="pl-c1">=</span><span class="pl-s1">col</span>).<span class="pl-c1">value</span>
-
-    <span class="pl-k">def</span> <span class="pl-en">append_row</span>(<span class="pl-s1">self</span>, <span class="pl-s1">data_list</span>):
-        <span class="pl-s">"""</span>
-<span class="pl-s">        追加一行数据</span>
-<span class="pl-s">        :param data_list: 列表形式的一行数据</span>
-<span class="pl-s">        """</span>
-        <span class="pl-s1">self</span>.<span class="pl-c1">ws</span>.<span class="pl-c1">append</span>(<span class="pl-s1">data_list</span>)
-
-    <span class="pl-k">def</span> <span class="pl-en">read_all</span>(<span class="pl-s1">self</span>):
-        <span class="pl-s">"""</span>
-<span class="pl-s">        读取所有数据（返回二维列表）</span>
-<span class="pl-s">        """</span>
-        <span class="pl-k">return</span> [[<span class="pl-s1">cell</span>.<span class="pl-c1">value</span> <span class="pl-k">for</span> <span class="pl-s1">cell</span> <span class="pl-c1">in</span> <span class="pl-s1">row</span>] <span class="pl-k">for</span> <span class="pl-s1">row</span> <span class="pl-c1">in</span> <span class="pl-s1">self</span>.<span class="pl-c1">ws</span>.<span class="pl-c1">iter_rows</span>()]
-
-    <span class="pl-k">def</span> <span class="pl-en">set_style</span>(<span class="pl-s1">self</span>, <span class="pl-s1">cell_range</span>, <span class="pl-s1">font</span><span class="pl-c1">=</span><span class="pl-c1">None</span>, <span class="pl-s1">fill</span><span class="pl-c1">=</span><span class="pl-c1">None</span>, <span class="pl-s1">alignment</span><span class="pl-c1">=</span><span class="pl-c1">None</span>):
-        <span class="pl-s">"""</span>
-<span class="pl-s">        批量设置单元格样式</span>
-<span class="pl-s">        :param cell_range: 例如 "A1:C1"</span>
-<span class="pl-s">        :param font: 字体对象</span>
-<span class="pl-s">        :param fill: 填充对象</span>
-<span class="pl-s">        :param alignment: 对齐对象</span>
-<span class="pl-s">        """</span>
-        <span class="pl-k">for</span> <span class="pl-s1">row</span> <span class="pl-c1">in</span> <span class="pl-s1">self</span>.<span class="pl-c1">ws</span>[<span class="pl-s1">cell_range</span>]:
-            <span class="pl-k">for</span> <span class="pl-s1">cell</span> <span class="pl-c1">in</span> <span class="pl-s1">row</span>:
-                <span class="pl-k">if</span> <span class="pl-s1">font</span>:
-                    <span class="pl-s1">cell</span>.<span class="pl-c1">font</span> <span class="pl-c1">=</span> <span class="pl-s1">font</span>
-                <span class="pl-k">if</span> <span class="pl-s1">fill</span>:
-                    <span class="pl-s1">cell</span>.<span class="pl-c1">fill</span> <span class="pl-c1">=</span> <span class="pl-s1">fill</span>
-                <span class="pl-k">if</span> <span class="pl-s1">alignment</span>:
-                    <span class="pl-s1">cell</span>.<span class="pl-c1">alignment</span> <span class="pl-c1">=</span> <span class="pl-s1">alignment</span>
-
-    <span class="pl-k">def</span> <span class="pl-en">merge_cells</span>(<span class="pl-s1">self</span>, <span class="pl-s1">cell_range</span>):
-        <span class="pl-s">"""合并单元格"""</span>
-        <span class="pl-s1">self</span>.<span class="pl-c1">ws</span>.<span class="pl-c1">merge_cells</span>(<span class="pl-s1">cell_range</span>)
-
-    <span class="pl-k">def</span> <span class="pl-en">unmerge_cells</span>(<span class="pl-s1">self</span>, <span class="pl-s1">cell_range</span>):
-        <span class="pl-s">"""取消合并单元格"""</span>
-        <span class="pl-s1">self</span>.<span class="pl-c1">ws</span>.<span class="pl-c1">unmerge_cells</span>(<span class="pl-s1">cell_range</span>)
-
-    <span class="pl-k">def</span> <span class="pl-en">insert_formula</span>(<span class="pl-s1">self</span>, <span class="pl-s1">cell</span>, <span class="pl-s1">formula</span>):
-        <span class="pl-s">"""</span>
-<span class="pl-s">        插入 Excel 公式</span>
-<span class="pl-s">        :param cell: 单元格位置，如 "D2"</span>
-<span class="pl-s">        :param formula: 公式字符串，例如 "=SUM(A1:A3)"</span>
-<span class="pl-s">        """</span>
-        <span class="pl-s1">self</span>.<span class="pl-c1">ws</span>[<span class="pl-s1">cell</span>] <span class="pl-c1">=</span> <span class="pl-s1">formula</span>
-
-    <span class="pl-k">def</span> <span class="pl-en">insert_rows</span>(<span class="pl-s1">self</span>, <span class="pl-s1">idx</span>, <span class="pl-s1">amount</span><span class="pl-c1">=</span><span class="pl-c1">1</span>):
-        <span class="pl-s">"""插入行"""</span>
-        <span class="pl-s1">self</span>.<span class="pl-c1">ws</span>.<span class="pl-c1">insert_rows</span>(<span class="pl-s1">idx</span>, <span class="pl-s1">amount</span>)
-
-    <span class="pl-k">def</span> <span class="pl-en">delete_rows</span>(<span class="pl-s1">self</span>, <span class="pl-s1">idx</span>, <span class="pl-s1">amount</span><span class="pl-c1">=</span><span class="pl-c1">1</span>):
-        <span class="pl-s">"""删除行"""</span>
-        <span class="pl-s1">self</span>.<span class="pl-c1">ws</span>.<span class="pl-c1">delete_rows</span>(<span class="pl-s1">idx</span>, <span class="pl-s1">amount</span>)
-
-    <span class="pl-k">def</span> <span class="pl-en">insert_cols</span>(<span class="pl-s1">self</span>, <span class="pl-s1">idx</span>, <span class="pl-s1">amount</span><span class="pl-c1">=</span><span class="pl-c1">1</span>):
-        <span class="pl-s">"""插入列"""</span>
-        <span class="pl-s1">self</span>.<span class="pl-c1">ws</span>.<span class="pl-c1">insert_cols</span>(<span class="pl-s1">idx</span>, <span class="pl-s1">amount</span>)
-
-    <span class="pl-k">def</span> <span class="pl-en">delete_cols</span>(<span class="pl-s1">self</span>, <span class="pl-s1">idx</span>, <span class="pl-s1">amount</span><span class="pl-c1">=</span><span class="pl-c1">1</span>):
-        <span class="pl-s">"""删除列"""</span>
-        <span class="pl-s1">self</span>.<span class="pl-c1">ws</span>.<span class="pl-c1">delete_cols</span>(<span class="pl-s1">idx</span>, <span class="pl-s1">amount</span>)
-
-    <span class="pl-k">def</span> <span class="pl-en">set_column_width</span>(<span class="pl-s1">self</span>, <span class="pl-s1">col_letter</span>, <span class="pl-s1">width</span>):
-        <span class="pl-s">"""设置列宽"""</span>
-        <span class="pl-s1">self</span>.<span class="pl-c1">ws</span>.<span class="pl-c1">column_dimensions</span>[<span class="pl-s1">col_letter</span>].<span class="pl-c1">width</span> <span class="pl-c1">=</span> <span class="pl-s1">width</span>
-
-    <span class="pl-k">def</span> <span class="pl-en">set_row_height</span>(<span class="pl-s1">self</span>, <span class="pl-s1">row</span>, <span class="pl-s1">height</span>):
-        <span class="pl-s">"""设置行高"""</span>
-        <span class="pl-s1">self</span>.<span class="pl-c1">ws</span>.<span class="pl-c1">row_dimensions</span>[<span class="pl-s1">row</span>].<span class="pl-c1">height</span> <span class="pl-c1">=</span> <span class="pl-s1">height</span>
-
-    <span class="pl-k">def</span> <span class="pl-en">freeze_panes</span>(<span class="pl-s1">self</span>, <span class="pl-s1">cell</span>):
-        <span class="pl-s">"""</span>
-<span class="pl-s">        冻结窗格</span>
-<span class="pl-s">        :param cell: 冻结到的单元格，例如 "A2"</span>
-<span class="pl-s">        """</span>
-        <span class="pl-s1">self</span>.<span class="pl-c1">ws</span>.<span class="pl-c1">freeze_panes</span> <span class="pl-c1">=</span> <span class="pl-s1">cell</span>
-
-    <span class="pl-k">def</span> <span class="pl-en">save</span>(<span class="pl-s1">self</span>, <span class="pl-s1">filename</span><span class="pl-c1">=</span><span class="pl-c1">None</span>):
-        <span class="pl-s">"""</span>
-<span class="pl-s">        保存 Excel 文件</span>
-<span class="pl-s">        :param filename: 文件名（如果为 None，则覆盖原文件）</span>
-<span class="pl-s">        """</span>
-        <span class="pl-k">if</span> <span class="pl-s1">filename</span>:
-            <span class="pl-s1">self</span>.<span class="pl-c1">wb</span>.<span class="pl-c1">save</span>(<span class="pl-s1">filename</span>)
-            <span class="pl-s1">self</span>.<span class="pl-c1">filename</span> <span class="pl-c1">=</span> <span class="pl-s1">filename</span>
-        <span class="pl-k">else</span>:
-            <span class="pl-k">if</span> <span class="pl-s1">self</span>.<span class="pl-c1">filename</span>:
-                <span class="pl-s1">self</span>.<span class="pl-c1">wb</span>.<span class="pl-c1">save</span>(<span class="pl-s1">self</span>.<span class="pl-c1">filename</span>)
-            <span class="pl-k">else</span>:
-                <span class="pl-k">raise</span> <span class="pl-en">ValueError</span>(<span class="pl-s">"必须提供文件名才能保存。"</span>)
-
-    <span class="pl-k">def</span> <span class="pl-en">close</span>(<span class="pl-s1">self</span>):
-        <span class="pl-s">"""关闭工作簿"""</span>
-        <span class="pl-s1">self</span>.<span class="pl-c1">wb</span>.<span class="pl-c1">close</span>()</pre></div>
-<p>使用示例</p>
-<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">if</span> <span class="pl-s1">__name__</span> <span class="pl-c1">==</span> <span class="pl-s">"__main__"</span>:
-    <span class="pl-s1">excel</span> <span class="pl-c1">=</span> <span class="pl-en">ExcelHelper</span>()  <span class="pl-c"># 创建新文件</span>
-    <span class="pl-s1">excel</span>.<span class="pl-c1">set_sheet</span>(<span class="pl-s">"学生成绩表"</span>)
-
-    <span class="pl-c"># 写表头</span>
-    <span class="pl-s1">excel</span>.<span class="pl-c1">append_row</span>([<span class="pl-s">"姓名"</span>, <span class="pl-s">"语文"</span>, <span class="pl-s">"数学"</span>, <span class="pl-s">"平均分"</span>])
-
-    <span class="pl-c"># 写数据</span>
-    <span class="pl-s1">excel</span>.<span class="pl-c1">append_row</span>([<span class="pl-s">"张三"</span>, <span class="pl-c1">85</span>, <span class="pl-c1">90</span>, <span class="pl-c1">None</span>])
-    <span class="pl-s1">excel</span>.<span class="pl-c1">append_row</span>([<span class="pl-s">"李四"</span>, <span class="pl-c1">78</span>, <span class="pl-c1">88</span>, <span class="pl-c1">None</span>])
-    <span class="pl-s1">excel</span>.<span class="pl-c1">append_row</span>([<span class="pl-s">"王五"</span>, <span class="pl-c1">92</span>, <span class="pl-c1">95</span>, <span class="pl-c1">None</span>])
-
-    <span class="pl-c"># 插入公式</span>
-    <span class="pl-k">for</span> <span class="pl-s1">row</span> <span class="pl-c1">in</span> <span class="pl-en">range</span>(<span class="pl-c1">2</span>, <span class="pl-c1">5</span>):
-        <span class="pl-s1">excel</span>.<span class="pl-c1">insert_formula</span>(<span class="pl-s">f"D<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">row</span><span class="pl-kos">}</span></span>"</span>, <span class="pl-s">f"=AVERAGE(B<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">row</span><span class="pl-kos">}</span></span>:C<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">row</span><span class="pl-kos">}</span></span>)"</span>)
-
-    <span class="pl-c"># 设置样式</span>
-    <span class="pl-s1">header_font</span> <span class="pl-c1">=</span> <span class="pl-en">Font</span>(<span class="pl-s1">name</span><span class="pl-c1">=</span><span class="pl-s">"微软雅黑"</span>, <span class="pl-s1">size</span><span class="pl-c1">=</span><span class="pl-c1">12</span>, <span class="pl-s1">bold</span><span class="pl-c1">=</span><span class="pl-c1">True</span>, <span class="pl-s1">color</span><span class="pl-c1">=</span><span class="pl-s">"FFFFFF"</span>)
-    <span class="pl-s1">header_fill</span> <span class="pl-c1">=</span> <span class="pl-en">PatternFill</span>(<span class="pl-s">"solid"</span>, <span class="pl-s1">fgColor</span><span class="pl-c1">=</span><span class="pl-s">"4F81BD"</span>)
-    <span class="pl-s1">center_align</span> <span class="pl-c1">=</span> <span class="pl-en">Alignment</span>(<span class="pl-s1">horizontal</span><span class="pl-c1">=</span><span class="pl-s">"center"</span>, <span class="pl-s1">vertical</span><span class="pl-c1">=</span><span class="pl-s">"center"</span>)
-    <span class="pl-s1">excel</span>.<span class="pl-c1">set_style</span>(<span class="pl-s">"A1:D1"</span>, <span class="pl-s1">font</span><span class="pl-c1">=</span><span class="pl-s1">header_font</span>, <span class="pl-s1">fill</span><span class="pl-c1">=</span><span class="pl-s1">header_fill</span>, <span class="pl-s1">alignment</span><span class="pl-c1">=</span><span class="pl-s1">center_align</span>)
-
-    <span class="pl-c"># 设置列宽</span>
-    <span class="pl-s1">excel</span>.<span class="pl-c1">set_column_width</span>(<span class="pl-s">"A"</span>, <span class="pl-c1">12</span>)
-    <span class="pl-s1">excel</span>.<span class="pl-c1">set_column_width</span>(<span class="pl-s">"B"</span>, <span class="pl-c1">10</span>)
-    <span class="pl-s1">excel</span>.<span class="pl-c1">set_column_width</span>(<span class="pl-s">"C"</span>, <span class="pl-c1">10</span>)
-    <span class="pl-s1">excel</span>.<span class="pl-c1">set_column_width</span>(<span class="pl-s">"D"</span>, <span class="pl-c1">10</span>)
-
-    <span class="pl-c"># 冻结首行</span>
-    <span class="pl-s1">excel</span>.<span class="pl-c1">freeze_panes</span>(<span class="pl-s">"A2"</span>)
-
-    <span class="pl-c"># 保存</span>
-    <span class="pl-s1">excel</span>.<span class="pl-c1">save</span>(<span class="pl-s">"学生成绩.xlsx"</span>)
-
-    <span class="pl-s1">excel</span>.<span class="pl-c1">close</span>()</pre></div>
-<p>这样封装的好处是：</p>
-<p>统一接口，写法更简洁</p>
-<p>每个功能单独封装，方便维护</p>
-<p>直接可用于生产环境</p>
-<p>可扩展，例如加批量读取写入、数据校验等</p>
-<div class="highlight highlight-source-python"><pre class="notranslate"></pre></div></div>
+<span class="pl-c"># 保存文件</span>
+<span class="pl-s1">pyautogui</span>.<span class="pl-c1">hotkey</span>(<span class="pl-s">"ctrl"</span>, <span class="pl-s">"s"</span>)
+<span class="pl-s1">time</span>.<span class="pl-c1">sleep</span>(<span class="pl-c1">0.5</span>)
+<span class="pl-s1">pyautogui</span>.<span class="pl-c1">typewrite</span>(<span class="pl-s">"test.txt"</span>, <span class="pl-s1">interval</span><span class="pl-c1">=</span><span class="pl-c1">0.1</span>)
+<span class="pl-s1">pyautogui</span>.<span class="pl-c1">press</span>(<span class="pl-s">"enter"</span>)</pre></div>
+<hr>
+<p>✅ 这样你不仅学了 PyAutoGUI 的常用功能，还能用它做自动化脚本。<br>
+如果你愿意，我还可以帮你写一个 <strong>PyAutoGUI 可视化坐标助手</strong>，可以实时显示鼠标位置，方便你写自动化脚本时定位点击位置。<br>
+这样配合上面的教程，就能直接做自动化点击了。</p>
+<p>你要我帮你做这个可视化坐标助手吗？我可以直接给你代码。</p></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
