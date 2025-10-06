@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html data-color-mode="light" data-dark-theme="dark" data-light-theme="light" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    
+    <link rel="icon" href="https://github.com/binghey/blog/blob/main/%E6%89%A7%E8%A1%8C%E5%90%88%E4%B8%80%E7%AC%94%E8%AE%B0.png?raw=true"><script>
+        let theme = localStorage.getItem("meek_theme") || "light";
+        document.documentElement.setAttribute("data-color-mode", theme);
+    </script>
+<meta name="description" content="当然可以。">
+<meta property="og:title" content="综合渗透测试框架 (最直接的 Metasploit 替代品)">
+<meta property="og:description" content="当然可以。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://binghey.github.io/blog/post/zong-he-shen-tou-ce-shi-kuang-jia-%20%28-zui-zhi-jie-de-%20Metasploit%20-ti-dai-pin-%29.html">
+<meta property="og:image" content="https://github.com/binghey/blog/blob/main/%E6%89%A7%E8%A1%8C%E5%90%88%E4%B8%80%E7%AC%94%E8%AE%B0.png?raw=true">
+<title>综合渗透测试框架 (最直接的 Metasploit 替代品)</title>
+
+
+
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+#cmButton{height:48px;margin-top:48px;}
+#comments{margin-top:64px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+
+</style>
+
+
+
+
+<body>
+    <div id="header">
+<h1 class="postTitle">综合渗透测试框架 (最直接的 Metasploit 替代品)</h1>
+<div class="title-right">
+    <a href="https://binghey.github.io/blog" id="buttonHome" class="btn btn-invisible circle" title="首页">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/binghey/blog/issues/11" target="_blank" class="btn btn-invisible circle" title="Issue">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题">
+        <svg class="octicon" width="16" height="16" >
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content">
+<div class="markdown-body" id="postBody"><p>当然可以。除了 Metasploit 本身也是开源的之外，还有很多优秀且完全免费开源的渗透测试和安全工具。</p>
+<p>以下为您推荐几个不同类别的顶级开源替代方案，它们都拥有活跃的社区，相对透明和安全。</p>
+<h3>1. 综合渗透测试框架 (最直接的 Metasploit 替代品)</h3>
+<p>这类工具和 Metasploit 功能最相似，提供漏洞利用、Payload 生成、会话管理等功能。</p>
+<p><strong>a) Cobalt Strike 的社区版 / 精神续作： <code class="notranslate">Viper</code> 和 <code class="notranslate">Manjusaka</code></strong></p>
+<ul>
+<li>
+<p><strong>Viper</strong>：</p>
+<ul>
+<li><strong>简介</strong>： 一个图形化的内网渗透测试平台，被许多人称为“开源版的 Cobalt Strike”。它集成了多种武器库，提供多阶段Payload、会话管理、权限提升等功能。</li>
+<li><strong>特点</strong>： 图形化界面友好，模块化设计，支持多种攻击方式，非常适合红队行动。</li>
+<li><strong>GitHub</strong>： <code class="notranslate">https://github.com/FunnyWolf/Viper</code></li>
+<li><strong>安全性</strong>： 项目在 GitHub 上公开，代码相对透明，但由于其强大的功能，使用时仍需在隔离环境中进行。</li>
+</ul>
+</li>
+<li>
+<p><strong>Manjusaka（牛磺酸）</strong>：</p>
+<ul>
+<li><strong>简介</strong>： 被称为“中国版 Cobalt Strike”，是一个功能丰富的远程控制木马框架，支持多平台。</li>
+<li><strong>特点</strong>： 使用现代语言开发，跨平台，有友好的 Web 界面。</li>
+<li><strong>GitHub</strong>： <code class="notranslate">https://github.com/Manjusaka/Manjusaka</code></li>
+<li><strong>安全性</strong>： 同样，功能强大，必须在完全授权的环境中使用。</li>
+</ul>
+</li>
+</ul>
+<p><strong>b) 模块化框架： <code class="notranslate">Core Impact</code> / <code class="notranslate">Metasploit</code> 的启发者 <code class="notranslate">Armitage</code></strong></p>
+<ul>
+<li><strong>Armitage</strong>：
+<ul>
+<li><strong>简介</strong>： 严格来说它不是 Metasploit 的替代，而是 <strong>Metasploit 的图形化界面</strong>。它通过可视化方式展示网络、主机、推荐攻击模块，极大地简化了 Metasploit 的使用。</li>
+<li><strong>特点</strong>： 图形化、协同作战、攻击可视化。它是学习 Metasploit 和团队协作的绝佳工具。</li>
+<li><strong>官网</strong>： <code class="notranslate">http://www.fastandeasyhacking.com/</code></li>
+<li><strong>安全性</strong>： 因为它本质是 Metasploit 的客户端，所以安全性等同于 Metasploit。</li>
+</ul>
+</li>
+</ul>
+<h3>2. 漏洞扫描与评估工具</h3>
+<p>这些工具专注于发现和评估系统中的漏洞。</p>
+<ul>
+<li>
+<p><strong>OpenVAS (现已成为 Greenbone Vulnerability Management 的核心)</strong></p>
+<ul>
+<li><strong>简介</strong>： 目前最功能最全面的开源漏洞扫描器之一。它拥有一个庞大的、持续更新的网络漏洞测试数据库。</li>
+<li><strong>特点</strong>： 漏洞库全面，报告详细，有强大的 Web 管理界面。</li>
+<li><strong>官网</strong>： <code class="notranslate">https://www.greenbone.net/en/</code></li>
+<li><strong>安全性</strong>： 非常安全，是专业安全审计的标准工具。</li>
+</ul>
+</li>
+<li>
+<p><strong>Nessus 的替代品？</strong></p>
+<ul>
+<li><strong>注意</strong>： 著名的 Nessus 在版本 3 之后就不再是开源软件。<strong>OpenVAS 正是从古老的 Nessus 分支发展而来</strong>，因此它是 Nessus 最佳的开源替代品。</li>
+</ul>
+</li>
+</ul>
+<h3>3. 网络扫描与侦察工具</h3>
+<p>这是渗透测试的第一步，用于信息收集。</p>
+<ul>
+<li><strong>Nmap</strong>
+<ul>
+<li><strong>简介</strong>： 网络发现的瑞士军刀。用于端口扫描、服务识别、操作系统侦测等。</li>
+<li><strong>特点</strong>： 无可争议的行业标准，脚本引擎功能强大。</li>
+<li><strong>官网</strong>： <code class="notranslate">https://nmap.org/</code></li>
+<li><strong>安全性</strong>： 极其稳定和安全，是每个网络管理员和安全研究员的必备工具。</li>
+</ul>
+</li>
+</ul>
+<h3>4. Web 应用安全测试工具</h3>
+<p>专门用于查找 Web 应用漏洞。</p>
+<ul>
+<li>
+<p><strong>OWASP ZAP</strong></p>
+<ul>
+<li><strong>简介</strong>： 由 OWASP 基金会维护的顶级 Web 应用扫描器。它非常适合手动安全测试的新手和专家。</li>
+<li><strong>特点</strong>： 功能强大，自动化程度高，支持拦截代理和主动/被动扫描。</li>
+<li><strong>官网</strong>： <code class="notranslate">https://www.zaproxy.org/</code></li>
+<li><strong>安全性</strong>： 非常安全，是 Web 开发者和安全测试人员的首选。</li>
+</ul>
+</li>
+<li>
+<p><strong>Burp Suite 社区版</strong></p>
+<ul>
+<li><strong>简介</strong>： Burp Suite 是业界事实上的标准，其 <strong>社区版是免费且功能强大</strong> 的，尽管一些高级扫描和攻击功能被限制。</li>
+<li><strong>特点</strong>： 拦截代理、漏洞扫描、爬虫、中继攻击等。</li>
+<li><strong>官网</strong>： <code class="notranslate">https://portswigger.net/burp/communitydownload</code></li>
+<li><strong>安全性</strong>： 非常安全，广泛用于教育和专业领域。</li>
+</ul>
+</li>
+</ul>
+<h3>5. 密码破解工具</h3>
+<ul>
+<li>
+<p><strong>Hashcat</strong></p>
+<ul>
+<li><strong>简介</strong>： 世界上最快、最先进的密码恢复工具。支持使用 CPU 和 GPU 进行高速破解。</li>
+<li><strong>特点</strong>： 支持多种哈希算法，速度快，攻击模式多。</li>
+<li><strong>官网</strong>： <code class="notranslate">https://hashcat.net/hashcat/</code></li>
+<li><strong>安全性</strong>： 安全，主要用于密码强度测试和数字取证。</li>
+</ul>
+</li>
+<li>
+<p><strong>John the Ripper</strong></p>
+<ul>
+<li><strong>简介</strong>： 另一款经典的密码破解工具，以其多功能性和强大的规则系统而闻名。</li>
+<li><strong>官网</strong>： <code class="notranslate">https://www.openwall.com/john/</code></li>
+<li><strong>安全性</strong>： 安全，用途与 Hashcat 类似。</li>
+</ul>
+</li>
+</ul>
+<h3>总结与安全使用建议</h3>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th align="left">工具名称</th>
+<th align="left">主要类别</th>
+<th align="left">特点</th>
+<th align="left">开源协议</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><strong>Viper</strong></td>
+<td align="left">综合渗透框架</td>
+<td align="left">图形化，红队利器，类似 Cobalt Strike</td>
+<td align="left">开源</td>
+</tr>
+<tr>
+<td align="left"><strong>Manjusaka</strong></td>
+<td align="left">综合渗透框架</td>
+<td align="left">跨平台，现代 C2 框架</td>
+<td align="left">开源</td>
+</tr>
+<tr>
+<td align="left"><strong>Armitage</strong></td>
+<td align="left">综合渗透框架</td>
+<td align="left">Metasploit 的图形化前端</td>
+<td align="left">开源</td>
+</tr>
+<tr>
+<td align="left"><strong>OpenVAS/GVM</strong></td>
+<td align="left">漏洞扫描</td>
+<td align="left">企业级，漏洞库全面</td>
+<td align="left">开源</td>
+</tr>
+<tr>
+<td align="left"><strong>Nmap</strong></td>
+<td align="left">网络扫描</td>
+<td align="left">网络发现与安全审计的行业标准</td>
+<td align="left">开源</td>
+</tr>
+<tr>
+<td align="left"><strong>OWASP ZAP</strong></td>
+<td align="left">Web 应用扫描</td>
+<td align="left">OWASP 项目，功能全面，易于使用</td>
+<td align="left">开源</td>
+</tr>
+<tr>
+<td align="left"><strong>Burp Suite (社区版)</strong></td>
+<td align="left">Web 应用扫描</td>
+<td align="left">业界标准，社区版免费</td>
+<td align="left">免费（非开源）</td>
+</tr>
+<tr>
+<td align="left"><strong>Hashcat</strong></td>
+<td align="left">密码破解</td>
+<td align="left">速度极快，支持 GPU</td>
+<td align="left">开源</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<p><strong>关于“安全”的重要提示</strong>：</p>
+<ol>
+<li><strong>合法授权</strong>： 这些工具功能强大，<strong>只能在您自己拥有或明确获得书面授权的网络和设备上使用</strong>。未经授权使用是违法的。</li>
+<li><strong>隔离环境</strong>： 学习和测试请在隔离的虚拟实验室（如 VirtualBox 或 VMware 搭建的虚拟机）中进行。</li>
+<li><strong>来源可信</strong>： 始终从项目的<strong>官方网站或 GitHub 仓库</strong>下载工具，以避免被植入恶意代码的版本。</li>
+<li><strong>保持更新</strong>： 这些工具和其中的漏洞利用模块更新频繁，请定期更新以获取最新功能和修复。</li>
+</ol>
+<p>这些工具组合在一起，可以构成一个功能不亚于商业软件的、完全免费且开源的安全测试工具箱。</p></div>
+<div style="font-size:small;margin-top:8px;float:right;"></div>
+
+<button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
+<div class="comments" id="comments"></div>
+
+</div>
+    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://binghey.github.io/blog">知行合一笔记</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if(""!=""){
+    var startSite=new Date("");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行"+diffDay+"天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z'};
+var utterancesLoad=0;
+
+let themeSettings={
+    "dark": ["dark","moon","#00f0ff","dark-blue"],
+    "light": ["light","sun","#ff5000","github-light"],
+    "auto": ["auto","sync","","preferred-color-scheme"]
+};
+function changeTheme(mode, icon, color, utheme){
+    document.documentElement.setAttribute("data-color-mode",mode);
+    document.getElementById("themeSwitch").setAttribute("d",value=IconList[icon]);
+    document.getElementById("themeSwitch").parentNode.style.color=color;
+    if(utterancesLoad==1){utterancesTheme(utheme);}
+}
+function modeSwitch(){
+    let currentMode=document.documentElement.getAttribute('data-color-mode');
+    let newMode = currentMode === "light" ? "dark" : currentMode === "dark" ? "auto" : "light";
+    localStorage.setItem("meek_theme", newMode);
+    if(themeSettings[newMode]){
+        changeTheme(...themeSettings[newMode]);
+    }
+}
+function utterancesTheme(theme){
+    const message={type:'set-theme',theme: theme};
+    const iframe=document.getElementsByClassName('utterances-frame')[0];
+    iframe.contentWindow.postMessage(message,'https://utteranc.es');
+}
+if(themeSettings[theme]){changeTheme(...themeSettings[theme]);}
+console.log("\n %c Gmeek last https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+function openComments(){
+    cm=document.getElementById("comments");
+    cmButton=document.getElementById("cmButton");
+    cmButton.innerHTML="loading";
+    span=document.createElement("span");
+    span.setAttribute("class","AnimatedEllipsis");
+    cmButton.appendChild(span);
+
+    script=document.createElement("script");
+    script.setAttribute("src","https://utteranc.es/client.js");
+    script.setAttribute("repo","binghey/blog");
+    script.setAttribute("issue-term","title");
+    
+    if(localStorage.getItem("meek_theme")=="dark"){script.setAttribute("theme","dark-blue");}
+    else if(localStorage.getItem("meek_theme")=="light") {script.setAttribute("theme","github-light");}
+    else{script.setAttribute("theme","preferred-color-scheme");}
+    
+    script.setAttribute("crossorigin","anonymous");
+    script.setAttribute("async","");
+    cm.appendChild(script);
+
+    int=self.setInterval("iFrameLoading()",200);
+}
+
+function iFrameLoading(){
+    var utterances=document.getElementsByClassName('utterances');
+    if(utterances.length==1){
+        if(utterances[0].style.height!=""){
+            utterancesLoad=1;
+            int=window.clearInterval(int);
+            document.getElementById("cmButton").style.display="none";
+            console.log("utterances Load OK");
+        }
+    }
+}
+
+
+
+</script>
+
+
+</html>
