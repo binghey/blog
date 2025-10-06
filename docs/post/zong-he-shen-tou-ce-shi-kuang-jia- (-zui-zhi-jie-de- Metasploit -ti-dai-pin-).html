@@ -10,9 +10,9 @@
         let theme = localStorage.getItem("meek_theme") || "light";
         document.documentElement.setAttribute("data-color-mode", theme);
     </script>
-<meta name="description" content="当然可以。">
+<meta name="description" content="除了 Metasploit 本身也是开源的之外，还有很多优秀且完全免费开源的渗透测试和安全工具。">
 <meta property="og:title" content="综合渗透测试框架 (最直接的 Metasploit 替代品)">
-<meta property="og:description" content="当然可以。">
+<meta property="og:description" content="除了 Metasploit 本身也是开源的之外，还有很多优秀且完全免费开源的渗透测试和安全工具。">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://binghey.github.io/blog/post/zong-he-shen-tou-ce-shi-kuang-jia-%20%28-zui-zhi-jie-de-%20Metasploit%20-ti-dai-pin-%29.html">
 <meta property="og:image" content="https://github.com/binghey/blog/blob/main/%E6%89%A7%E8%A1%8C%E5%90%88%E4%B8%80%E7%AC%94%E8%AE%B0.png?raw=true">
@@ -73,7 +73,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 </div>
 </div>
     <div id="content">
-<div class="markdown-body" id="postBody"><p>当然可以。除了 Metasploit 本身也是开源的之外，还有很多优秀且完全免费开源的渗透测试和安全工具。</p>
+<div class="markdown-body" id="postBody"><p>除了 Metasploit 本身也是开源的之外，还有很多优秀且完全免费开源的渗透测试和安全工具。</p>
 <p>以下为您推荐几个不同类别的顶级开源替代方案，它们都拥有活跃的社区，相对透明和安全。</p>
 <h3>1. 综合渗透测试框架 (最直接的 Metasploit 替代品)</h3>
 <p>这类工具和 Metasploit 功能最相似，提供漏洞利用、Payload 生成、会话管理等功能。</p>
@@ -309,7 +309,11 @@ console.log("\n %c Gmeek last https://github.com/Meekdai/Gmeek \n","padding:5px 
 <script>
 document.getElementById("pathHome").setAttribute("d",IconList["home"]);
 document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
-
+cmButton=document.getElementById("cmButton");
+    span=document.createElement("span");
+    span.setAttribute("class","Counter");
+    span.innerHTML="1";
+    cmButton.appendChild(span);
 
 
 function openComments(){
