@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html data-color-mode="light" data-dark-theme="dark" data-light-theme="light" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    
+    <link rel="icon" href="https://github.com/binghey/blog/blob/main/%E6%89%A7%E8%A1%8C%E5%90%88%E4%B8%80%E7%AC%94%E8%AE%B0.png?raw=true"><script>
+        let theme = localStorage.getItem("meek_theme") || "light";
+        document.documentElement.setAttribute("data-color-mode", theme);
+    </script>
+<meta name="description" content="随着智能家居和物联网设备的普及，家庭和企业网络中的路由器、IP摄像头、智能电视等设备数量激增。">
+<meta property="og:title" content="物联网安全灾难：一文掌握RouterSploit，看黑客如何30秒攻破你家智能设备">
+<meta property="og:description" content="随着智能家居和物联网设备的普及，家庭和企业网络中的路由器、IP摄像头、智能电视等设备数量激增。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://binghey.github.io/blog/post/wu-lian-wang-an-quan-zai-nan-%EF%BC%9A-yi-wen-zhang-wo-RouterSploit%EF%BC%8C-kan-hei-ke-ru-he-30-miao-gong-po-ni-jia-zhi-neng-she-bei.html">
+<meta property="og:image" content="https://github.com/binghey/blog/blob/main/%E6%89%A7%E8%A1%8C%E5%90%88%E4%B8%80%E7%AC%94%E8%AE%B0.png?raw=true">
+<title>物联网安全灾难：一文掌握RouterSploit，看黑客如何30秒攻破你家智能设备</title>
+
+
+
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+#cmButton{height:48px;margin-top:48px;}
+#comments{margin-top:64px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+
+</style>
+
+
+
+
+<body>
+    <div id="header">
+<h1 class="postTitle">物联网安全灾难：一文掌握RouterSploit，看黑客如何30秒攻破你家智能设备</h1>
+<div class="title-right">
+    <a href="https://binghey.github.io/blog" id="buttonHome" class="btn btn-invisible circle" title="首页">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/binghey/blog/issues/18" target="_blank" class="btn btn-invisible circle" title="Issue">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题">
+        <svg class="octicon" width="16" height="16" >
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content">
+<div class="markdown-body" id="postBody"><p>随着智能家居和物联网设备的普及，家庭和企业网络中的路由器、IP摄像头、智能电视等设备数量激增。然而，这些设备往往存在严重的安全漏洞，成为黑客入侵的首选目标。今天，我们将深入探讨一款强大的网络安全工具——<a href="https://zhida.zhihu.com/search?content_id=255298103&amp;content_type=Article&amp;match_order=1&amp;q=RouterSploit&amp;zd_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ6aGlkYV9zZXJ2ZXIiLCJleHAiOjE3NjMzNTAxNTQsInEiOiJSb3V0ZXJTcGxvaXQiLCJ6aGlkYV9zb3VyY2UiOiJlbnRpdHkiLCJjb250ZW50X2lkIjoyNTUyOTgxMDMsImNvbnRlbnRfdHlwZSI6IkFydGljbGUiLCJtYXRjaF9vcmRlciI6MSwiemRfdG9rZW4iOm51bGx9.L-5LO6PUcwhbOQv37a8eBNHmMhDiYtpXOXgBVBG-4ag&amp;zhida_source=entity" rel="nofollow">RouterSploit</a>，了解它如何帮助安全研究人员发现并修复这些潜在威胁。</p>
+<p>RouterSploit：物联网安全的"瑞士军刀"<br>
+RouterSploit是一款开源的渗透测试框架，专为路由器和物联网设备安全评估设计。它的工作原理与著名的<a href="https://zhida.zhihu.com/search?content_id=255298103&amp;content_type=Article&amp;match_order=1&amp;q=Metasploit&amp;zd_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ6aGlkYV9zZXJ2ZXIiLCJleHAiOjE3NjMzNTAxNTQsInEiOiJNZXRhc3Bsb2l0IiwiemhpZGFfc291cmNlIjoiZW50aXR5IiwiY29udGVudF9pZCI6MjU1Mjk4MTAzLCJjb250ZW50X3R5cGUiOiJBcnRpY2xlIiwibWF0Y2hfb3JkZXIiOjEsInpkX3Rva2VuIjpudWxsfQ.SNefrMKUH6o5dhWVxjMTSxxM_fQTGEXeAau95RMPb_M&amp;zhida_source=entity" rel="nofollow">Metasploit</a>类似，但更专注于网络设备和IoT系统的漏洞利用。</p>
+<p>作为一款功能强大的安全工具，RouterSploit能够自动化漏洞检测和利用过程，帮助安全研究人员、网络管理员和白帽黑客识别网络中的薄弱环节，进而采取防御措施。</p>
+<p>RouterSploit的核心特性<br>
+全面的漏洞支持：覆盖市场上主流路由器品牌和物联网设备<br>
+丰富的攻击模块：包含命令注入、暴力破解、远程代码执行等多种攻击方式<br>
+简洁的命令行界面：便于初学者和专业人士操作<br>
+自动化扫描功能：快速发现网络中的漏洞设备<br>
+定期更新漏洞库：保持对最新安全威胁的响应能力<br>
+RouterSploit的部署与配置<br>
+在实际使用RouterSploit之前，需要进行正确的安装与配置。以下是详细的部署步骤：</p>
+<p>前提条件<br>
+确保系统已安装Python（2.7或更高版本）和Git。大多数Linux发行版和macOS系统默认已安装这些工具，Windows用户可能需要单独安装。</p>
+<p>安装步骤<br>
+克隆RouterSploit代码库<br>
+git clone <a href="https://github.com/threat9/routersploit">https://github.com/threat9/routersploit</a><br>
+cd routersploit<br>
+安装依赖项<br>
+pip install -r requirements.txt<br>
+启动RouterSploit控制台<br>
+python rsf.py<br>
+成功启动后，你将看到RouterSploit的命令行界面，现在就可以开始进行安全测试了。</p>
+<p>RouterSploit实战指南：常见攻击场景<br>
+以下是几种RouterSploit支持的常见攻击场景，每个场景都附带详细的命令和解释。这些示例仅供安全研究和教育目的，请确保只在获得授权的设备上进行测试。</p>
+<ol>
+<li>路由器弱密码暴力破解<br>
+弱密码是路由器最常见的安全问题之一。RouterSploit提供了多个模块用于暴力破解各品牌路由器的默认或弱密码。</li>
+</ol>
+<p><a href="https://zhida.zhihu.com/search?content_id=255298103&amp;content_type=Article&amp;match_order=1&amp;q=TP-Link&amp;zd_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ6aGlkYV9zZXJ2ZXIiLCJleHAiOjE3NjMzNTAxNTQsInEiOiJUUC1MaW5rIiwiemhpZGFfc291cmNlIjoiZW50aXR5IiwiY29udGVudF9pZCI6MjU1Mjk4MTAzLCJjb250ZW50X3R5cGUiOiJBcnRpY2xlIiwibWF0Y2hfb3JkZXIiOjEsInpkX3Rva2VuIjpudWxsfQ.10UmN8kYcyGh3Igr4A6_UWF4HsM7C6FRjrepTGWTuwE&amp;zhida_source=entity" rel="nofollow">TP-Link</a>路由器密码暴力破解示例：</p>
+<p>use exploits/routers/tp-link/tplink_authentication_bypass<br>
+set target 192.168.1.1<br>
+set username admin<br>
+set password_file /path/to/passwords.txt<br>
+run<br>
+命令解析：</p>
+<p>use exploits/routers/tp-link/tplink_authentication_bypass：选择针对TP-Link路由器的身份验证绕过漏洞模块<br>
+set target 192.168.1.1：设置目标路由器IP地址<br>
+set username admin：指定用户名（通常路由器默认用户名为admin）<br>
+set password_file：指定包含常见密码的字典文件<br>
+run：执行攻击，尝试每个密码直到成功<br>
+2. 路由器命令注入漏洞利用<br>
+命令注入漏洞允许攻击者在目标设备上执行任意系统命令，这是一种极其危险的高级漏洞。</p>
+<p><a href="https://zhida.zhihu.com/search?content_id=255298103&amp;content_type=Article&amp;match_order=1&amp;q=D-Link&amp;zd_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ6aGlkYV9zZXJ2ZXIiLCJleHAiOjE3NjMzNTAxNTQsInEiOiJELUxpbmsiLCJ6aGlkYV9zb3VyY2UiOiJlbnRpdHkiLCJjb250ZW50X2lkIjoyNTUyOTgxMDMsImNvbnRlbnRfdHlwZSI6IkFydGljbGUiLCJtYXRjaF9vcmRlciI6MSwiemRfdG9rZW4iOm51bGx9.Cq1h6ieBZqrciUlg4jDy6F9ETr4a7uaAG_T1SuH-a6w&amp;zhida_source=entity" rel="nofollow">D-Link</a>路由器命令注入示例：</p>
+<p>use exploits/routers/dlink/command_injection<br>
+set target 192.168.1.1<br>
+set port 80<br>
+run<br>
+命令解析：</p>
+<p>use exploits/routers/dlink/command_injection：选择针对D-Link路由器的命令注入漏洞模块<br>
+set target 192.168.1.1：设置目标路由器IP地址<br>
+set port 80：指定端口（通常为HTTP端口80）<br>
+run：执行漏洞利用，成功后可在路由器上执行系统命令<br>
+3. IP摄像头远程代码执行漏洞<br>
+IP摄像头作为常见的物联网设备，因其安全设计缺陷经常成为攻击目标。RouterSploit包含多个模块专门针对各品牌摄像头的漏洞。</p>
+<p>Axis摄像头未授权RCE漏洞利用示例：</p>
+<p>use exploits/iot/cameras/axis/unauthenticated_rce<br>
+set target 192.168.1.100<br>
+run<br>
+命令解析：</p>
+<p>use exploits/iot/cameras/axis/unauthenticated_rce：选择针对Axis摄像头的未授权远程代码执行漏洞模块<br>
+set target 192.168.1.100：设置目标摄像头IP地址<br>
+run：执行漏洞利用，获取对摄像头的远程控制权<br>
+4. 网络打印机漏洞利用<br>
+网络打印机通常被忽视的安全隐患，但它们同样可能成为网络攻击的入口点。</p>
+<p><a href="https://zhida.zhihu.com/search?content_id=255298103&amp;content_type=Article&amp;match_order=1&amp;q=HP%E6%89%93%E5%8D%B0%E6%9C%BA&amp;zd_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ6aGlkYV9zZXJ2ZXIiLCJleHAiOjE3NjMzNTAxNTQsInEiOiJIUOaJk-WNsOacuiIsInpoaWRhX3NvdXJjZSI6ImVudGl0eSIsImNvbnRlbnRfaWQiOjI1NTI5ODEwMywiY29udGVudF90eXBlIjoiQXJ0aWNsZSIsIm1hdGNoX29yZGVyIjoxLCJ6ZF90b2tlbiI6bnVsbH0.cVVei-13W6MjaRsUJKU9_ypw1gX-yjprIuUT1OBu6wc&amp;zhida_source=entity" rel="nofollow">HP打印机</a>远程代码执行漏洞示例：</p>
+<p>use exploits/routers/printers/hp_remote_code_execution<br>
+set target 192.168.1.50<br>
+run<br>
+命令解析：</p>
+<p>use exploits/routers/printers/hp_remote_code_execution：选择针对HP打印机的远程代码执行漏洞模块<br>
+set target 192.168.1.50：设置目标打印机IP地址<br>
+run：执行漏洞利用，在打印机上执行远程代码<br>
+5. 入侵后信息收集<br>
+成功入侵设备后，可以使用后期利用模块收集更多信息，进一步扩大攻击范围。</p>
+<p>路由器信息收集示例：</p>
+<p>use post/routers/gather/router_info<br>
+set target 192.168.1.1<br>
+run<br>
+命令解析：</p>
+<p>use post/routers/gather/router_info：选择路由器信息收集模块<br>
+set target 192.168.1.1：设置已被入侵的路由器IP地址<br>
+run：执行信息收集，获取路由器配置和连接设备的详细信息<br>
+6. 查看可用模块<br>
+RouterSploit包含大量针对不同设备的漏洞利用模块，可以使用以下命令查看所有可用模块：</p>
+<p>show exploits<br>
+这将显示RouterSploit支持的所有漏洞利用模块，按设备类型（路由器、摄像头、打印机等）分类。</p>
+<p>物联网设备安全防护策略<br>
+了解了RouterSploit的强大功能后，作为普通用户或网络管理员，我们应如何保护自己的设备免受攻击？以下是几点实用建议：</p>
+<ol>
+<li>
+<p>及时更新固件<br>
+路由器和物联网设备厂商会定期发布固件更新来修复已知安全漏洞。请养成定期检查并更新设备固件的习惯，这是防御大多数已知漏洞最有效的方法。</p>
+</li>
+<li>
+<p>修改默认凭证<br>
+永远不要使用设备的默认用户名和密码。设置强密码，包含大小写字母、数字和特殊字符，且长度不少于12位。对不同设备使用不同的密码。</p>
+</li>
+<li>
+<p>禁用不必要的服务<br>
+关闭设备上不需要的功能和服务，如远程管理、UPnP等。每个开启的服务都可能成为潜在的攻击入口。</p>
+</li>
+<li>
+<p>启用加密和防火墙<br>
+确保路由器启用<a href="https://zhida.zhihu.com/search?content_id=255298103&amp;content_type=Article&amp;match_order=1&amp;q=WPA3&amp;zd_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ6aGlkYV9zZXJ2ZXIiLCJleHAiOjE3NjMzNTAxNTQsInEiOiJXUEEzIiwiemhpZGFfc291cmNlIjoiZW50aXR5IiwiY29udGVudF9pZCI6MjU1Mjk4MTAzLCJjb250ZW50X3R5cGUiOiJBcnRpY2xlIiwibWF0Y2hfb3JkZXIiOjEsInpkX3Rva2VuIjpudWxsfQ.h-TzauVSoVmoFFJLvHi7WHvrDCFTloh_KytACuHyVrI&amp;zhida_source=entity" rel="nofollow">WPA3</a>加密（如果支持），并启用内置防火墙功能，限制对设备管理界面的访问。</p>
+</li>
+<li>
+<p>网络隔离<br>
+为物联网设备创建单独的网络或VLAN，将其与主要设备（如电脑和手机）隔离，限制潜在入侵的影响范围。</p>
+</li>
+<li>
+<p>定期安全审计<br>
+使用RouterSploit等工具定期对自己的网络进行安全审计（在获得适当授权的前提下），发现潜在问题并及时修复。</p>
+</li>
+</ol>
+<p>结语<br>
+RouterSploit作为一款强大的安全测试工具，展示了当前路由器和物联网设备安全领域面临的严峻挑战。随着物联网设备在我们日常生活中的普及，提高安全意识和采取积极防御措施变得前所未有的重要。</p>
+<p>安全研究人员和白帽黑客可以利用RouterSploit帮助发现并修复潜在威胁，而普通用户则应该采取必要的防护措施，确保自己的智能设备不会成为网络攻击的突破口。</p>
+<p>在数字化程度越来越高的今天，网络安全不再是可选项，而是保护个人隐私和数据安全的必要条件。让我们共同努力，构建更加安全的物联网环境。</p></div>
+<div style="font-size:small;margin-top:8px;float:right;"></div>
+
+<button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
+<div class="comments" id="comments"></div>
+
+</div>
+    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://binghey.github.io/blog">知行合一笔记</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if(""!=""){
+    var startSite=new Date("");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行"+diffDay+"天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z'};
+var utterancesLoad=0;
+
+let themeSettings={
+    "dark": ["dark","moon","#00f0ff","dark-blue"],
+    "light": ["light","sun","#ff5000","github-light"],
+    "auto": ["auto","sync","","preferred-color-scheme"]
+};
+function changeTheme(mode, icon, color, utheme){
+    document.documentElement.setAttribute("data-color-mode",mode);
+    document.getElementById("themeSwitch").setAttribute("d",value=IconList[icon]);
+    document.getElementById("themeSwitch").parentNode.style.color=color;
+    if(utterancesLoad==1){utterancesTheme(utheme);}
+}
+function modeSwitch(){
+    let currentMode=document.documentElement.getAttribute('data-color-mode');
+    let newMode = currentMode === "light" ? "dark" : currentMode === "dark" ? "auto" : "light";
+    localStorage.setItem("meek_theme", newMode);
+    if(themeSettings[newMode]){
+        changeTheme(...themeSettings[newMode]);
+    }
+}
+function utterancesTheme(theme){
+    const message={type:'set-theme',theme: theme};
+    const iframe=document.getElementsByClassName('utterances-frame')[0];
+    iframe.contentWindow.postMessage(message,'https://utteranc.es');
+}
+if(themeSettings[theme]){changeTheme(...themeSettings[theme]);}
+console.log("\n %c Gmeek last https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+function openComments(){
+    cm=document.getElementById("comments");
+    cmButton=document.getElementById("cmButton");
+    cmButton.innerHTML="loading";
+    span=document.createElement("span");
+    span.setAttribute("class","AnimatedEllipsis");
+    cmButton.appendChild(span);
+
+    script=document.createElement("script");
+    script.setAttribute("src","https://utteranc.es/client.js");
+    script.setAttribute("repo","binghey/blog");
+    script.setAttribute("issue-term","title");
+    
+    if(localStorage.getItem("meek_theme")=="dark"){script.setAttribute("theme","dark-blue");}
+    else if(localStorage.getItem("meek_theme")=="light") {script.setAttribute("theme","github-light");}
+    else{script.setAttribute("theme","preferred-color-scheme");}
+    
+    script.setAttribute("crossorigin","anonymous");
+    script.setAttribute("async","");
+    cm.appendChild(script);
+
+    int=self.setInterval("iFrameLoading()",200);
+}
+
+function iFrameLoading(){
+    var utterances=document.getElementsByClassName('utterances');
+    if(utterances.length==1){
+        if(utterances[0].style.height!=""){
+            utterancesLoad=1;
+            int=window.clearInterval(int);
+            document.getElementById("cmButton").style.display="none";
+            console.log("utterances Load OK");
+        }
+    }
+}
+
+
+
+</script>
+
+
+</html>
